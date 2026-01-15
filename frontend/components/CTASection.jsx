@@ -6,18 +6,15 @@ export default function CTASection() {
             <div className="container">
                 <div className="cta-content">
                     <h2 className="cta-title">
-                        Planifier un entretien confidentiel
+                        Planifier un entretien
                     </h2>
                     <p className="cta-desc">
                         Rencontrez un de nos experts pour une analyse discrète et rigoureuse
                         de vos besoins patrimoniaux. Aucun engagement n'est requis.
                     </p>
                     <div className="cta-buttons">
-                        <a href="#appointment" className="btn btn-gold">
+                        <a href="https://calendly.com/amana-patrimoine/30min" target="_blank" rel="noopener noreferrer" className="btn btn-gold">
                             Prendre rendez-vous
-                        </a>
-                        <a href="tel:+33189700000" className="btn btn-outline-white">
-                            Contacter un associé
                         </a>
                     </div>
                 </div>

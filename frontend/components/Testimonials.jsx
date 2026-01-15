@@ -56,7 +56,7 @@ export default function Testimonials() {
             <div className="container">
                 <div className="section-header">
                     <span className="section-label">Confiance</span>
-                    <h2 className="section-title">Paroles de nos partenaires</h2>
+                    <h2 className="section-title">Paroles de nos clients</h2>
                     <p className="section-desc">
                         L'excellence de notre service se mesure à la satisfaction de ceux que nous accompagnons.
                     </p>

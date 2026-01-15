@@ -5,8 +5,8 @@ const partners = [
     { name: 'Vie Plus', logo: '/logo-vieplus.png', isImage: true },
     { name: 'HSBC', logo: 'HSBC' },
     { name: 'Franklin Templeton', logo: 'FT' },
-    { name: 'Comgest', logo: 'CG' },
-    { name: 'Norma Capital', logo: 'NC' }
+    { name: 'Norma Capital', logo: 'NC' },
+    { name: 'SBSC', logo: '/SBSC.avif', isImage: true }
 ];
 
 export default function PartnersSection() {

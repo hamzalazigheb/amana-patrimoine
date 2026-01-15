@@ -54,7 +54,7 @@ export default function SuccessionPage() {
                     badge="Succession"
                     title="L'art de transmettre avec sérénité"
                     subtitle="Anticiper sa succession, c'est protéger ceux que l'on aime et assurer la continuité de ses valeurs. Nous vous aidons à organiser votre héritage avec discrétion et efficacité."
-                    image="/edu-vineyard.png"
+                    image="/transmisison.png"
                     ctaText="Organiser mon héritage"
                 />
 

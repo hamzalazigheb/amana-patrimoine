@@ -20,7 +20,7 @@ export default function Header() {
             <div className="container header-inner">
                 <a href="/" className="logo">
                     <img
-                        src="/logo-amana.png"
+                        src="/logo10.png"
                         alt="Amana Patrimoine"
                         className="logo-img"
                     />
@@ -39,19 +39,52 @@ export default function Header() {
                             </svg>
                         </span>
                         {servicesOpen && (
-                            <div className="nav-dropdown-menu">
-                                <a href="/retraite" className="nav-dropdown-item">Préparer ma retraite</a>
-                                <a href="/strategie" className="nav-dropdown-item">Stratégie patrimoniale</a>
-                                <a href="/enfants" className="nav-dropdown-item">Avenir des enfants</a>
-                                <a href="/succession" className="nav-dropdown-item">Préparer ma succession</a>
-                                <a href="/reduire-impots" className="nav-dropdown-item">Réduire ses impôts</a>
-                                <a href="/immobilier" className="nav-dropdown-item">Investir dans l'immobilier</a>
-                                <a href="/investissement" className="nav-dropdown-item">Investir son argent</a>
+                            <div className="nav-dropdown-menu mega-menu">
+                                <div className="mega-menu-content">
+                                    <div className="mega-menu-column">
+                                        <h4 className="mega-menu-title">Planification</h4>
+                                        <a href="/retraite" className="nav-dropdown-item">
+                                            <span className="mega-menu-item-title">Préparer ma retraite</span>
+                                            <span className="mega-menu-item-desc">Sécurisez votre avenir financier</span>
+                                        </a>
+                                        <a href="/strategie" className="nav-dropdown-item">
+                                            <span className="mega-menu-item-title">Stratégie patrimoniale</span>
+                                            <span className="mega-menu-item-desc">Optimisez votre patrimoine</span>
+                                        </a>
+                                        <a href="/succession" className="nav-dropdown-item">
+                                            <span className="mega-menu-item-title">Préparer ma succession</span>
+                                            <span className="mega-menu-item-desc">Transmettez en toute sérénité</span>
+                                        </a>
+                                    </div>
+                                    <div className="mega-menu-column">
+                                        <h4 className="mega-menu-title">Investissement</h4>
+                                        <a href="/immobilier" className="nav-dropdown-item">
+                                            <span className="mega-menu-item-title">Investir dans l'immobilier</span>
+                                            <span className="mega-menu-item-desc">Patrimoine immobilier durable</span>
+                                        </a>
+                                        <a href="/investissement" className="nav-dropdown-item">
+                                            <span className="mega-menu-item-title">Investir son argent</span>
+                                            <span className="mega-menu-item-desc">Croissance et diversification</span>
+                                        </a>
+                                    </div>
+                                    <div className="mega-menu-column">
+                                        <h4 className="mega-menu-title">Optimisation</h4>
+                                        <a href="/enfants" className="nav-dropdown-item">
+                                            <span className="mega-menu-item-title">Avenir des enfants</span>
+                                            <span className="mega-menu-item-desc">Préparez leur avenir</span>
+                                        </a>
+                                        <a href="/reduire-impots" className="nav-dropdown-item">
+                                            <span className="mega-menu-item-title">Réduire ses impôts</span>
+                                            <span className="mega-menu-item-desc">Optimisation fiscale légale</span>
+                                        </a>
+                                    </div>
+                                </div>
                             </div>
                         )}
                     </div>
+                    <a href="/qui-sommes-nous" className="nav-link">Qui sommes-nous</a>
                     <a href="/#methodology" className="nav-link">Notre Approche</a>
-                    <a href="/#contact" className="btn btn-primary btn-sm">Entretien Confidentiel</a>
+                    <a href="https://calendly.com/amana-patrimoine/30min" target="_blank" rel="noopener noreferrer" className="btn btn-primary btn-sm">Bilan Patrimonial</a>
                 </nav>
             </div>
         </header>

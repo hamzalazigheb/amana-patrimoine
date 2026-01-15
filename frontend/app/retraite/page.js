@@ -8,18 +8,18 @@ import CTASection from '../../components/CTASection';
 import Footer from '../../components/Footer';
 
 export const metadata = {
-    title: 'Retraite Halal & Éthique | Amana Patrimoine',
-    description: 'Préparez votre retraite sans Riba. Optimisation fiscale via le PER Halal, investissement immobilier de rente et capitalisation sereine.',
+    title: 'Retraite Éthique | Amana Patrimoine',
+    description: 'Préparez votre retraite sans Riba. Optimisation fiscale via le PER, investissement immobilier de rente et capitalisation sereine.',
 };
 
 const tools = [
     {
-        title: 'PER Individuel Halal',
+        title: 'PER Individuel',
         description: 'La solution phare pour transformer votre impôt en capital retraite, sur des supports audités sans Riba.',
-        features: ['Déduction fiscale intégrale', 'Allocation diversifiée', 'Sortie en capital possible']
+        features: ['Option de capitalisation', 'Sans effet de levier', 'Revenus récurrents']
     },
     {
-        title: 'SCPI de Rente Éthique',
+        title: 'SCPI Éthique',
         description: 'Bâtissez un revenu trimestriel décorrélé des marchés financiers, adossé à l\'immobilier réel.',
         features: ['Loyers nets de frais', 'Zéro gestion locative', 'Conformité Shariah']
     },
@@ -27,13 +27,18 @@ const tools = [
         title: 'Assurance-Vie Capitalisation',
         description: 'La flexibilité absolue pour disposer de revenus à tout moment, avec un cadre fiscal privilégié.',
         features: ['Fonds Shariah Compliant', 'Transmission optimisée', 'Disponibilité du capital']
+    },
+    {
+        title: 'Investissement Immobilier',
+        description: 'Structurez une rente grâce à l\'investissement immobilier',
+        features: ['Revenus régulier', 'Biens tangibles', 'Croissance du patrimoine']
     }
 ];
 
 const faqs = [
     {
-        question: "Qu'est-ce qui rend un PER 'Halal' ?",
-        answer: "Un PER est considéré comme Halal lorsqu'il est investi exclusivement dans des supports (fonds d'investissements, actions, SCPI) qui respectent les principes de la finance islamique : absence d'intérêt (riba), pas de spéculation excessive (gharar) et exclusion des secteurs illicites (alcool, porc, banques conventionnelles, armement)."
+        question: "Qu'est-ce qui rend un PER éthique ?",
+        answer: "Un PER est considéré comme éthique lorsqu'il est investi exclusivement dans des supports (fonds d'investissements, actions, SCPI) qui respectent les principes de la finance islamique : absence d'intérêt (riba), pas de spéculation excessive (gharar) et exclusion des secteurs illicites (alcool, porc, banques conventionnelles, armement)."
     },
     {
         question: "Puis-je retirer mon capital en une seule fois ?",
@@ -102,7 +107,7 @@ export default function RetraitePage() {
                             </div>
                             <div className="case-study-item">
                                 <span className="case-study-label">Allocation</span>
-                                <span className="case-study-value">DYNAMIQUE HALAL</span>
+                                <span className="case-study-value">DYNAMIQUE ÉTHIQUE</span>
                             </div>
                         </div>
 
@@ -132,6 +137,17 @@ export default function RetraitePage() {
                         {tools.map((tool, index) => (
                             <ToolCard key={index} {...tool} />
                         ))}
+                    </div>
+                    <div style={{ marginTop: 'var(--space-16)', padding: 'var(--space-10)', backgroundColor: 'var(--color-ivory)', borderRadius: 'var(--radius-md)', borderLeft: '4px solid var(--color-brass)' }}>
+                        <h3 style={{ fontFamily: 'var(--font-heading)', fontSize: 'var(--text-xl)', color: '#444b3f', marginBottom: 'var(--space-6)', fontWeight: 'bold' }}>
+                            Retraite et Finance Islamique : concilier éthique et performance
+                        </h3>
+                        <p style={{ fontSize: 'var(--text-base)', color: 'var(--color-text)', lineHeight: '1.8', marginBottom: 'var(--space-4)' }}>
+                            Chez Amana Patrimoine, nos conseillers sont formés aux principes de la finance islamique (charia compatible) et au fiqh al muamallat (droit musulman des transaction). Nos experts s'assurent que vos opérations soient conformes à l'éthique musulmane, sans intérêt (riba) et sans investissement dans des activités illicites (haram).
+                        </p>
+                        <p style={{ fontSize: 'var(--text-base)', color: 'var(--color-text)', lineHeight: '1.8' }}>
+                            Investissement, immobilier, succession, structuration : nous construisons une stratégie patrimoniale de conviction et responsable, validée par des spécialistes de la finance islamique pour concilier performance et conformité à vos valeurs.
+                        </p>
                     </div>
                 </ContentSection>
 

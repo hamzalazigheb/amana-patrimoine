@@ -4,19 +4,19 @@ import { useEffect, useRef, useState } from 'react';
 
 const slides = [
     {
-        image: '/hero-nature.png',
+        image: '/Design sans titre (1) (1).png',
         badge: 'Partenaire de confiance | Institutional Grade',
         title: 'Une stratégie patrimoniale pensée pour durer',
         subtitle: 'Nous accompagnons les familles, dirigeants et cadres de haut niveau dans l\'organisation et l\'optimisation de leur patrimoine avec une indépendance absolue et une rigueur institutionnelle.'
     },
     {
-        image: '/hero-bg.png',
+        image: '/pexels-moritz-feldmann-3362914-33287877.jpg',
         badge: 'Expertise & Audit | Excellence Technique',
         title: 'Préserver l\'actif, bâtir l\'avenir',
         subtitle: 'Notre approche se fonde sur une analyse rigoureuse des actifs réels pour garantir une croissance stable en accord avec vos principes.'
     },
     {
-        image: '/edu-vineyard.png',
+        image: '/Site 10.png',
         badge: 'Valeurs & Éthique | Vision Long Terme',
         title: 'L\'excellence financière, la conscience en plus',
         subtitle: 'Une gestion de patrimoine éthique qui concilie performance durable et respect scrupuleux de vos convictions.'
@@ -30,7 +30,7 @@ export default function Hero() {
     useEffect(() => {
         const timer = setInterval(() => {
             setCurrentSlide((prev) => (prev + 1) % slides.length);
-        }, 8000);
+        }, 5000);
 
         return () => clearInterval(timer);
     }, []);
@@ -50,13 +50,22 @@ export default function Hero() {
 
     return (
         <section className="hero" ref={heroRef}>
-            {slides.map((slide, index) => (
-                <div
-                    key={index}
-                    className={`hero-slide ${currentSlide === index ? 'active' : ''}`}
-                    style={{ backgroundImage: `url(${slide.image})` }}
-                />
-            ))}
+            {slides.map((slide, index) => {
+                // Encode l'URL pour gérer les espaces et caractères spéciaux
+                const encodedImage = encodeURI(slide.image);
+                return (
+                    <div
+                        key={index}
+                        className={`hero-slide ${currentSlide === index ? 'active' : ''}`}
+                        style={{ 
+                            backgroundImage: `url("${encodedImage}")`,
+                            backgroundSize: 'cover',
+                            backgroundPosition: 'center',
+                            backgroundRepeat: 'no-repeat'
+                        }}
+                    />
+                );
+            })}
 
             <div className="container">
                 <div className="hero-content">
@@ -71,16 +80,13 @@ export default function Hero() {
                         {slides[currentSlide].title}
                     </h1>
 
-                    <p className="hero-subtitle animate-on-load" key={`subtitle-${currentSlide}`}>
+                    <p className={`hero-subtitle animate-on-load ${currentSlide === 2 ? 'hero-subtitle-dark' : ''}`} key={`subtitle-${currentSlide}`}>
                         {slides[currentSlide].subtitle}
                     </p>
 
                     <div className="hero-cta animate-on-load">
-                        <a href="#contact" className="btn btn-primary">
+                        <a href="https://calendly.com/amana-patrimoine/30min" target="_blank" rel="noopener noreferrer" className="btn btn-primary">
                             Prendre rendez-vous
-                        </a>
-                        <a href="#methodology" className="btn btn-secondary">
-                            Découvrir notre approche
                         </a>
                     </div>
 
@@ -91,7 +97,6 @@ export default function Hero() {
                         </div>
                         <div className="hero-stat">
                             <div className="hero-stat-value">Indépendance</div>
-                            <div className="hero-stat-label">Absence de biais commercial</div>
                         </div>
                     </div>
                 </div>

@@ -30,11 +30,11 @@ const steps = [
     },
     {
         icon: (
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
+                <text x="12" y="18" fontSize="20" fontWeight="bold" textAnchor="middle" fill="currentColor">€</text>
             </svg>
         ),
-        title: 'Investissez avec sérénité',
+        title: 'Déployez votre stratégie',
         description: 'Déploiement de votre stratégie sur-mesure avec un suivi rigoureux de la performance et de la conformité.'
     }
 ];

@@ -16,7 +16,7 @@ const resources = [
         description: 'Analyse des mutations du marché immobilier et opportunités de structuration fiscale.'
     },
     {
-        image: '/edu-vineyard.png',
+        image: '/transmisison.png',
         tag: 'Guide',
         title: 'Transmission & Successsion',
         description: 'Les clés pour organiser la transmission de votre patrimoine avec sérénité et efficacité.'
@@ -59,9 +59,9 @@ export default function Education() {
             <div className="container">
                 <div className="section-header">
                     <span className="section-label">Pédagogie</span>
-                    <h2 className="section-title">Notes d'Analyse & Perspectives</h2>
+                    <h2 className="section-title">Paroles de nos clients</h2>
                     <p className="section-desc">
-                        Nous partageons nos réflexions et nos outils pour éclairer vos décisions patrimoniales.
+                        Découvrez les témoignages de nos clients qui nous font confiance pour la gestion de leur patrimoine.
                     </p>
                 </div>
 

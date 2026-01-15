@@ -59,12 +59,12 @@ export default function StrategiePage() {
                             <p>Analyse exhaustive de votre actif et passif pour identifier les forces et faiblesses de votre structure actuelle.</p>
                         </div>
                         <div className="method-step-item" style={{ marginBottom: '2rem' }}>
-                            <h4 style={{ color: 'var(--color-brass)', marginBottom: '0.5rem' }}>02. Définition des Caps</h4>
+                            <h4 style={{ color: 'var(--color-brass)', marginBottom: '0.5rem' }}>02. Définition des objectifs</h4>
                             <p>Clarification de vos priorités : revenus immédiats, capitalisation, transmission ou investissement de sens.</p>
                         </div>
                         <div className="method-step-item">
-                            <h4 style={{ color: 'var(--color-brass)', marginBottom: '0.5rem' }}>03. Sélection des Leviers</h4>
-                            <p>Arbitrage entre immobilier, assurance-vie, et actifs tangibles selon une allocation d'actifs rigoureuse.</p>
+                            <h4 style={{ color: 'var(--color-brass)', marginBottom: '0.5rem' }}>03. Déploiement stratégique</h4>
+                            <p>Arbitrage des solutions patrimoniales et d'investissement pour atteindre vos objectifs.</p>
                         </div>
                     </div>
                 </ContentSection>

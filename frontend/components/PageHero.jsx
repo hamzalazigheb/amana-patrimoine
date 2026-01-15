@@ -7,7 +7,7 @@ export default function PageHero({
     title,
     subtitle,
     ctaText = "Prendre rendez-vous",
-    ctaLink = "#contact",
+    ctaLink = "https://calendly.com/amana-patrimoine/30min",
     secondaryCtaText,
     secondaryCtaLink,
     image
@@ -46,7 +46,11 @@ export default function PageHero({
                     )}
 
                     <div className="page-hero-cta animate-on-load">
-                        <a href={ctaLink} className="btn btn-primary btn-lg">
+                        <a 
+                            href={ctaLink} 
+                            className="btn btn-primary btn-lg"
+                            {...(ctaLink.includes('calendly.com') ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+                        >
                             {ctaText}
                         </a>
                         {secondaryCtaText && (
