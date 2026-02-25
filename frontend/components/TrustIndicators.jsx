@@ -4,46 +4,20 @@ import { useEffect, useRef } from 'react';
 
 const trustItems = [
     {
-        icon: (
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
-                <polyline points="22 4 12 14.01 9 11.01" />
-            </svg>
-        ),
-        title: '15 Ans d\'Expertise',
-        description: 'Une maîtrise pointue des enjeux patrimoniaux et fiscaux au service de votre sérénité.'
+        title: '15 ans d\'expérience en gestion de patrimoine et finance islamique',
+        description: 'Une expertise reconnue pour vous accompagner sur tous vos projets patrimoniaux, de l\'investissement à la transmission. Certification AMF et diplôme en finance islamique.'
     },
     {
-        icon: (
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
-                <circle cx="9" cy="7" r="4" />
-                <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
-                <path d="M16 3.13a4 4 0 0 1 0 7.75" />
-            </svg>
-        ),
-        title: 'Accompagnement Dédié',
-        description: 'Un interlocuteur unique pour une stratégie sur-mesure totalement intégrée.'
+        title: 'Un accompagnement sur-mesure avec un interlocuteur unique',
+        description: 'Nous prenons le temps de comprendre votre situation, vos objectifs et vos contraintes pour vous proposer une stratégie vraiment adaptée. Un seul conseiller centralise l\'ensemble de vos démarches.'
     },
     {
-        icon: (
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-            </svg>
-        ),
-        title: 'Indépendance Totale',
-        description: 'Liberté de sélection absolue des solutions pour garantir votre seul intérêt.'
+        title: 'Une indépendance totale vis-à-vis des établissements financiers',
+        description: 'Aucun lien capitalistique avec nos partenaires, ce qui nous permet de sélectionner les meilleures solutions pour vous, sans conflit d\'intérêts. Notre priorité : votre satisfaction.'
     },
     {
-        icon: (
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                <circle cx="12" cy="12" r="10" />
-                <line x1="12" y1="16" x2="12" y2="12" />
-                <line x1="12" y1="8" x2="12.01" y2="8" />
-            </svg>
-        ),
-        title: 'Transparence Absolue',
-        description: 'Clarté totale sur les frais et les rapports de gestion pour une confiance durable.'
+        title: 'Une transparence absolue sur les frais et la gestion',
+        description: 'Vous savez exactement où va votre argent et comment votre stratégie évolue. Clarté totale sur les frais, les placements et les rapports de gestion.'
     }
 ];
 
@@ -81,12 +55,12 @@ export default function TrustIndicators() {
     return (
         <section className="trust-section" ref={sectionRef}>
             <div className="container">
+                <div className="section-header">
+                    <h2 className="section-title">Pourquoi choisir Amana Patrimoine ?</h2>
+                </div>
                 <div className="trust-grid">
                     {trustItems.map((item, index) => (
                         <div key={index} className="trust-item">
-                            <div className="trust-icon">
-                                {item.icon}
-                            </div>
                             <h3 className="trust-title">{item.title}</h3>
                             <p className="trust-desc">{item.description}</p>
                         </div>

@@ -1,0 +1,20 @@
+<svg width="56" height="56" viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Personne -->
+  <circle cx="28" cy="18" r="7" stroke="#B8935F" stroke-width="2" fill="none"/>
+  <path d="M16 44 C16 34 20 28 28 28 C36 28 40 34 40 44" stroke="#B8935F" stroke-width="2" stroke-linecap="round" fill="none"/>
+  
+  <!-- Jauge de risque -->
+  <path d="M44 24 L52 24 L52 44 L44 44 Z" stroke="#2C3E50" stroke-width="1.5" stroke-linejoin="round" fill="none"/>
+  <rect x="45" y="38" width="6" height="4" fill="#B8935F"/>
+  <rect x="45" y="32" width="6" height="4" fill="#B8935F" opacity="0.6"/>
+  <rect x="45" y="26" width="6" height="4" fill="#2C3E50" opacity="0.2"/>
+  
+  <!-- Horloge (horizon) -->
+  <circle cx="10" cy="12" r="6" stroke="#2C3E50" stroke-width="1.5" fill="none"/>
+  <path d="M10 9 L10 12 L12 13" stroke="#2C3E50" stroke-width="1.5" stroke-linecap="round"/>
+</svg>
+
+
+
+
+

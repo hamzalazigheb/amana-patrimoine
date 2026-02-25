@@ -1,84 +1,40 @@
 import Header from '../../components/Header';
-import PageHero from '../../components/PageHero';
-import ContentSection from '../../components/ContentSection';
-import ProfileTable from '../../components/ProfileTable';
-import ReassuranceBlock from '../../components/ReassuranceBlock';
-import CTASection from '../../components/CTASection';
 import Footer from '../../components/Footer';
+import BlockRenderer from '../../components/BlockRenderer';
+import { getPageBySlug } from '../../lib/cms';
+import { buildMetadata, buildBreadcrumbJsonLd, buildServiceJsonLd } from '../../lib/seo';
 
-export const metadata = {
-    title: 'Stratégie Patrimoniale | Amana Patrimoine',
-    description: 'Construisez une stratégie patrimoniale cohérente, durable et personnalisée. Vision globale pour un avenir maîtrisé avec Amana Patrimoine.',
-};
+export const dynamic = 'force-dynamic';
 
-const profiles = [
-    { profile: 'Cadre avec forte imposition', solutions: 'PER, SCPI, assurance-vie, immobilier' },
-    { profile: 'Jeune actif qui démarre', solutions: 'Assurance-vie, épargne régulière, SCPI' },
-    { profile: 'Famille avec enfants', solutions: 'Assurance-vie, démembrement, donation' },
-    { profile: 'Entrepreneur', solutions: 'Holding + fonds conformes, PER, fiducie' },
-    { profile: 'Retraité avec capital à placer', solutions: 'SCPI, assurance-vie, gestion prudente' }
-];
+export async function generateMetadata() {
+    const page = await getPageBySlug('strategie');
+    return buildMetadata(
+        page,
+        'strategie',
+        'Stratégie Patrimoniale Personnalisée',
+        'Définissez votre stratégie patrimoniale sur mesure avec Amana Patrimoine. Audit, objectifs, allocation d\'actifs conforme à la finance islamique.'
+    );
+}
 
-export default function StrategiePage() {
+export default async function StrategiePage() {
+    const page = await getPageBySlug('strategie');
+
+    const breadcrumb = buildBreadcrumbJsonLd([{ name: 'Stratégie patrimoniale', slug: 'strategie' }]);
+    const service = buildServiceJsonLd('Stratégie Patrimoniale', 'Conseil en stratégie patrimoniale personnalisée et conforme à la finance islamique.', 'strategie');
+
     return (
         <>
+            <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumb) }} />
+            <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(service) }} />
             <Header />
-            <main>
-                <PageHero
-                    badge="Stratégie"
-                    title="Une vision globale pour un avenir maîtrisé"
-                    subtitle="Votre patrimoine mérite une architecture cohérente. Nous organisons vos actifs de manière durable et personnalisée, en parfaite adéquation avec vos aspirations profondes."
-                    image="/hero-bg.png"
-                />
-
-                <ContentSection
-                    label="Notre Philosophie"
-                    title="Au-delà des produits, un écosystème"
-                    intro="Nous ne nous contentons pas d'empiler des solutions financières. Nous construisons une structure qui donne du sens à votre réussite."
-                    image="/hero-nature.png"
-                    imageSide="right"
-                >
-                    <p>
-                        Une stratégie patrimoniale sérieuse ne subit pas les modes du marché. Elle s'inscrit dans le temps long et répond à des besoins fondamentaux de protection, de transmission et d'éthique.
-                    </p>
-                    <div className="highlight-box">
-                        <p>« La meilleure stratégie n'est pas la plus complexe, mais la plus fidèle à vos objectifs. »</p>
+            <main id="main-content">
+                {page ? (
+                    <BlockRenderer blocks={page.blocks} />
+                ) : (
+                    <div className="container" style={{ padding: '4rem 0', textAlign: 'center' }}>
+                        <p>Contenu en cours de chargement...</p>
                     </div>
-                </ContentSection>
-
-                <ContentSection
-                    background="beige"
-                    label="Notre Méthode"
-                    title="Les étapes de la construction"
-                    image="/edu-heritage.png"
-                    imageSide="left"
-                >
-                    <div className="method-steps-list">
-                        <div className="method-step-item" style={{ marginBottom: '2rem' }}>
-                            <h4 style={{ color: 'var(--color-brass)', marginBottom: '0.5rem' }}>01. Diagnostic Global</h4>
-                            <p>Analyse exhaustive de votre actif et passif pour identifier les forces et faiblesses de votre structure actuelle.</p>
-                        </div>
-                        <div className="method-step-item" style={{ marginBottom: '2rem' }}>
-                            <h4 style={{ color: 'var(--color-brass)', marginBottom: '0.5rem' }}>02. Définition des objectifs</h4>
-                            <p>Clarification de vos priorités : revenus immédiats, capitalisation, transmission ou investissement de sens.</p>
-                        </div>
-                        <div className="method-step-item">
-                            <h4 style={{ color: 'var(--color-brass)', marginBottom: '0.5rem' }}>03. Déploiement stratégique</h4>
-                            <p>Arbitrage des solutions patrimoniales et d'investissement pour atteindre vos objectifs.</p>
-                        </div>
-                    </div>
-                </ContentSection>
-
-                <ReassuranceBlock />
-
-                <ContentSection
-                    label="Personnalisation"
-                    title="Exemples de structuration"
-                >
-                    <ProfileTable profiles={profiles} />
-                </ContentSection>
-
-                <CTASection />
+                )}
             </main>
             <Footer />
         </>

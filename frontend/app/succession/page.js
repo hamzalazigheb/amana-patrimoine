@@ -1,137 +1,60 @@
 import Header from '../../components/Header';
-import PageHero from '../../components/PageHero';
-import ContentSection from '../../components/ContentSection';
-import ToolCard from '../../components/ToolCard';
-import FAQ from '../../components/FAQ';
-import ReassuranceBlock from '../../components/ReassuranceBlock';
-import CTASection from '../../components/CTASection';
 import Footer from '../../components/Footer';
+import BlockRenderer from '../../components/BlockRenderer';
+import SuccessionCalculator from '../../components/SuccessionCalculator';
+import { getPageBySlug } from '../../lib/cms';
+import { buildMetadata, buildBreadcrumbJsonLd, buildServiceJsonLd, buildFaqJsonLd } from '../../lib/seo';
 
-export const metadata = {
-    title: 'Préparation de Succession | Amana Patrimoine',
-    description: 'Transmettez sereinement votre patrimoine. Assurance-vie, donations, testament et solutions conformes à vos valeurs éthiques.',
-};
+export const dynamic = 'force-dynamic';
 
-const tools = [
-    {
-        title: 'L\'Assurance-Vie Transmise',
-        description: 'Transmettez jusqu\'à 152 500 € par bénéficiaire hors droits de succession avec une totale liberté de désignation.',
-        features: ['Abattements fiscaux majeurs', 'Fonds certifiés sans Riba', 'Clause bénéficiaire sur mesure']
-    },
-    {
-        title: 'Démembrement de Propriété',
-        description: 'Donnez la nue-propriété de vos actifs tout en conservant l\'usufruit (jouissance et revenus) de votre vivant.',
-        features: ['Réduction des droits de mutation', 'Transmission progressive', 'Protection du conjoint']
-    },
-    {
-        title: 'Assurance-Vie Capitalisation',
-        description: 'Optimisez la transmission de la nue-propriété d\'un contrat pour une efficacité fiscale maximale sur le long terme.',
-        features: ['Efficacité civile', 'Pérennité des valeurs', 'Sur-mesure juridique']
+export async function generateMetadata() {
+    const page = await getPageBySlug('succession');
+    return buildMetadata(
+        page,
+        'succession',
+        'Préparer sa Succession - Transmission de Patrimoine Conforme',
+        'Organisez la transmission de votre patrimoine selon la finance islamique. Assurance-vie, donation, testament : conseil expert à Paris.'
+    );
+}
+
+export default async function SuccessionPage() {
+    const page = await getPageBySlug('succession');
+
+    const breadcrumb = buildBreadcrumbJsonLd([{ name: 'Préparer ma succession', slug: 'succession' }]);
+    const service = buildServiceJsonLd('Transmission de Patrimoine', 'Conseil en transmission et succession conforme à la finance islamique.', 'succession');
+
+    const faqBlock = page?.blocks?.find(b => b.type === 'faq');
+    const faqJsonLd = faqBlock ? buildFaqJsonLd(faqBlock.content?.items) : null;
+
+    if (!page) {
+        return (
+            <>
+                <Header />
+                <main id="main-content">
+                    <div className="container" style={{ padding: '4rem 0', textAlign: 'center' }}>
+                        <p>Contenu en cours de chargement...</p>
+                    </div>
+                </main>
+                <Footer />
+            </>
+        );
     }
-];
 
-const faqs = [
-    {
-        question: "Pourquoi préparer sa succession dès 50 ans ?",
-        answer: "Le droit français prévoit des abattements sur les donations qui se renouvellent tous les 15 ans. Anticiper permet de 'purger' la fiscalité plusieurs fois de son vivant, économisant potentiellement des centaines de milliers d'euros à ses héritiers."
-    },
-    {
-        question: "Comment concilier droit civil et éthique religieuse ?",
-        answer: "Nous utilisons des outils juridiques comme le testament olographe ou authentique et les clauses bénéficiaires démembrées pour que la répartition de vos biens respecte vos volontés profondes (ex: parts successorales spécifiques) tout en restant strictement légale."
-    },
-    {
-        question: "Qu'en est-il de l'assurance-vie après 70 ans ?",
-        answer: "Après 70 ans, le cadre fiscal change mais reste avantageux : un abattement global de 30 500 € s'applique sur les primes versées, et les plus-values sont totalement exonérées de droits de succession."
-    }
-];
+    const faqIndex = page.blocks.findIndex(b => b.type === 'faq');
+    const insertAt = faqIndex > 0 ? faqIndex : page.blocks.length;
+    const blocksBefore = page.blocks.slice(0, insertAt);
+    const blocksAfter = page.blocks.slice(insertAt);
 
-export default function SuccessionPage() {
     return (
         <>
+            <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumb) }} />
+            <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(service) }} />
+            {faqJsonLd && <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }} />}
             <Header />
-            <main>
-                <PageHero
-                    badge="Succession"
-                    title="L'art de transmettre avec sérénité"
-                    subtitle="Anticiper sa succession, c'est protéger ceux que l'on aime et assurer la continuité de ses valeurs. Nous vous aidons à organiser votre héritage avec discrétion et efficacité."
-                    image="/transmisison.png"
-                    ctaText="Organiser mon héritage"
-                />
-
-                <ContentSection
-                    label="Héritage"
-                    title="Plus qu'un capital, une continuité"
-                    intro="La transmission est l'acte final d'une gestion patrimoniale réussie. Elle doit être préparée avec soin pour éviter les frottements fiscaux."
-                    image="/edu-heritage.png"
-                    imageSide="right"
-                >
-                    <p>
-                        Sans anticipation, la loi décide de la répartition de vos biens, souvent au prix d'une fiscalité lourde (jusqu'à 45% en ligne directe) et de situations d'indivision complexes qui peuvent fragiliser l'harmonie familiale.
-                    </p>
-                    <div className="highlight-box">
-                        <p>« Transmettre, c'est semer pour des générations que l'on ne verra pas. Notre rôle est de garantir que chaque graine porte ses fruits. »</p>
-                    </div>
-                </ContentSection>
-
-                <ContentSection
-                    background="beige"
-                    label="Comparatif"
-                    title="L'impact de l'anticipation fiscale"
-                >
-                    <div className="case-study-box">
-                        <div className="case-study-header">
-                            <div className="case-study-persona">Transmission d'un capital de 500 000 €</div>
-                            <p style={{ color: 'var(--color-text-muted)' }}>Simulation pour 2 enfants, actifs immobiliers et financiers cumulés.</p>
-                        </div>
-
-                        <div className="case-study-grid">
-                            <div className="case-study-item">
-                                <span className="case-study-label">Abattement de droit</span>
-                                <span className="case-study-value">100 000 € / enfant</span>
-                            </div>
-                            <div className="case-study-item">
-                                <span className="case-study-label">Levier Assurance-Vie</span>
-                                <span className="case-study-value">152 500 € / enfant</span>
-                            </div>
-                        </div>
-
-                        <div className="case-study-comparison">
-                            <div className="comparison-chart-bar">
-                                <div className="bar-visual secondary" style={{ height: '140px' }}></div>
-                                <span className="comparison-label">Sans Anticipation (Droits dus)</span>
-                                <div style={{ marginTop: '5px', fontWeight: 'bold' }}>~58 000 € d'impôts</div>
-                            </div>
-                            <div className="comparison-chart-bar">
-                                <div className="bar-visual primary" style={{ height: '40px' }}></div>
-                                <span className="comparison-label">Avec Stratégie Amana</span>
-                                <div style={{ marginTop: '5px', fontWeight: 'bold', color: 'var(--color-brass-dark)' }}>~8 000 € d'impôts*</div>
-                            </div>
-                        </div>
-                    </div>
-                </ContentSection>
-
-                <ContentSection
-                    label="Solutions"
-                    title="Les outils de la transmission"
-                >
-                    <div className="tools-grid">
-                        {tools.map((tool, index) => (
-                            <ToolCard key={index} {...tool} />
-                        ))}
-                    </div>
-                </ContentSection>
-
-                <ContentSection
-                    background="beige"
-                    label="FAQ"
-                    title="Transmission & Conformité"
-                >
-                    <FAQ items={faqs} />
-                </ContentSection>
-
-                <ReassuranceBlock />
-
-                <CTASection />
+            <main id="main-content">
+                <BlockRenderer blocks={blocksBefore} />
+                <SuccessionCalculator />
+                <BlockRenderer blocks={blocksAfter} />
             </main>
             <Footer />
         </>

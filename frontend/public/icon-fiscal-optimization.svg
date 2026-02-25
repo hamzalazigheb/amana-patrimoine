@@ -1,0 +1,20 @@
+<svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Pièces de monnaie -->
+  <circle cx="25" cy="24" r="8" stroke="#2C3E50" stroke-width="1.5" fill="none"/>
+  <path d="M25 20 L25 28 M21 24 L29 24" stroke="#2C3E50" stroke-width="1.5" stroke-linecap="round"/>
+  
+  <circle cx="39" cy="24" r="8" stroke="#2C3E50" stroke-width="1.5" fill="none" opacity="0.6"/>
+  <path d="M39 20 L39 28 M35 24 L43 24" stroke="#2C3E50" stroke-width="1.5" stroke-linecap="round" opacity="0.6"/>
+  
+  <!-- Flèche vers le bas -->
+  <path d="M32 36 L32 52" stroke="#B8935F" stroke-width="2" stroke-linecap="round"/>
+  <path d="M26 46 L32 52 L38 46" stroke="#B8935F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+  
+  <!-- Ligne de base -->
+  <path d="M16 56 L48 56" stroke="#2C3E50" stroke-width="1.5" stroke-linecap="round"/>
+</svg>
+
+
+
+
+

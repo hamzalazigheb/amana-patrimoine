@@ -1,36 +1,31 @@
 'use client';
 
 const partners = [
-    { name: 'Suravenir', logo: 'SRV' },
-    { name: 'Vie Plus', logo: '/logo-vieplus.png', isImage: true },
-    { name: 'HSBC', logo: 'HSBC' },
-    { name: 'Franklin Templeton', logo: 'FT' },
-    { name: 'Norma Capital', logo: 'NC' },
-    { name: 'SBSC', logo: '/SBSC.avif', isImage: true }
+    { name: 'SURAVENIR', logo: '/logo-2025.svg' },
+    { name: 'VIE PLUS', logo: '/logo-vieplus.png' },
+    { name: 'HSBC', logo: '/hsbc-logo-200x25.svg' },
+    { name: 'FRANKLIN TEMPLETON', logo: '/FT_logo_pos_RGB@2x.png' },
+    { name: 'COMGEST', logo: '/logo--color.svg' },
+    { name: 'NORMA CAPITAL', logo: '/norma.png' },
+    { name: 'SBSC', logo: '/SBSC.avif' }
 ];
 
 export default function PartnersSection() {
     return (
         <section className="partners-section">
             <div className="container">
-                <div className="section-header text-center">
-                    <span className="section-label">Nos Partenaires</span>
-                    <h2 className="section-title">Des partenariats stratégiques</h2>
+                <div className="section-header">
+                    <h2 className="section-title">Des partenariats stratégiques avec les acteurs incontournables du secteur</h2>
                     <p className="section-desc">
-                        Grâce à nos alliances privilégiées avec des institutions financières de premier plan,
-                        bénéficiez d'un accès exclusif aux meilleures opportunités d'investissement.
+                        Nous travaillons avec des établissements financiers et patrimoniaux de premier plan : Suravenir, Vie Plus, HSBC, Franklin Templeton, Comgest, Norma Capital, SBSC. Ces partenariats nous permettent de vous proposer des solutions performantes, sans pour autant compromettre notre indépendance de conseil.
                     </p>
                 </div>
 
                 <div className="partners-grid">
                     {partners.map((partner, index) => (
                         <div key={index} className="partner-item">
-                            <div className="partner-logo">
-                                {partner.isImage ? (
-                                    <img src={partner.logo} alt={partner.name} className="partner-img" />
-                                ) : (
-                                    partner.logo
-                                )}
+                            <div className="partner-logo-wrapper">
+                                <img src={partner.logo} alt={partner.name} className="partner-img" />
                             </div>
                             <span className="partner-name">{partner.name}</span>
                         </div>

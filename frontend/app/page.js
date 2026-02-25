@@ -1,32 +1,37 @@
 import Header from '../components/Header';
-import Hero from '../components/Hero';
-import TrustIndicators from '../components/TrustIndicators';
-import CabinetVision from '../components/CabinetVision';
-import Services from '../components/Services';
-import Methodology from '../components/Methodology';
-import Education from '../components/Education';
-import Testimonials from '../components/Testimonials';
-import PartnersSection from '../components/PartnersSection';
-import CTASection from '../components/CTASection';
 import Footer from '../components/Footer';
+import BlockRenderer from '../components/BlockRenderer';
+import { getPageBySlug } from '../lib/cms';
+import { buildMetadata } from '../lib/seo';
 
-export default function Home() {
+export const dynamic = 'force-dynamic';
+
+export async function generateMetadata() {
+    const page = await getPageBySlug('home');
+    return buildMetadata(
+        page,
+        'home',
+        'Amana Patrimoine - Conseil en Gestion de Patrimoine et Finance Islamique | Paris',
+        'Cabinet de conseil en gestion de patrimoine indépendant, spécialisé en finance islamique. Investissement, retraite, transmission. Paris et Île-de-France.'
+    );
+}
+
+export default async function Home() {
+    const page = await getPageBySlug('home');
+
     return (
         <>
             <Header />
-            <main>
-                <Hero />
-                <TrustIndicators />
-                <CabinetVision />
-                <Services />
-                <Methodology />
-                <Education />
-                <Testimonials />
-                <PartnersSection />
-                <CTASection />
+            <main id="main-content">
+                {page ? (
+                    <BlockRenderer blocks={page.blocks} />
+                ) : (
+                    <div className="container" style={{ padding: '4rem 0', textAlign: 'center' }}>
+                        <p>Contenu en cours de chargement...</p>
+                    </div>
+                )}
             </main>
             <Footer />
         </>
     );
 }
-

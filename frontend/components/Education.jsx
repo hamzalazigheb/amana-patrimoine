@@ -6,20 +6,20 @@ const resources = [
     {
         image: '/edu-heritage.png',
         tag: 'Livre Blanc',
-        title: 'Principes de Gestion Privée',
-        description: 'Une étude approfondie sur les stratégies de préservation du capital en période d\'incertitude.'
+        title: 'Bientôt disponible',
+        description: ''
     },
     {
         image: '/edu-paris.png',
         tag: 'Analyse',
-        title: 'Perspectives Immobilier 2024',
-        description: 'Analyse des mutations du marché immobilier et opportunités de structuration fiscale.'
+        title: 'Bientôt disponible',
+        description: ''
     },
     {
         image: '/transmisison.png',
         tag: 'Guide',
-        title: 'Transmission & Successsion',
-        description: 'Les clés pour organiser la transmission de votre patrimoine avec sérénité et efficacité.'
+        title: 'Bientôt disponible',
+        description: ''
     }
 ];
 
@@ -58,10 +58,9 @@ export default function Education() {
         <section className="education-section" id="education" ref={sectionRef}>
             <div className="container">
                 <div className="section-header">
-                    <span className="section-label">Pédagogie</span>
-                    <h2 className="section-title">Paroles de nos clients</h2>
+                    <h2 className="section-title">Nos ressources pédagogiques</h2>
                     <p className="section-desc">
-                        Découvrez les témoignages de nos clients qui nous font confiance pour la gestion de leur patrimoine.
+                        Découvrez prochainement nos guides, livres blancs et analyses pour approfondir vos connaissances en gestion de patrimoine et finance islamique.
                     </p>
                 </div>
 
@@ -72,7 +71,9 @@ export default function Education() {
                                 <img src={resource.image} alt={resource.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                             </div>
                             <div className="education-content">
-                                <span className="education-tag">{resource.tag}</span>
+                                <div style={{ display: 'flex', gap: '8px', alignItems: 'center', flexWrap: 'wrap' }}>
+                                    <span className="education-tag">{resource.tag}</span>
+                                </div>
                                 <h3>{resource.title}</h3>
                                 <p className="education-desc">{resource.description}</p>
                             </div>

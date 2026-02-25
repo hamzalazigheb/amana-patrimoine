@@ -1,0 +1,27 @@
+<svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Balance en équilibre -->
+  <path d="M32 12 L32 42" stroke="#2C3E50" stroke-width="2" stroke-linecap="round"/>
+  <circle cx="32" cy="44" r="3" fill="#2C3E50"/>
+  
+  <!-- Plateau gauche (lourd - avant) -->
+  <path d="M12 24 L22 24 L20 18 L14 18 Z" stroke="#2C3E50" stroke-width="1.5" stroke-linejoin="round" fill="#2C3E50" opacity="0.2"/>
+  <line x1="17" y1="24" x2="32" y2="12" stroke="#2C3E50" stroke-width="1.5"/>
+  
+  <!-- Plateau droit (léger - après optimisation) -->
+  <path d="M42 16 L52 16 L50 12 L44 12 Z" stroke="#B8935F" stroke-width="1.5" stroke-linejoin="round" fill="none"/>
+  <line x1="47" y1="16" x2="32" y2="12" stroke="#B8935F" stroke-width="1.5"/>
+  
+  <!-- Symboles €€€ sur plateau gauche -->
+  <text x="14" y="22" font-family="Arial" font-size="6" fill="#2C3E50" font-weight="bold">€€€</text>
+  
+  <!-- Symbole € unique sur plateau droit -->
+  <text x="46" y="14" font-family="Arial" font-size="6" fill="#B8935F" font-weight="bold">€</text>
+  
+  <!-- Flèche d'optimisation -->
+  <path d="M24 32 L40 28" stroke="#B8935F" stroke-width="2" stroke-linecap="round"/>
+  <path d="M36 30 L40 28 L38 24" stroke="#B8935F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+  
+  <!-- Base -->
+  <rect x="26" y="48" width="12" height="4" rx="1" fill="#2C3E50"/>
+  <line x1="22" y1="54" x2="42" y2="54" stroke="#2C3E50" stroke-width="2" stroke-linecap="round"/>
+</svg>

@@ -1,0 +1,23 @@
+<svg width="56" height="56" viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Graphique en ligne avec tendance -->
+  <path d="M8 44 L8 12 M8 44 L48 44" stroke="#2C3E50" stroke-width="2" stroke-linecap="round"/>
+  
+  <!-- Ligne de performance -->
+  <path d="M12 36 L20 30 L28 32 L36 24 L44 20" stroke="#B8935F" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+  
+  <!-- Points de suivi -->
+  <circle cx="12" cy="36" r="3" fill="#B8935F"/>
+  <circle cx="20" cy="30" r="3" fill="#B8935F"/>
+  <circle cx="28" cy="32" r="3" fill="#B8935F"/>
+  <circle cx="36" cy="24" r="3" fill="#B8935F"/>
+  <circle cx="44" cy="20" r="3" fill="#B8935F"/>
+  
+  <!-- Loupe (analyse) -->
+  <circle cx="42" cy="10" r="6" stroke="#2C3E50" stroke-width="1.5" fill="none"/>
+  <line x1="46" y1="14" x2="50" y2="18" stroke="#2C3E50" stroke-width="1.5" stroke-linecap="round"/>
+</svg>
+
+
+
+
+

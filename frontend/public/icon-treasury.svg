@@ -1,0 +1,19 @@
+<svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Graphique ascendant -->
+  <path d="M12 48 L12 52 M20 42 L20 52 M28 36 L28 52 M36 28 L36 52 M44 20 L44 52 M52 14 L52 52" stroke="#2C3E50" stroke-width="1.5" stroke-linecap="round"/>
+  
+  <!-- Ligne courbe de tendance -->
+  <path d="M10 50 Q20 40 30 32 T50 12" stroke="#B8935F" stroke-width="2" stroke-linecap="round" fill="none"/>
+  
+  <!-- Flèche de croissance -->
+  <path d="M46 16 L52 10 L52 16" stroke="#B8935F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+  <path d="M46 10 L52 10" stroke="#B8935F" stroke-width="2" stroke-linecap="round"/>
+  
+  <!-- Base -->
+  <path d="M8 54 L56 54" stroke="#2C3E50" stroke-width="1.5" stroke-linecap="round"/>
+</svg>
+
+
+
+
+

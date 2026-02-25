@@ -6,14 +6,12 @@ const steps = [
     {
         icon: (
             <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
-                <line x1="16" y1="2" x2="16" y2="6" />
-                <line x1="8" y1="2" x2="8" y2="6" />
-                <line x1="3" y1="10" x2="21" y2="10" />
+                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+                <circle cx="12" cy="10" r="3" />
             </svg>
         ),
-        title: 'Planifiez votre rendez-vous',
-        description: 'Un premier échange confidentiel pour faire connaissance et comprendre vos objectifs de vie.'
+        title: 'Premier contact gratuit',
+        description: 'Un échange confidentiel pour comprendre votre situation, vos projets et vos contraintes. Aucun engagement de votre part.'
     },
     {
         icon: (
@@ -25,17 +23,29 @@ const steps = [
                 <polyline points="10 9 9 9 8 9" />
             </svg>
         ),
-        title: 'Réalisez votre bilan patrimonial',
-        description: 'Nos experts analysent votre structure actuelle pour identifier les leviers d\'optimisation éthique.'
+        title: 'Bilan patrimonial complet',
+        description: 'Nous analysons en détail vos actifs, vos revenus, votre fiscalité et vos objectifs pour identifier les leviers d\'optimisation.'
     },
     {
         icon: (
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
-                <text x="12" y="18" fontSize="20" fontWeight="bold" textAnchor="middle" fill="currentColor">€</text>
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                <path d="M12 2L2 7l10 5 10-5-10-5z" />
+                <path d="M2 17l10 5 10-5" />
+                <path d="M2 12l10 5 10-5" />
             </svg>
         ),
-        title: 'Déployez votre stratégie',
-        description: 'Déploiement de votre stratégie sur-mesure avec un suivi rigoureux de la performance et de la conformité.'
+        title: 'Stratégie sur-mesure',
+        description: 'Nous vous présentons une stratégie claire, chiffrée, adaptée à votre profil. Vous décidez, nous mettons en œuvre.'
+    },
+    {
+        icon: (
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                <polyline points="23 6 13.5 15.5 8.5 10.5 1 18" />
+                <polyline points="17 6 23 6 23 12" />
+            </svg>
+        ),
+        title: 'Suivi régulier',
+        description: 'Votre vie évolue, votre stratégie aussi. Nous restons à vos côtés pour adapter votre patrimoine à chaque étape.'
     }
 ];
 
@@ -70,11 +80,7 @@ export default function Methodology() {
         <section className="methodology-section" id="methodology" ref={sectionRef}>
             <div className="container">
                 <div className="section-header">
-                    <span className="section-label">Processus</span>
-                    <h2 className="section-title">Comment bénéficier de nos conseils ?</h2>
-                    <p className="section-desc">
-                        Un parcours structuré en trois étapes clés pour bâtir un patrimoine qui vous ressemble.
-                    </p>
+                    <h2 className="section-title">Comment ça marche ?</h2>
                 </div>
 
                 <div className="methodology-timeline">

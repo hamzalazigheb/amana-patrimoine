@@ -1,0 +1,28 @@
+<svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Parapluie protecteur -->
+  <path d="M32 18 C20 18 12 22 12 28 L12 30 L52 30 L52 28 C52 22 44 18 32 18" stroke="#B8935F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+  <path d="M32 18 L32 52" stroke="#2C3E50" stroke-width="2" stroke-linecap="round"/>
+  
+  <!-- Courbes décoratives du parapluie -->
+  <path d="M16 28 Q20 24 24 28" stroke="#B8935F" stroke-width="1.5" stroke-linecap="round" fill="none" opacity="0.5"/>
+  <path d="M28 28 Q32 24 36 28" stroke="#B8935F" stroke-width="1.5" stroke-linecap="round" fill="none" opacity="0.5"/>
+  <path d="M40 28 Q44 24 48 28" stroke="#B8935F" stroke-width="1.5" stroke-linecap="round" fill="none" opacity="0.5"/>
+  
+  <!-- Poignée courbée -->
+  <path d="M32 52 C32 52 36 52 36 48" stroke="#2C3E50" stroke-width="2" stroke-linecap="round" fill="none"/>
+  
+  <!-- Famille protégée (silhouettes simples) -->
+  <circle cx="24" cy="42" r="2.5" fill="#2C3E50"/>
+  <path d="M20 54 L20 48 C20 46 22 45 24 45 C26 45 28 46 28 48 L28 54" stroke="#2C3E50" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+  
+  <circle cx="32" cy="40" r="2.5" fill="#2C3E50"/>
+  <path d="M28 54 L28 46 C28 44 30 43 32 43 C34 43 36 44 36 46 L36 54" stroke="#2C3E50" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+  
+  <circle cx="40" cy="42" r="2.5" fill="#2C3E50"/>
+  <path d="M36 54 L36 48 C36 46 38 45 40 45 C42 45 44 46 44 48 L44 54" stroke="#2C3E50" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+  
+  <!-- Gouttes repoussées -->
+  <circle cx="10" cy="34" r="1.5" fill="#2C3E50" opacity="0.3"/>
+  <circle cx="54" cy="36" r="1.5" fill="#2C3E50" opacity="0.3"/>
+  <circle cx="8" cy="40" r="1" fill="#2C3E50" opacity="0.3"/>
+</svg>

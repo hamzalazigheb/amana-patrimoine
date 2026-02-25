@@ -1,0 +1,25 @@
+<svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Fusée/Roquette (croissance rapide) -->
+  <path d="M32 8 L38 22 L32 20 L26 22 Z" stroke="#B8935F" stroke-width="2" stroke-linejoin="round" fill="none"/>
+  <ellipse cx="32" cy="23" rx="6" ry="3" stroke="#B8935F" stroke-width="1.5" fill="none"/>
+  
+  <!-- Corps de la fusée -->
+  <path d="M28 23 L28 38 C28 40 29 42 32 42 C35 42 36 40 36 38 L36 23" stroke="#2C3E50" stroke-width="1.5" fill="none"/>
+  
+  <!-- Hublot avec € -->
+  <circle cx="32" cy="30" r="4" stroke="#B8935F" stroke-width="1.5" fill="none"/>
+  <path d="M31 29 L33 29 M31 30 L33 30 M31 31 L33 31" stroke="#B8935F" stroke-width="1" stroke-linecap="round"/>
+  
+  <!-- Flammes/Propulsion -->
+  <path d="M28 42 L26 48 L28 46 L26 52" stroke="#B8935F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M32 42 L32 54" stroke="#B8935F" stroke-width="2.5" stroke-linecap="round"/>
+  <path d="M36 42 L38 48 L36 46 L38 52" stroke="#B8935F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  
+  <!-- Ailerons -->
+  <path d="M28 36 L22 38 L28 40" stroke="#2C3E50" stroke-width="1.5" stroke-linejoin="round" fill="none"/>
+  <path d="M36 36 L42 38 L36 40" stroke="#2C3E50" stroke-width="1.5" stroke-linejoin="round" fill="none"/>
+  
+  <!-- Étoiles de dynamisme -->
+  <path d="M48 16 L49 18 L51 18 L49.5 19.5 L50 21 L48 20 L46 21 L46.5 19.5 L45 18 L47 18 Z" fill="#B8935F" opacity="0.6"/>
+  <path d="M16 24 L17 26 L19 26 L17.5 27.5 L18 29 L16 28 L14 29 L14.5 27.5 L13 26 L15 26 Z" fill="#B8935F" opacity="0.4"/>
+</svg>

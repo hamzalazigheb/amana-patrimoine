@@ -4,48 +4,23 @@ import { useEffect, useRef } from 'react';
 
 const services = [
     {
-        icon: (
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <path d="M12 2L2 7l10 5 10-5-10-5z" />
-                <path d="M2 17l10 5 10-5" />
-                <path d="M2 12l10 5 10-5" />
-            </svg>
-        ),
-        title: 'Gestion de Patrimoine',
-        description: 'Audit complet et stratégies d\'organisation pour une vision globale de vos actifs.',
+        title: 'Stratégie patrimoniale',
+        description: 'Construire une vision d\'ensemble de votre patrimoine. Nous réalisons un bilan complet de votre situation (actifs, passifs, revenus, fiscalité) pour définir une stratégie cohérente qui répond à vos objectifs de vie.',
         link: '/strategie'
     },
     {
-        icon: (
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
-                <polyline points="9 22 9 12 15 12 15 22" />
-            </svg>
-        ),
-        title: 'Investissement Immobilier',
-        description: 'Sélection rigoureuse, SCPI éthiques et structuration locative haut de gamme.',
+        title: 'Investissement immobilier',
+        description: 'Investir dans la pierre, en direct ou via des SCPI conformes aux normes de finance islamique. Location meublée (LMNP), déficit foncier, dispositifs fiscaux (Pinel, Malraux), SCPI sans dette bancaire : nous vous accompagnons sur tous les montages immobiliers.',
         link: '/immobilier'
     },
     {
-        icon: (
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <line x1="12" y1="11.5" x2="12" y2="23" />
-                <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
-            </svg>
-        ),
-        title: 'Épargne & Retraite',
-        description: 'Constitution d\'une épargne solide et préparation anticipée de votre retraite.',
+        title: 'Préparation de la retraite',
+        description: 'Anticiper votre retraite avec des solutions d\'épargne performantes et éthiques. Plan d\'épargne retraite (PER), assurance-vie, SCPI : nous construisons un complément de revenus qui vous permettra de maintenir votre niveau de vie.',
         link: '/retraite'
     },
     {
-        icon: (
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <polyline points="23 6 13.5 15.5 8.5 10.5 1 18" />
-                <polyline points="17 6 23 6 23 12" />
-            </svg>
-        ),
-        title: 'Transmission & Optimisation',
-        description: 'Pérenniser la transmission de votre patrimoine et optimiser votre fiscalité.',
+        title: 'Transmission et fiscalité',
+        description: 'Transmettre votre patrimoine dans les meilleures conditions et réduire légalement vos impôts. Donation, démembrement, assurance-vie, optimisation IFI : nous organisons votre succession et votre fiscalité en respectant vos valeurs.',
         link: '/succession'
     }
 ];
@@ -85,23 +60,19 @@ export default function Services() {
         <section className="services-section" id="services" ref={sectionRef}>
             <div className="container">
                 <div className="section-header">
-                    <span className="section-label">Expertises</span>
-                    <h2 className="section-title">Un accompagnement d'excellence</h2>
+                    <h2 className="section-title">Nos domaines d&apos;expertise</h2>
                     <p className="section-desc">
-                        Nous concevons des solutions sur mesure pour répondre aux exigences des profils les plus complexes.
+                        Nous intervenons sur l&apos;ensemble des problématiques patrimoniales, avec une spécialisation en finance islamique et une approche globale de votre situation.
                     </p>
                 </div>
 
                 <div className="services-grid">
                     {services.map((service, index) => (
                         <div key={index} className="service-card">
-                            <div className="service-icon">
-                                {service.icon}
-                            </div>
                             <h3 className="service-title">{service.title}</h3>
                             <p className="service-desc">{service.description}</p>
                             <a href={service.link} className="service-link">
-                                Découvrir
+                                En savoir plus
                                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
                                     <line x1="5" y1="12" x2="19" y2="12" />
                                     <polyline points="12 5 19 12 12 19" />
