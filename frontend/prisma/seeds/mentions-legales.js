@@ -2,7 +2,7 @@ const { createPage } = require('./_helpers');
 
 module.exports = async function seedMentionsLegales(prisma) {
   await createPage(prisma, 'mentions-legales', {
-    title: 'Mentions Légales | Amana Patrimoine',
+    title: 'Mentions Légales',
     description: 'Mentions légales et informations sur Amana Patrimoine.',
   }, [
     { type: 'content', content: {

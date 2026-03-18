@@ -2,13 +2,13 @@ const { createPage } = require('./_helpers');
 
 module.exports = async function seedImmobilier(prisma) {
   await createPage(prisma, 'immobilier', {
-    title: 'Investir dans l\'Immobilier | Amana Patrimoine',
-    description: 'Investissement immobilier : SCPI, locatif, SCI, financement islamique. Conseil indépendant et accompagnement sur-mesure.',
-    keywords: 'investissement immobilier, SCPI halal, immobilier islamique, SCI, LMNP, Paris',
+    title: 'SCPI Halal & Immobilier Islamique : Investir sans Riba',
+    description: 'Investissez dans l\'immobilier halal : SCPI conformes à la finance islamique, financement sans riba, SCI, locatif éthique. Conseil CGP indépendant Paris.',
+    keywords: 'SCPI halal, immobilier islamique, investissement immobilier sans riba, financement islamique immobilier, SCI, LMNP, Paris',
   }, [
     { type: 'pageHero', content: {
-      badge: 'Investissement Immobilier',
-      title: 'Investir dans l\'immobilier : un pilier incontournable du patrimoine',
+      badge: 'Immobilier Islamique & SCPI Halal',
+      title: 'SCPI halal et immobilier islamique : investir dans la pierre sans riba',
       subtitle: 'L\'immobilier occupe une place centrale dans une stratégie patrimoniale. Il permet un investissement tangible, stable et de générer une rente récurrente. L\'investissement immobilier ne se fait pas d\'une seule façon. En fonction de votre profil, de votre appétence au risque, de vos moyens et de nombreux facteurs, la stratégie change du tout au tout. Face à toutes les possibilités, à la complexité des montages, aux freins juridiques, fiscaux et financiers, il est nécessaire de se faire accompagner par un professionnel.',
       image: '/edu-paris.png',
       ctaText: 'Prendre rendez-vous',

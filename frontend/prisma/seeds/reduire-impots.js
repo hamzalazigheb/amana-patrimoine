@@ -2,9 +2,9 @@ const { createPage } = require('./_helpers');
 
 module.exports = async function seedReduireImpots(prisma) {
   await createPage(prisma, 'reduire-impots', {
-    title: 'Optimiser sa Fiscalité en tant que Particulier | Amana Patrimoine',
-    description: 'Optimisation fiscale particulier : PER, assurance-vie, immobilier, transmission. Conseil conforme à la finance islamique.',
-    keywords: 'optimisation fiscale, réduire impôts, PER, assurance-vie, déficit foncier, donation, IFI, Paris',
+    title: 'Réduire ses Impôts Légalement & Éthiquement',
+    description: 'Optimisez votre fiscalité avec des solutions légales et conformes à la finance islamique : PER, assurance-vie, immobilier, transmission. Conseil CGP indépendant Paris.',
+    keywords: 'réduire impôts, optimisation fiscale halal, PER déductible, déficit foncier, donation abattement, IFI, Paris',
   }, [
     { type: 'pageHero', content: {
       badge: 'Optimisation Fiscale',
@@ -91,6 +91,11 @@ module.exports = async function seedReduireImpots(prisma) {
         'Nous privilégions les stratégies pérennes, lisibles, sécurisées et adaptées à vos objectifs de vie.',
       ],
     } },
+    { type: 'faq', content: { items: [
+      { question: 'Peut-on réduire ses impôts en respectant la finance islamique ?', answer: 'Oui, absolument. L\'optimisation fiscale est compatible avec la finance islamique à condition d\'utiliser les bons outils. Un PER investi sur des fonds Shariah Compliant permet de déduire les versements de vos revenus imposables. L\'assurance-vie islamique offre une fiscalité avantageuse après 8 ans. Les SCPI conformes génèrent des revenus immobiliers peu fiscalisés. Chez Amana Patrimoine, nous veillons à ce que chaque levier fiscal utilisé soit conforme à vos convictions.' },
+      { question: 'Quels sont les principaux leviers pour réduire ses impôts ?', answer: 'Les principaux leviers légaux pour réduire ses impôts en France sont : le PER (déduction des versements du revenu imposable), l\'immobilier locatif (déficit foncier jusqu\'à 10 700€/an, amortissement LMNP), les dons aux associations (réduction 66-75%), les investissements en PME (réduction IR 25%), et la donation à ses enfants (abattement 100 000€ tous les 15 ans). Nous sélectionnons les leviers adaptés à votre situation et à vos valeurs.' },
+      { question: 'Combien peut-on économiser avec un PER ?', answer: 'L\'économie d\'impôt via un PER dépend de votre tranche marginale d\'imposition (TMI). Pour un versement de 10 000€ : 3 000€ économisés à 30% de TMI, 4 100€ à 41%, 4 500€ à 45%. Ces économies sont immédiates dès l\'année suivante. Sur 10 ans à 3 000€ d\'économie par an, c\'est 30 000€ réinjectés dans votre patrimoine.' },
+    ] } },
     { type: 'cta', content: {
       title: 'Parlons de votre fiscalité',
       subtitle: 'Vous souhaitez réduire vos impôts ? Investir intelligemment ? Structurer votre patrimoine de manière éthique et durable ?',

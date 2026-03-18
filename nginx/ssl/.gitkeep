@@ -1,0 +1,6 @@
+# SSL certificates are generated on the server via certbot (Let's Encrypt)
+# They are NOT committed to git.
+# On the AWS server, run:
+#   sudo certbot certonly --standalone -d amana-patrimoine.fr -d www.amana-patrimoine.fr
+#   sudo cp /etc/letsencrypt/live/amana-patrimoine.fr/fullchain.pem ./nginx/ssl/
+#   sudo cp /etc/letsencrypt/live/amana-patrimoine.fr/privkey.pem ./nginx/ssl/

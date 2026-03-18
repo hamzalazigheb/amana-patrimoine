@@ -2,7 +2,7 @@ import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import BlockRenderer from '../../components/BlockRenderer';
 import { getPageBySlug } from '../../lib/cms';
-import { buildMetadata, buildBreadcrumbJsonLd, buildServiceJsonLd } from '../../lib/seo';
+import { buildMetadata, buildBreadcrumbJsonLd, buildServiceJsonLd, buildFaqJsonLd } from '../../lib/seo';
 
 export const dynamic = 'force-dynamic';
 
@@ -11,21 +11,25 @@ export async function generateMetadata() {
     return buildMetadata(
         page,
         'strategie',
-        'Stratégie Patrimoniale Personnalisée',
-        'Définissez votre stratégie patrimoniale sur mesure avec Amana Patrimoine. Audit, objectifs, allocation d\'actifs conforme à la finance islamique.'
+        'Stratégie Patrimoniale Islamique : Gestion de Patrimoine Halal',
+        'Construisez une stratégie patrimoniale conforme à la finance islamique : bilan patrimonial, investissements halal, transmission, retraite. CGP indépendant Paris.'
     );
 }
 
 export default async function StrategiePage() {
     const page = await getPageBySlug('strategie');
 
-    const breadcrumb = buildBreadcrumbJsonLd([{ name: 'Stratégie patrimoniale', slug: 'strategie' }]);
-    const service = buildServiceJsonLd('Stratégie Patrimoniale', 'Conseil en stratégie patrimoniale personnalisée et conforme à la finance islamique.', 'strategie');
+    const breadcrumb = buildBreadcrumbJsonLd([{ name: 'Stratégie patrimoniale islamique', slug: 'strategie' }]);
+    const service = buildServiceJsonLd('Stratégie Patrimoniale Islamique', 'Conseil en stratégie patrimoniale personnalisée et conforme à la finance islamique : bilan, investissements halal, transmission.', 'strategie');
+
+    const faqBlock = page?.blocks?.find(b => b.type === 'faq');
+    const faqJsonLd = faqBlock ? buildFaqJsonLd(faqBlock.content?.items) : null;
 
     return (
         <>
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumb) }} />
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(service) }} />
+            {faqJsonLd && <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }} />}
             <Header />
             <main id="main-content">
                 {page ? (

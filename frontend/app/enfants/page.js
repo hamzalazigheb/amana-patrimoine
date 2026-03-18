@@ -3,7 +3,7 @@ import Footer from '../../components/Footer';
 import BlockRenderer from '../../components/BlockRenderer';
 import EnfantsSimulator from '../../components/EnfantsSimulator';
 import { getPageBySlug } from '../../lib/cms';
-import { buildMetadata, buildBreadcrumbJsonLd, buildServiceJsonLd } from '../../lib/seo';
+import { buildMetadata, buildBreadcrumbJsonLd, buildServiceJsonLd, buildFaqJsonLd } from '../../lib/seo';
 
 export const dynamic = 'force-dynamic';
 
@@ -12,16 +12,19 @@ export async function generateMetadata() {
     return buildMetadata(
         page,
         'enfants',
-        'Financer les Études de ses Enfants - Épargne Enfant Conforme',
-        'Anticipez les besoins futurs de vos enfants : études, permis, logement. Épargne éthique et conforme à la finance islamique à Paris.'
+        'Épargne Enfants Halal : Financer les Études sans Riba',
+        'Préparez les études de vos enfants avec une épargne halal : assurance-vie islamique, SCPI conformes, épargne programmée sans intérêt. Conseil expert Paris.'
     );
 }
 
 export default async function EnfantsPage() {
     const page = await getPageBySlug('enfants');
 
-    const breadcrumb = buildBreadcrumbJsonLd([{ name: 'Avenir des enfants', slug: 'enfants' }]);
-    const service = buildServiceJsonLd('Épargne Enfants', 'Conseil en épargne pour les études et l\'avenir des enfants, conforme à la finance islamique.', 'enfants');
+    const breadcrumb = buildBreadcrumbJsonLd([{ name: 'Épargne enfants halal', slug: 'enfants' }]);
+    const service = buildServiceJsonLd('Épargne Enfants Halal', 'Conseil en épargne halal pour financer les études des enfants sans riba, conforme à la finance islamique.', 'enfants');
+
+    const faqBlock = page?.blocks?.find(b => b.type === 'faq');
+    const faqJsonLd = faqBlock ? buildFaqJsonLd(faqBlock.content?.items) : null;
 
     if (!page) {
         return (
@@ -46,6 +49,7 @@ export default async function EnfantsPage() {
         <>
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumb) }} />
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(service) }} />
+            {faqJsonLd && <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }} />}
             <Header />
             <main id="main-content">
                 <BlockRenderer blocks={blocksBefore} />

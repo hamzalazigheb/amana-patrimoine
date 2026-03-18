@@ -3,7 +3,7 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
@@ -34,10 +34,13 @@ model Block {
   pageId    String   @map("page_id")
   type      String
   order     Int      @default(0)
-  content   String   @default("{}")
+  content   String   @default("{}")  // kept as String for compatibility with existing code
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
   page      Page     @relation(fields: [pageId], references: [id], onDelete: Cascade)
+
+  @@index([pageId])
+  @@index([pageId, order])
 }
 
 model Media {

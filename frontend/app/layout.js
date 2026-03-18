@@ -1,5 +1,6 @@
 import './globals.css';
 import { Playfair_Display, Inter } from 'next/font/google';
+import WhatsAppFab from '../components/WhatsAppFab';
 
 const playfair = Playfair_Display({
     subsets: ['latin'],
@@ -81,34 +82,88 @@ export const metadata = {
 const organizationJsonLd = {
     '@context': 'https://schema.org',
     '@type': 'FinancialService',
+    '@id': `${SITE_URL}/#organization`,
     name: 'Amana Patrimoine',
+    alternateName: 'Amana Patrimoine - Finance Islamique',
     url: SITE_URL,
-    logo: `${SITE_URL}/1amanap-patrimoine.svg`,
-    description: 'Cabinet de conseil en gestion de patrimoine indépendant, spécialisé en finance islamique. Investissement, retraite, transmission.',
+    logo: {
+        '@type': 'ImageObject',
+        url: `${SITE_URL}/1amanap-patrimoine.svg`,
+        width: 200,
+        height: 60,
+    },
+    image: `${SITE_URL}/logo10.png`,
+    description: 'Cabinet de conseil en gestion de patrimoine indépendant, spécialisé en finance islamique. Investissement halal, retraite islamique, SCPI halal, transmission. Paris et Île-de-France.',
     address: {
         '@type': 'PostalAddress',
         addressLocality: 'Paris',
         addressRegion: 'Île-de-France',
+        postalCode: '75000',
         addressCountry: 'FR',
     },
     telephone: '+33189700000',
     email: 'contact@amana-patrimoine.fr',
-    areaServed: {
-        '@type': 'GeoCircle',
-        geoMidpoint: { '@type': 'GeoCoordinates', latitude: 48.8566, longitude: 2.3522 },
-        geoRadius: '50000',
-    },
+    areaServed: [
+        { '@type': 'City', name: 'Paris' },
+        { '@type': 'AdministrativeArea', name: 'Île-de-France' },
+        { '@type': 'Country', name: 'France' },
+    ],
     priceRange: '€€',
+    currenciesAccepted: 'EUR',
+    paymentAccepted: 'Virement bancaire, chèque',
+    openingHours: 'Mo-Fr 09:00-18:00',
+    sameAs: [
+        'https://www.linkedin.com/company/amana-patrimoine',
+    ],
     knowsAbout: [
-        'Gestion de patrimoine',
         'Finance islamique',
         'Investissement halal',
-        'SCPI',
-        'Assurance-vie',
-        'Préparation retraite',
-        'Transmission de patrimoine',
+        'Placements halal',
+        'SCPI halal',
+        'PER halal',
+        'Assurance-vie islamique',
+        'Retraite islamique',
+        'Succession islamique',
+        'Gestion de patrimoine',
+        'Bilan patrimonial',
         'Optimisation fiscale',
+        'Transmission de patrimoine',
+        'Zakat',
     ],
+    hasOfferCatalog: {
+        '@type': 'OfferCatalog',
+        name: 'Services de gestion de patrimoine islamique',
+        itemListElement: [
+            { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Investissement halal', url: `${SITE_URL}/investissement` } },
+            { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Immobilier islamique & SCPI halal', url: `${SITE_URL}/immobilier` } },
+            { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Retraite islamique & PER halal', url: `${SITE_URL}/retraite` } },
+            { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Transmission & succession islamique', url: `${SITE_URL}/succession` } },
+            { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Optimisation fiscale', url: `${SITE_URL}/reduire-impots` } },
+            { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Épargne enfants halal', url: `${SITE_URL}/enfants` } },
+        ],
+    },
+};
+
+const founderPersonJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Person',
+    '@id': `${SITE_URL}/#founder`,
+    name: 'Amana Patrimoine',
+    jobTitle: 'Conseiller en Gestion de Patrimoine',
+    worksFor: {
+        '@type': 'FinancialService',
+        '@id': `${SITE_URL}/#organization`,
+        name: 'Amana Patrimoine',
+    },
+    knowsAbout: [
+        'Finance islamique',
+        'Gestion de patrimoine',
+        'Investissement halal',
+        'Planification retraite',
+        'Transmission de patrimoine',
+    ],
+    url: `${SITE_URL}/qui-sommes-nous`,
+    image: `${SITE_URL}/logo10.png`,
 };
 
 const websiteJsonLd = {
@@ -133,10 +188,15 @@ export default function RootLayout({ children }) {
                     type="application/ld+json"
                     dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
                 />
+                <script
+                    type="application/ld+json"
+                    dangerouslySetInnerHTML={{ __html: JSON.stringify(founderPersonJsonLd) }}
+                />
             </head>
             <body>
                 <a href="#main-content" className="skip-to-content">Aller au contenu principal</a>
                 {children}
+                <WhatsAppFab />
             </body>
         </html>
     );

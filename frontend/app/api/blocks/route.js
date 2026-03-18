@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { prisma } from '@/lib/db';
+import prisma from '@/lib/db';
 import { requireAdmin } from '@/lib/auth-guard';
 
 export async function POST(request) {
@@ -18,6 +18,7 @@ export async function POST(request) {
     });
     return NextResponse.json({ ...block, content: JSON.parse(block.content) }, { status: 201 });
   } catch (error) {
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    console.error('Block create error:', error);
+    return NextResponse.json({ error: 'Erreur lors de la création du bloc' }, { status: 500 });
   }
 }

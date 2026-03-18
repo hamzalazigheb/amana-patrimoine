@@ -1,8 +1,11 @@
 import { NextResponse } from 'next/server';
-import { prisma } from '@/lib/db';
+import prisma from '@/lib/db';
 import { requireAdmin } from '@/lib/auth-guard';
 
 export async function GET() {
+  const { error } = await requireAdmin();
+  if (error) return error;
+
   try {
     const rows = await prisma.globalSetting.findMany();
     const settings = {};
@@ -10,8 +13,8 @@ export async function GET() {
       try { settings[row.key] = JSON.parse(row.value); } catch { settings[row.key] = row.value; }
     }
     return NextResponse.json(settings);
-  } catch (error) {
-    return NextResponse.json({ error: error.message }, { status: 500 });
+  } catch {
+    return NextResponse.json({ error: 'Erreur lors de la récupération des paramètres' }, { status: 500 });
   }
 }
 
@@ -34,6 +37,7 @@ export async function PUT(request) {
 
     return NextResponse.json({ success: true, updated: results.length });
   } catch (error) {
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    console.error('Settings update error:', error);
+    return NextResponse.json({ error: 'Erreur lors de la mise à jour' }, { status: 500 });
   }
 }

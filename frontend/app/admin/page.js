@@ -10,6 +10,7 @@ import MethodologyEditor from '@/components/admin/blocks/MethodologyEditor';
 import EducationEditor from '@/components/admin/blocks/EducationEditor';
 import PartnersEditor from '@/components/admin/blocks/PartnersEditor';
 import CTAEditor from '@/components/admin/blocks/CTAEditor';
+import FAQEditor from '@/components/admin/blocks/FAQEditor';
 
 const BLOCK_LABELS = {
   hero: 'Hero (bannière principale)',
@@ -51,6 +52,8 @@ function getBlockEditor(type) {
       return PartnersEditor;
     case 'cta':
       return CTAEditor;
+    case 'faq':
+      return FAQEditor;
     default:
       return null;
   }
@@ -319,6 +322,13 @@ export default function AdminDashboard() {
   const [loading, setLoading] = useState(true);
   const [editingPage, setEditingPage] = useState(null);
   const [showSettings, setShowSettings] = useState(false);
+  const [activeSection, setActiveSection] = useState('pages'); // 'pages' | 'blog' | 'visibility'
+  const [showNewArticle, setShowNewArticle] = useState(false);
+  const [newArticleForm, setNewArticleForm] = useState({ slug: '', title: '', description: '' });
+  const [newArticleError, setNewArticleError] = useState('');
+  const [features, setFeatures] = useState({ simulateurs_visible: true });
+  const [featureSaving, setFeatureSaving] = useState(false);
+  const [featureMsg, setFeatureMsg] = useState('');
   const router = useRouter();
 
   const fetchPages = useCallback(async () => {
@@ -337,6 +347,8 @@ export default function AdminDashboard() {
         const data = await res.json();
         setUser(data.user);
         await fetchPages();
+        const fr = await fetch('/api/public/features');
+        if (fr.ok) setFeatures(await fr.json());
       } catch {
         router.push('/admin/login');
       } finally {
@@ -346,9 +358,66 @@ export default function AdminDashboard() {
     checkAuth();
   }, [router, fetchPages]);
 
+  const toggleFeature = async (key) => {
+    const newVal = !features[key];
+    setFeatureSaving(true);
+    setFeatureMsg('');
+    try {
+      const res = await fetch('/api/admin/settings', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ [key]: newVal }),
+      });
+      if (!res.ok) throw new Error();
+      setFeatures((prev) => ({ ...prev, [key]: newVal }));
+      setFeatureMsg('Sauvegardé !');
+      setTimeout(() => setFeatureMsg(''), 2500);
+    } catch {
+      setFeatureMsg('Erreur de sauvegarde');
+    } finally {
+      setFeatureSaving(false);
+    }
+  };
+
   const handleLogout = async () => {
     await fetch('/api/auth/logout', { method: 'POST' });
     router.push('/admin/login');
+  };
+
+  const deleteArticle = async (id, e) => {
+    e.stopPropagation();
+    if (!confirm('Supprimer cet article définitivement ?')) return;
+    await fetch(`/api/pages/${id}`, { method: 'DELETE' });
+    await fetchPages();
+  };
+
+  const togglePublishArticle = async (article, e) => {
+    e.stopPropagation();
+    await fetch(`/api/pages/${article.id}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ ...article, published: !article.published }),
+    });
+    await fetchPages();
+  };
+
+  const handleCreateArticle = async (e) => {
+    e.preventDefault();
+    setNewArticleError('');
+    const slug = `blog/${newArticleForm.slug.replace(/^blog\//, '').trim()}`;
+    const res = await fetch('/api/pages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ slug, title: newArticleForm.title, description: newArticleForm.description, keywords: '' }),
+    });
+    if (res.ok) {
+      setShowNewArticle(false);
+      setNewArticleForm({ slug: '', title: '', description: '' });
+      await fetchPages();
+    } else {
+      const data = await res.json();
+      setNewArticleError(data.error || 'Erreur lors de la création');
+    }
   };
 
   if (loading) {
@@ -390,13 +459,29 @@ export default function AdminDashboard() {
         </div>
 
         <nav className="admin-sidebar-nav">
-          <button className="admin-nav-item active">
-            <span className="admin-nav-icon">📄</span>
-            <span>Pages</span>
+          <div className="admin-nav-group-label">Contenu</div>
+          <button
+            className={`admin-nav-item ${activeSection === 'pages' ? 'active' : ''}`}
+            onClick={() => { setActiveSection('pages'); setShowSettings(false); }}
+          >
+            Pages du site
           </button>
-          <button className="admin-nav-item" onClick={() => setShowSettings(true)}>
-            <span className="admin-nav-icon">⚙️</span>
-            <span>Paramètres</span>
+          <button
+            className={`admin-nav-item ${activeSection === 'blog' ? 'active' : ''}`}
+            onClick={() => { setActiveSection('blog'); setShowSettings(false); }}
+          >
+            Articles de blog
+            <span className="admin-nav-badge">{pages.filter(p => p.slug.startsWith('blog/')).length}</span>
+          </button>
+          <div className="admin-nav-group-label">Configuration</div>
+          <button
+            className={`admin-nav-item ${activeSection === 'visibility' ? 'active' : ''}`}
+            onClick={() => { setActiveSection('visibility'); setShowSettings(false); }}
+          >
+            Visibilité
+          </button>
+          <button className={`admin-nav-item ${showSettings ? 'active' : ''}`} onClick={() => { setShowSettings(true); setActiveSection(null); }}>
+            Paramètres globaux
           </button>
         </nav>
 
@@ -413,30 +498,184 @@ export default function AdminDashboard() {
       </aside>
 
       <main className="admin-main">
-        <div className="admin-topbar">
-          <h1>Gestion des pages</h1>
-          <a href="/" target="_blank" rel="noopener noreferrer" className="admin-btn-outline">
-            Voir le site →
-          </a>
-        </div>
+        {activeSection === 'pages' && (
+          <>
+            <div className="admin-topbar">
+              <h1>Gestion des pages</h1>
+              <a href="/" target="_blank" rel="noopener noreferrer" className="admin-btn-outline">
+                Voir le site →
+              </a>
+            </div>
+            <div className="admin-pages-grid">
+              {pages.filter(p => !p.slug.startsWith('blog/')).map((page) => (
+                <div key={page.id} className="admin-page-card" onClick={() => setEditingPage(page)}>
+                  <div className="admin-page-card-header">
+                    <span className={`admin-status ${page.published ? 'published' : 'draft'}`}>
+                      {page.published ? 'Publié' : 'Brouillon'}
+                    </span>
+                    <span className="admin-page-blocks">{page.blocks?.length || 0} blocs</span>
+                  </div>
+                  <h3 className="admin-page-slug">/{page.slug}</h3>
+                  <p className="admin-page-title">{page.title}</p>
+                  <div className="admin-page-card-footer">
+                    Modifié le {new Date(page.updatedAt).toLocaleDateString('fr-FR')}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </>
+        )}
 
-        <div className="admin-pages-grid">
-          {pages.map((page) => (
-            <div key={page.id} className="admin-page-card" onClick={() => setEditingPage(page)}>
-              <div className="admin-page-card-header">
-                <span className={`admin-status ${page.published ? 'published' : 'draft'}`}>
-                  {page.published ? 'Publié' : 'Brouillon'}
-                </span>
-                <span className="admin-page-blocks">{page.blocks?.length || 0} blocs</span>
-              </div>
-              <h3 className="admin-page-slug">/{page.slug}</h3>
-              <p className="admin-page-title">{page.title}</p>
-              <div className="admin-page-card-footer">
-                Modifié le {new Date(page.updatedAt).toLocaleDateString('fr-FR')}
+        {activeSection === 'visibility' && (
+          <>
+            <div className="admin-topbar">
+              <h1>Visibilité des pages</h1>
+              {featureMsg && <span style={{ fontSize: '0.875rem', color: featureMsg.includes('Erreur') ? '#dc3545' : '#28a745', fontWeight: 500 }}>{featureMsg}</span>}
+            </div>
+            <div className="admin-card">
+              <p style={{ color: 'var(--admin-text-muted)', fontSize: '0.875rem', marginBottom: '24px' }}>
+                Activez ou désactivez des pages depuis la navigation du site. Les pages restent accessibles via leur URL directe.
+              </p>
+              <div className="admin-feature-list">
+                <div className="admin-feature-row">
+                  <div className="admin-feature-info">
+                    <div className="admin-feature-name">Simulateurs</div>
+                    <div className="admin-feature-desc">Page calculateur Zakat — lien dans le menu &quot;Ressources&quot;</div>
+                    <code className="admin-feature-url">/simulateurs</code>
+                  </div>
+                  <button
+                    className={`admin-toggle ${features.simulateurs_visible ? 'on' : 'off'}`}
+                    onClick={() => toggleFeature('simulateurs_visible')}
+                    disabled={featureSaving}
+                    aria-label="Activer/désactiver Simulateurs"
+                  >
+                    <span className="admin-toggle-thumb" />
+                    <span className="admin-toggle-label">{features.simulateurs_visible ? 'Visible' : 'Masqué'}</span>
+                  </button>
+                </div>
               </div>
             </div>
-          ))}
-        </div>
+          </>
+        )}
+
+        {activeSection === 'blog' && (
+          <>
+            <div className="admin-topbar">
+              <h1>Articles de blog</h1>
+              <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
+                <a href="/blog" target="_blank" rel="noopener noreferrer" className="admin-btn-outline">
+                  Voir le blog →
+                </a>
+                <button className="admin-btn-primary" onClick={() => setShowNewArticle(!showNewArticle)}>
+                  + Nouvel article
+                </button>
+              </div>
+            </div>
+
+            {showNewArticle && (
+              <div className="admin-card" style={{ marginBottom: '24px' }}>
+                <h3 style={{ marginBottom: '16px', fontSize: '1rem', fontWeight: 600 }}>Créer un nouvel article</h3>
+                {newArticleError && <div className="admin-alert admin-alert-error" style={{ marginBottom: '12px' }}>{newArticleError}</div>}
+                <form onSubmit={handleCreateArticle}>
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px', marginBottom: '16px' }}>
+                    <div className="admin-field">
+                      <label className="admin-field-label">Slug de l&apos;article</label>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                        <span style={{ color: 'var(--admin-text-muted)', fontSize: '0.875rem', whiteSpace: 'nowrap' }}>blog/</span>
+                        <input
+                          className="admin-field-input"
+                          value={newArticleForm.slug}
+                          onChange={(e) => setNewArticleForm({ ...newArticleForm, slug: e.target.value.toLowerCase().replace(/\s+/g, '-') })}
+                          placeholder="mon-article-de-blog"
+                          required
+                        />
+                      </div>
+                    </div>
+                    <div className="admin-field">
+                      <label className="admin-field-label">Titre SEO</label>
+                      <input
+                        className="admin-field-input"
+                        value={newArticleForm.title}
+                        onChange={(e) => setNewArticleForm({ ...newArticleForm, title: e.target.value })}
+                        placeholder="Titre de l'article"
+                        required
+                      />
+                    </div>
+                  </div>
+                  <div className="admin-field" style={{ marginBottom: '16px' }}>
+                    <label className="admin-field-label">Description / extrait</label>
+                    <textarea
+                      className="admin-field-textarea"
+                      style={{ minHeight: '64px' }}
+                      value={newArticleForm.description}
+                      onChange={(e) => setNewArticleForm({ ...newArticleForm, description: e.target.value })}
+                      placeholder="Courte description pour les moteurs de recherche et l'aperçu de la carte"
+                    />
+                  </div>
+                  <div style={{ display: 'flex', gap: '12px' }}>
+                    <button type="submit" className="admin-btn-primary">Créer l&apos;article</button>
+                    <button type="button" className="admin-btn-outline" onClick={() => { setShowNewArticle(false); setNewArticleError(''); }}>Annuler</button>
+                  </div>
+                </form>
+              </div>
+            )}
+
+            {pages.filter(p => p.slug.startsWith('blog/')).length === 0 ? (
+              <div className="admin-card" style={{ textAlign: 'center', padding: '48px', color: 'var(--admin-text-muted)' }}>
+                <div style={{ fontSize: '2rem', marginBottom: '12px' }}>✍️</div>
+                <p>Aucun article de blog pour l&apos;instant.</p>
+                <button className="admin-btn-primary" style={{ marginTop: '16px' }} onClick={() => setShowNewArticle(true)}>
+                  Créer le premier article
+                </button>
+              </div>
+            ) : (
+              <div className="admin-blog-list">
+                {pages.filter(p => p.slug.startsWith('blog/')).map((article) => (
+                  <div key={article.id} className="admin-blog-row">
+                    <div className="admin-blog-row-main">
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '6px' }}>
+                        <span className={`admin-status ${article.published ? 'published' : 'draft'}`}>
+                          {article.published ? 'Publié' : 'Brouillon'}
+                        </span>
+                        <code style={{ fontSize: '0.72rem', color: 'var(--admin-text-muted)' }}>/{article.slug}</code>
+                        <span style={{ fontSize: '0.72rem', color: 'var(--admin-text-muted)', marginLeft: 'auto' }}>
+                          Modifié le {new Date(article.updatedAt).toLocaleDateString('fr-FR')} · {article.blocks?.length || 0} blocs
+                        </span>
+                      </div>
+                      <h3 className="admin-blog-row-title">{article.title}</h3>
+                      {article.description && (
+                        <p className="admin-blog-row-desc">{article.description}</p>
+                      )}
+                    </div>
+                    <div className="admin-blog-row-actions">
+                      <button
+                        className="admin-row-btn"
+                        onClick={() => setEditingPage(article)}
+                        title="Éditer le contenu"
+                      >
+                        Éditer
+                      </button>
+                      <button
+                        className={`admin-row-btn ${article.published ? 'admin-row-btn-warn' : 'admin-row-btn-success'}`}
+                        onClick={(e) => togglePublishArticle(article, e)}
+                        title={article.published ? 'Dépublier' : 'Publier'}
+                      >
+                        {article.published ? 'Dépublier' : 'Publier'}
+                      </button>
+                      <button
+                        className="admin-row-btn admin-row-btn-danger"
+                        onClick={(e) => deleteArticle(article.id, e)}
+                        title="Supprimer l'article"
+                      >
+                        Supprimer
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </>
+        )}
       </main>
     </div>
   );

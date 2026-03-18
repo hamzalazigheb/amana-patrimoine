@@ -2,7 +2,7 @@ import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import BlockRenderer from '../../components/BlockRenderer';
 import { getPageBySlug } from '../../lib/cms';
-import { buildMetadata, buildBreadcrumbJsonLd, buildServiceJsonLd } from '../../lib/seo';
+import { buildMetadata, buildBreadcrumbJsonLd, buildServiceJsonLd, buildFaqJsonLd } from '../../lib/seo';
 
 export const dynamic = 'force-dynamic';
 
@@ -11,21 +11,25 @@ export async function generateMetadata() {
     return buildMetadata(
         page,
         'reduire-impots',
-        'Réduire ses Impôts - Optimisation Fiscale Particulier',
-        'Optimisez votre fiscalité personnelle de manière légale et conforme à la finance islamique. Conseil en défiscalisation à Paris.'
+        'Réduire ses Impôts Légalement & Éthiquement',
+        'Optimisez votre fiscalité avec des solutions légales et conformes à la finance islamique : PER, assurance-vie, immobilier, transmission. Conseil CGP indépendant Paris.'
     );
 }
 
 export default async function ReduireImpotsPage() {
     const page = await getPageBySlug('reduire-impots');
 
-    const breadcrumb = buildBreadcrumbJsonLd([{ name: 'Optimiser ma fiscalité', slug: 'reduire-impots' }]);
-    const service = buildServiceJsonLd('Optimisation Fiscale Particulier', 'Conseil en optimisation fiscale personnelle conforme à la finance islamique.', 'reduire-impots');
+    const breadcrumb = buildBreadcrumbJsonLd([{ name: 'Réduire mes impôts', slug: 'reduire-impots' }]);
+    const service = buildServiceJsonLd('Optimisation Fiscale', 'Conseil en optimisation fiscale légale et conforme à la finance islamique : PER, assurance-vie, immobilier.', 'reduire-impots');
+
+    const faqBlock = page?.blocks?.find(b => b.type === 'faq');
+    const faqJsonLd = faqBlock ? buildFaqJsonLd(faqBlock.content?.items) : null;
 
     return (
         <>
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumb) }} />
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(service) }} />
+            {faqJsonLd && <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }} />}
             <Header />
             <main id="main-content">
                 {page ? (

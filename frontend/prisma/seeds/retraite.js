@@ -2,13 +2,13 @@ const { createPage } = require('./_helpers');
 
 module.exports = async function seedRetraite(prisma) {
   await createPage(prisma, 'retraite', {
-    title: 'Préparer sa Retraite | Amana Patrimoine',
-    description: 'Préparez votre retraite avec des solutions conformes à la finance islamique. PER, SCPI, assurance-vie éthique.',
-    keywords: 'retraite, PER halal, complémentaire retraite, épargne retraite islamique, Paris',
+    title: 'Retraite Islamique & PER Halal : Préparez l\'Avenir sans Riba',
+    description: 'Préparez votre retraite islamique avec un PER halal, une SCPI conforme ou une assurance-vie éthique. Conseil CGP expert en finance islamique à Paris.',
+    keywords: 'retraite islamique, PER halal, retraite halal, épargne retraite islamique, PER finance islamique, Paris',
   }, [
     { type: 'pageHero', content: {
-      badge: 'Préparation Retraite',
-      title: 'Préparer sa retraite avec des solutions conformes à la finance islamique',
+      badge: 'Retraite Islamique & PER Halal',
+      title: 'Retraite islamique : préparez votre avenir avec un PER halal',
       subtitle: 'Le système de retraite par répartition ne suffira pas à maintenir votre niveau de vie. Pour les cadres, la baisse de revenus au moment du départ à la retraite peut atteindre 40 à 50%. Anticiper cette baisse en se constituant un complément de retraite, c\'est reprendre la main sur son avenir.',
       image: '/Site 29.png',
       ctaText: 'Prendre rendez-vous',
@@ -55,6 +55,8 @@ module.exports = async function seedRetraite(prisma) {
       ],
     } },
     { type: 'faq', content: { items: [
+      { question: 'Qu\'est-ce qu\'un PER halal ?', answer: 'Un PER halal est un Plan d\'Épargne Retraite dont les supports d\'investissement sont conformes à la finance islamique : fonds actions excluant les secteurs haram (alcool, armement, banques conventionnelles), SCPI sans dette bancaire, fonds obligataires de type sukuk. Ces supports sont audités par des comités charia (Shariah Board) reconnus. Chez Amana Patrimoine, nous sélectionnons uniquement des supports validés pour garantir la conformité de votre épargne retraite.' },
+      { question: 'Comment préparer sa retraite islamique en France ?', answer: 'Plusieurs outils permettent de préparer une retraite islamique en France : le PER sur des fonds Shariah Compliant (avec déduction fiscale immédiate), les SCPI conformes (revenus immobiliers sans riba), l\'assurance-vie sur des unités de compte éthiques. Chez Amana Patrimoine, nous construisons une stratégie retraite personnalisée qui combine ces supports en respectant vos convictions religieuses.' },
       { question: 'Qu\'est-ce qui rend un PER éthique ?', answer: 'Un PER est considéré comme éthique quand il investit uniquement sur des supports conformes à la finance islamique : fonds actions excluant les secteurs interdits, SCPI sans dette bancaire, obligations sukuk. Ces supports sont validés par des comités charia (Shariah Board) qui vérifient la conformité des investissements et des contrats. Tous nos PER respectent ces critères et sont audités par des experts en finance islamique.' },
       { question: 'Puis-je retirer mon capital avant la retraite ?', answer: 'Cela dépend du support. Le PER bloque le capital jusqu\'à la retraite, sauf pour l\'achat de la résidence principale ou en cas d\'accident de la vie (invalidité, décès du conjoint, surendettement, expiration des droits au chômage). L\'assurance-vie, elle, est totalement liquide : vous pouvez retirer votre argent à tout moment, sans condition.' },
       { question: 'L\'avantage fiscal du PER est-il immédiat ?', answer: 'Oui, absolument. Les versements effectués en 2025 sont déductibles de vos revenus imposables déclarés en 2026. Si vous versez 10 000 € et que vous êtes dans la tranche à 30%, vous économisez 3 000 € d\'impôt dès l\'année suivante.' },

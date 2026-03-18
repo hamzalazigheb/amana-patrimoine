@@ -2,13 +2,13 @@ const { createPage } = require('./_helpers');
 
 module.exports = async function seedStrategie(prisma) {
   await createPage(prisma, 'strategie', {
-    title: 'Construire sa Stratégie Patrimoniale | Amana Patrimoine',
-    description: 'Construisez une stratégie patrimoniale cohérente, durable et personnalisée, en parfaite adéquation avec vos aspirations.',
-    keywords: 'stratégie patrimoniale, gestion patrimoine, bilan patrimonial, conseil patrimoine Paris',
+    title: 'Stratégie Patrimoniale Islamique : Gestion de Patrimoine Halal',
+    description: 'Construisez une stratégie patrimoniale conforme à la finance islamique : bilan patrimonial, investissements halal, transmission, retraite. CGP indépendant Paris.',
+    keywords: 'stratégie patrimoniale islamique, gestion de patrimoine halal, bilan patrimonial, conseil patrimoine finance islamique, Paris',
   }, [
     { type: 'pageHero', content: {
-      badge: 'Stratégie Patrimoniale',
-      title: 'Construire sa stratégie patrimoniale : une vision globale pour un avenir maîtrisé',
+      badge: 'Stratégie Patrimoniale Islamique',
+      title: 'Stratégie patrimoniale islamique : construire une vision globale de votre patrimoine',
       subtitle: 'Votre patrimoine mérite mieux qu\'une série de produits empilés au hasard. Construire une stratégie patrimoniale, c\'est organiser ses finances de manière cohérente, durable et personnalisée, en fonction de ses objectifs de vie. Chez Amana Patrimoine, nous pensons que la bonne stratégie n\'est ni celle du banquier ni celle du voisin, mais celle qui respecte votre histoire, vos valeurs et vos ambitions.',
       image: '/bureau-amana.jpeg',
       ctaText: 'Prendre rendez-vous',
@@ -51,6 +51,11 @@ module.exports = async function seedStrategie(prisma) {
         { profile: 'Retraité avec capital à placer', solutions: 'SCPI, assurance-vie, gestion prudente' },
       ],
     } },
+    { type: 'faq', content: { items: [
+      { question: 'Qu\'est-ce qu\'une stratégie patrimoniale islamique ?', answer: 'Une stratégie patrimoniale islamique est une approche globale de gestion de patrimoine qui respecte les principes de la finance islamique : absence d\'intérêt (riba), exclusion des secteurs haram, adossement à des actifs réels. Elle couvre l\'investissement (SCPI halal, fonds Shariah Compliant), la retraite (PER éthique), la protection de la famille (assurance-vie islamique), et la transmission. Chez Amana Patrimoine, nous construisons une stratégie complète et personnalisée, conforme à vos convictions.' },
+      { question: 'Pourquoi faire un bilan patrimonial ?', answer: 'Le bilan patrimonial est la première étape indispensable pour construire une stratégie efficace. Il permet d\'identifier vos actifs (immobilier, épargne, entreprise), vos dettes et engagements, votre imposition actuelle, vos objectifs à court, moyen et long terme. Chez Amana Patrimoine, ce bilan est gratuit lors du premier rendez-vous.' },
+      { question: 'Comment gérer son patrimoine quand on est musulman en France ?', answer: 'Gérer son patrimoine en tant que musulman en France est tout à fait possible avec les bons outils. Plusieurs solutions conformes sont disponibles : SCPI halal (immobilier sans riba), PER sur fonds screentés, assurance-vie sur unités de compte éthiques, fonds actions Shariah Compliant. Il est également important d\'anticiper la succession selon les règles islamiques et de calculer la Zakat sur son patrimoine. Amana Patrimoine vous accompagne sur tous ces sujets.' },
+    ] } },
     { type: 'reassurance', content: { items: [
       { title: 'Conseil expert', description: 'Accompagnement par nos experts patrimoniaux et financiers.' },
       { title: 'Sur-mesure', description: 'Un suivi personnalisé pour atteindre vos objectifs.' },

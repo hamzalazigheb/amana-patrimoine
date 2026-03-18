@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { prisma } from '@/lib/db';
+import prisma from '@/lib/db';
 import { requireAdmin } from '@/lib/auth-guard';
 import { unlink } from 'fs/promises';
 import path from 'path';

@@ -2,7 +2,7 @@ const { createPage } = require('./_helpers');
 
 module.exports = async function seedHome(prisma) {
   await createPage(prisma, 'home', {
-    title: 'Amana Patrimoine - Conseil en Gestion de Patrimoine et Finance Islamique | Paris',
+    title: 'Conseil en Gestion de Patrimoine & Finance Islamique | Paris',
     description: 'Cabinet de conseil en gestion de patrimoine indépendant, spécialisé en finance islamique. Investissement, retraite, transmission. Paris et Île-de-France.',
     keywords: 'gestion patrimoine, conseil patrimonial, finance islamique, investissement halal, SCPI halal, PER conforme, Paris',
   }, [

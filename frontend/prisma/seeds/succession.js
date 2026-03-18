@@ -2,7 +2,7 @@ const { createPage } = require('./_helpers');
 
 module.exports = async function seedSuccession(prisma) {
   await createPage(prisma, 'succession', {
-    title: 'Préparer sa Succession | Amana Patrimoine',
+    title: 'Préparer sa Succession - Transmission de Patrimoine Islamique',
     description: 'Transmission de patrimoine : donation, assurance-vie, démembrement, testament. Accompagnement conforme à la finance islamique.',
     keywords: 'succession, transmission patrimoine, donation, démembrement, assurance-vie, testament, Paris',
   }, [

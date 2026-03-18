@@ -1,0 +1,36 @@
+version: '3.9'
+
+# ═══════════════════════════════════════════════════════
+# Amana Patrimoine — Local Development
+# Starts ONLY PostgreSQL — Next.js runs normally via npm run dev
+#
+# Usage:
+#   docker-compose -f docker-compose.dev.yml up -d
+#   Then set DATABASE_URL in frontend/.env (see below)
+#   Then: cd frontend && npx prisma db push && node prisma/seed.js
+# ═══════════════════════════════════════════════════════
+
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: amana_db_dev
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: amana_patrimoine
+      POSTGRES_USER: amana
+      POSTGRES_PASSWORD: amana_dev_local
+    ports:
+      # Exposed on localhost for local Next.js dev server
+      - "5432:5432"
+    volumes:
+      - postgres_dev_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U amana -d amana_patrimoine"]
+      interval: 5s
+      retries: 10
+
+volumes:
+  postgres_dev_data:
+
+# After running this, update frontend/.env:
+# DATABASE_URL="postgresql://amana:amana_dev_local@localhost:5432/amana_patrimoine"

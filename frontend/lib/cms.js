@@ -19,6 +19,14 @@ export async function getPageBySlug(slug) {
   };
 }
 
+export async function getBlogArticles() {
+  const pages = await prisma.page.findMany({
+    where: { published: true, slug: { startsWith: 'blog/' } },
+    orderBy: { createdAt: 'desc' },
+  });
+  return pages;
+}
+
 export async function getSettings() {
   const settings = await prisma.globalSetting.findMany();
   const obj = {};

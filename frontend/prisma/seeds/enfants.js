@@ -2,13 +2,13 @@ const { createPage } = require('./_helpers');
 
 module.exports = async function seedEnfants(prisma) {
   await createPage(prisma, 'enfants', {
-    title: 'Financer les Études de ses Enfants | Amana Patrimoine',
-    description: 'Anticipez les besoins futurs de vos enfants : études, permis, logement. Épargne éthique et conforme à la finance islamique.',
-    keywords: 'épargne enfants, études supérieures, assurance-vie mineur, finance islamique, Paris',
+    title: 'Épargne Enfants Halal : Financer les Études sans Riba',
+    description: 'Préparez les études de vos enfants avec une épargne halal : assurance-vie islamique, SCPI conformes, épargne programmée sans intérêt. Conseil expert Paris.',
+    keywords: 'épargne enfants halal, financer études enfants islam, assurance-vie mineur halal, épargne islamique enfants, Paris',
   }, [
     { type: 'pageHero', content: {
-      badge: 'Famille',
-      title: 'Financer les études de ses enfants : préparez leur avenir dès maintenant',
+      badge: 'Épargne Enfants Halal',
+      title: 'Épargne enfants halal : financer les études sans recourir au prêt à intérêt',
       subtitle: 'L\'arrivée d\'un enfant est une magnifique nouvelle. C\'est à la fois un cadeau et une responsabilité qui s\'offre aux parents. Prévoir en amont les dépenses à venir permet d\'ouvrir toutes les portes à son enfant. Les dépenses importantes que représentent les études, un échange universitaire à l\'étranger, le permis de conduire ou l\'acquisition d\'une première voiture s\'anticipent dès les premières années de vie de l\'enfant. Le prêt étudiant est souvent privilégié par les parents, mais cette solution est loin d\'être idéale. L\'enfant débutera sa vie endettée et passera ses premières années de travail à rembourser ce prêt. Fort heureusement, d\'autres solutions existent. Il faut cependant anticiper suffisamment tôt ces dépenses.',
       image: '/Site 30.png',
       ctaText: 'Prendre rendez-vous',
@@ -53,6 +53,7 @@ module.exports = async function seedEnfants(prisma) {
       ],
     } },
     { type: 'faq', content: { items: [
+      { question: 'Comment épargner pour les études de mon enfant en halal ?', answer: 'Pour constituer une épargne halal destinée aux études de votre enfant, plusieurs solutions conformes à la finance islamique sont disponibles : l\'assurance-vie au nom de l\'enfant investie sur des fonds Shariah Compliant, les SCPI conformes (sans dette bancaire), et l\'épargne programmée mensuelle sur des supports éthiques. L\'essentiel est d\'éviter tout produit générant des intérêts (riba). Chez Amana Patrimoine, nous vous guidons vers les solutions adaptées à votre capacité d\'épargne et à vos valeurs.' },
       { question: 'À quel âge ouvrir un contrat pour mon enfant ?', answer: 'Dès la naissance. Plus le contrat est ouvert tôt, plus vous bénéficiez de la puissance des intérêts composés et de l\'antériorité fiscale (notamment pour l\'assurance-vie après 8 ans). Un contrat ouvert à la naissance aura 18 ans d\'ancienneté au moment des études, ce qui offre une fiscalité très avantageuse.' },
       { question: 'Est-ce que l\'argent appartient à l\'enfant ?', answer: 'Oui, les fonds versés sur un contrat au nom d\'un mineur lui appartiennent. Toutefois, les parents en assurent la gestion légale jusqu\'à sa majorité. Il est possible d\'ajouter une clause de pacte adjoint pour encadrer l\'âge de mise à disposition des fonds (par exemple jusqu\'à 25 ans, le temps qu\'il termine ses études).' },
       { question: 'Comment garantir que l\'épargne est éthique ?', answer: 'Nous sélectionnons uniquement des supports certifiés Shariah Compliant ou ISR (Investissement Socialement Responsable) qui excluent les secteurs comme l\'armement, le tabac, l\'alcool ou la spéculation bancaire classique. Tous nos supports sont validés par des comités charia reconnus.' },

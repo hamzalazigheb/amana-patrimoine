@@ -2,13 +2,19 @@ const { createPage } = require('./_helpers');
 
 module.exports = async function seedQuiSommesNous(prisma) {
   await createPage(prisma, 'qui-sommes-nous', {
-    title: 'Qui sommes-nous | Amana Patrimoine',
-    description: 'Découvrez l\'équipe d\'Amana Patrimoine : des experts en gestion de patrimoine et finance islamique.',
-    keywords: 'Amana Patrimoine, équipe, Mohamed Mosbahi, Yanis Mahmoud, finance islamique, Paris',
+    title: 'Qui sommes-nous - Cabinet de Gestion de Patrimoine Islamique',
+    description: 'Découvrez l\'équipe d\'Amana Patrimoine : des experts en gestion de patrimoine et finance islamique à Paris. Mohamed Mosbahi et Yanis Mahmoud, vos conseillers CGP.',
+    keywords: 'Amana Patrimoine équipe, Mohamed Mosbahi, Yanis Mahmoud, CGP finance islamique, cabinet gestion patrimoine Paris',
   }, [
+    { type: 'pageHero', content: {
+      badge: 'Notre Cabinet',
+      title: 'Un cabinet indépendant au service de votre patrimoine',
+      subtitle: 'Amana Patrimoine est né d\'une conviction simple : chaque investisseur mérite un conseil honnête, transparent et en accord avec ses valeurs. Fondé par Mohamed Mosbahi et Yanis Mahmoud, notre cabinet accompagne les particuliers et entrepreneurs dans la construction d\'un patrimoine durable, performant et conforme aux principes de la finance islamique.',
+      image: '/bureau-amana.jpeg',
+      ctaText: 'Prendre rendez-vous',
+    } },
     { type: 'founders', content: {
       label: 'Nos Fondateurs',
-      background: '/Site 39.png',
       items: [
         {
           name: 'Mohamed Mosbahi',

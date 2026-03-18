@@ -5,14 +5,19 @@ const prisma = new PrismaClient();
 async function main() {
   console.log('Seeding database with ALL production content...\n');
 
-  // Admin user
-  const passwordHash = await bcrypt.hash('amana2025', 10);
-  await prisma.user.upsert({
-    where: { email: 'admin@amana-patrimoine.fr' },
-    update: {},
-    create: { email: 'admin@amana-patrimoine.fr', passwordHash, name: 'Admin', role: 'admin' },
-  });
-  console.log('✓ Admin user');
+  // Admin user — password read from ADMIN_PASSWORD env var
+  const adminPassword = process.env.ADMIN_PASSWORD;
+  if (!adminPassword) {
+    console.warn('⚠️  ADMIN_PASSWORD env var not set — skipping admin user upsert. Set it in .env before seeding.');
+  } else {
+    const passwordHash = await bcrypt.hash(adminPassword, 12);
+    await prisma.user.upsert({
+      where: { email: 'admin@amana-patrimoine.fr' },
+      update: { passwordHash },
+      create: { email: 'admin@amana-patrimoine.fr', passwordHash, name: 'Admin', role: 'admin' },
+    });
+    console.log('✓ Admin user created/updated');
+  }
 
   // Global settings
   const settings = {
@@ -28,6 +33,7 @@ async function main() {
     contact_email: 'contact@amana-patrimoine.fr',
     contact_address: 'Paris et Île-de-France',
     calendly_url: 'https://calendly.com/amana-patrimoine/30min',
+    simulateurs_visible: 'true',
   };
   for (const [key, value] of Object.entries(settings)) {
     await prisma.globalSetting.upsert({
@@ -51,6 +57,17 @@ async function main() {
     require('./seeds/reduire-impots-entreprise'),
     require('./seeds/qui-sommes-nous'),
     require('./seeds/mentions-legales'),
+    // Phase 3 — Nouvelles pages SEO
+    require('./seeds/finance-islamique'),
+    require('./seeds/scpi-halal'),
+    require('./seeds/assurance-vie-islamique'),
+    require('./seeds/zakat'),
+    require('./seeds/lexique'),
+    require('./seeds/bilan-patrimonial'),
+    // Phase 4 — Blog
+    require('./seeds/blog-guide-investissement-halal'),
+    require('./seeds/blog-per-halal-retraite'),
+    require('./seeds/blog-zakat-patrimoine'),
   ];
 
   for (const seedPage of pages) {
@@ -58,7 +75,7 @@ async function main() {
   }
 
   console.log('\n✅ Seed complete! ALL production content imported.');
-  console.log('Login: admin@amana-patrimoine.fr / amana2025');
+  console.log('Login: admin@amana-patrimoine.fr — password is the value you set in ADMIN_PASSWORD env var.');
 }
 
 main()

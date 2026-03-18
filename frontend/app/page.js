@@ -11,7 +11,7 @@ export async function generateMetadata() {
     return buildMetadata(
         page,
         'home',
-        'Amana Patrimoine - Conseil en Gestion de Patrimoine et Finance Islamique | Paris',
+        'Conseil en Gestion de Patrimoine & Finance Islamique | Paris',
         'Cabinet de conseil en gestion de patrimoine indépendant, spécialisé en finance islamique. Investissement, retraite, transmission. Paris et Île-de-France.'
     );
 }

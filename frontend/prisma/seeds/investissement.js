@@ -2,16 +2,25 @@ const { createPage } = require('./_helpers');
 
 module.exports = async function seedInvestissement(prisma) {
   await createPage(prisma, 'investissement', {
-    title: 'Investir son Argent | Amana Patrimoine',
-    description: 'Investissement éthique et conforme à la finance islamique : assurance-vie, PER, SCPI, private equity, marchés financiers.',
-    keywords: 'investissement halal, finance islamique, SCPI, assurance-vie, PER, private equity, Paris',
+    title: 'Investissement Halal : Placements Éthiques & Conseil',
+    description: 'Placements halal conformes à la finance islamique : assurance-vie, SCPI sans riba, PER éthique. Conseil CGP indépendant Paris. Premier RDV gratuit.',
+    keywords: 'investissement halal, placements halal, finance islamique, SCPI sans riba, assurance vie islamique, PER halal, Paris',
   }, [
     { type: 'pageHero', content: {
-      badge: 'Investissement Éthique',
-      title: 'Investir son argent selon ses convictions : finance islamique et placements éthiques',
+      badge: 'Investissement Halal',
+      title: 'Investissement halal : placez votre argent selon vos convictions',
       subtitle: 'Investir, ce n\'est pas seulement chercher la performance. C\'est d\'abord se poser la question : pourquoi est-ce que j\'investis ? Pour préparer ma retraite ? Financer les études de mes enfants ? Acheter un bien immobilier ? Générer des revenus complémentaires ? Chez Amana Patrimoine, nous pensons qu\'une stratégie d\'investissement réussie commence par une vision claire de vos objectifs. Nous prenons le temps de comprendre votre situation, vos projets et vos convictions pour vous proposer des solutions adaptées, performantes et conformes aux principes de la finance islamique.',
       image: '/edu-heritage.png',
       ctaText: 'Prendre rendez-vous',
+    } },
+    { type: 'content', content: {
+      label: 'Définition',
+      title: 'Qu\'est-ce qu\'un investissement halal ?',
+      paragraphs: [
+        'Un investissement halal est un placement financier conforme aux principes de la finance islamique. Concrètement : absence totale d\'intérêt (riba), exclusion des secteurs interdits (alcool, armement, banques conventionnelles, jeux de hasard), adossement à un actif réel et tangible, partage équitable du risque entre investisseur et gestionnaire.',
+        'En France, des solutions concrètes existent pour investir en halal : SCPI sans dette bancaire, assurance-vie en unités de compte filtrées, PER sur fonds éthiques screentés, fonds actions excluant les secteurs haram. Chez Amana Patrimoine, chaque placement proposé a été sélectionné et validé selon ces critères stricts.',
+        'Un investissement halal ne compromet pas la performance. Les fonds excluant les secteurs à risque (tabac, alcool, armement) ont souvent surperformé sur le long terme. Finance islamique et performance : deux objectifs compatibles.',
+      ],
     } },
     { type: 'content', content: {
       title: 'Pourquoi investir ?',
@@ -69,6 +78,8 @@ module.exports = async function seedInvestissement(prisma) {
       ],
     } },
     { type: 'faq', content: { items: [
+      { question: 'Qu\'est-ce qu\'un investissement halal ?', answer: 'Un investissement halal est un placement conforme aux principes de la finance islamique : pas d\'intérêt (riba), exclusion des secteurs interdits (alcool, armement, banques conventionnelles, jeux de hasard), adossement à des actifs réels et validation par un comité charia (Shariah Board). En France, cela concerne notamment les SCPI sans dette bancaire, les assurances-vie sur fonds screentés, les PER éthiques et les fonds actions Shariah Compliant.' },
+      { question: 'Quels placements halal sont disponibles en France ?', answer: 'En France, plusieurs solutions halal sont accessibles aux investisseurs musulmans : SCPI conformes (sans recours à la dette bancaire, critères ESG respectés), fonds d\'actions Shariah Compliant (screentés sectoriellement), PER investis sur des unités de compte éthiques, assurance-vie sur des fonds validés par des Shariah Boards. Amana Patrimoine vous accompagne dans la sélection de ces solutions adaptées à votre profil.' },
       { question: 'Qu\'est-ce qu\'un fonds Shariah Compliant ?', answer: 'Un fonds Shariah Compliant est un fonds d\'investissement conforme aux principes de la finance islamique. Il exclut les secteurs interdits (alcool, armement, banques conventionnelles), n\'investit pas dans des entreprises trop endettées, et ne génère pas de revenus liés à l\'intérêt (riba). Les investissements sont audités par un comité charia (Shariah Board) qui vérifie la conformité des placements.' },
       { question: 'La performance est-elle au rendez-vous ?', answer: 'Oui. Les études montrent que les fonds éthiques et Shariah Compliant peuvent offrir des performances comparables, voire supérieures aux fonds traditionnels sur le long terme. L\'exclusion de certains secteurs à risque et l\'accent mis sur la durabilité peuvent réduire la volatilité. Cependant, comme tout investissement, les performances passées ne garantissent pas les résultats futurs.' },
       { question: 'Comment gérez-vous les dividendes impurs ?', answer: 'Si une entreprise génère une petite partie de ses revenus via des activités non conformes (généralement moins de 5%), les dividendes correspondants sont considérés comme impurs. Nous calculons cette proportion et vous accompagnons pour reverser cette somme à des oeuvres caritatives, conformément aux principes de purification (tazkiya). Cela garantit que votre investissement reste éthique.' },

@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { prisma } from '@/lib/db';
+import prisma from '@/lib/db';
 import { requireAdmin } from '@/lib/auth-guard';
 
 export async function GET(request, { params }) {
@@ -15,7 +15,8 @@ export async function GET(request, { params }) {
       blocks: page.blocks.map((b) => ({ ...b, content: JSON.parse(b.content) })),
     });
   } catch (error) {
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    console.error('Page fetch error:', error);
+    return NextResponse.json({ error: 'Erreur lors de la récupération de la page' }, { status: 500 });
   }
 }
 
@@ -37,7 +38,8 @@ export async function PUT(request, { params }) {
     });
     return NextResponse.json(page);
   } catch (error) {
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    console.error('Page update error:', error);
+    return NextResponse.json({ error: 'Erreur lors de la mise à jour de la page' }, { status: 500 });
   }
 }
 
@@ -49,6 +51,7 @@ export async function DELETE(request, { params }) {
     await prisma.page.delete({ where: { id: params.id } });
     return NextResponse.json({ success: true });
   } catch (error) {
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    console.error('Page delete error:', error);
+    return NextResponse.json({ error: 'Erreur lors de la suppression de la page' }, { status: 500 });
   }
 }

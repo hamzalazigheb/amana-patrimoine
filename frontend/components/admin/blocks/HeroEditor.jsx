@@ -10,6 +10,15 @@ export default function HeroEditor({ content, onChange }) {
   return (
     <div className="block-editor-fields">
       <div className="admin-field">
+        <label className="admin-field-label">Badge (étiquette)</label>
+        <input
+          value={content.badge || ''}
+          onChange={(e) => update('badge', e.target.value)}
+          className="admin-field-input"
+          placeholder="ex: Finance Islamique"
+        />
+      </div>
+      <div className="admin-field">
         <label className="admin-field-label">Titre principal</label>
         <input
           value={content.title || ''}

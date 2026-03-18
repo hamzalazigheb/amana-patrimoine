@@ -1,8 +1,51 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+/**
+ * Sanitize HTML from the database to prevent XSS.
+ * - Browser: uses native DOMParser (no dependency, no eval)
+ * - Server (SSR): uses regex to strip scripts and event handlers
+ */
+function sanitize(html) {
+  if (!html) return '';
+
+  if (typeof window === 'undefined') {
+    // SSR path — scripts don't execute on the server, but strip them anyway
+    return html
+      .replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '')
+      .replace(/<iframe\b[^<]*(?:(?!<\/iframe>)<[^<]*)*<\/iframe>/gi, '')
+      .replace(/\s+on\w+\s*=\s*(?:"[^"]*"|'[^']*'|[^\s>]*)/gi, '')
+      .replace(/href\s*=\s*["']?\s*javascript\s*:/gi, 'href="blocked:');
+  }
+
+  // Client path — use native DOMParser, no external dependency
+  try {
+    const doc = new DOMParser().parseFromString(html, 'text/html');
+    doc.querySelectorAll('script, iframe, object, embed, form').forEach((el) => el.remove());
+    doc.querySelectorAll('*').forEach((el) => {
+      [...el.attributes].forEach((attr) => {
+        if (attr.name.startsWith('on') || /^javascript\s*:/i.test(attr.value)) {
+          el.removeAttribute(attr.name);
+        }
+      });
+    });
+    return doc.body.innerHTML;
+  } catch {
+    return '';
+  }
+}
+
+/** Validate a URL is safe to use as a CSS background-image (prevents CSS injection). */
+function safeBgUrl(url) {
+  if (!url) return '';
+  const trimmed = String(url).trim();
+  if (trimmed.startsWith('/') || trimmed.startsWith('https://') || trimmed.startsWith('http://localhost')) {
+    return trimmed;
+  }
+  return '';
+}
 
 function useAnimateOnScroll(threshold = 0.1) {
   const ref = useRef(null);
@@ -67,7 +110,7 @@ function HeroBlock({ content }) {
       <div
         className="hero-slide active"
         style={{
-          backgroundImage: `url("${content.backgroundImage || ''}")`,
+          backgroundImage: `url("${safeBgUrl(content.backgroundImage)}")`,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat',
@@ -130,32 +173,61 @@ function ContentBlock({ content }) {
         </div>
       );
     }
+    const count = content.steps.length;
     return (
-      <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-10)' }}>
+      <div className={`content-steps-cards ${count >= 4 ? 'content-steps-grid' : ''}`}>
         {content.steps.map((step, i) => (
-          <div key={i}>
-            <h3>{step.title}</h3>
-            <p>{step.description}</p>
+          <div key={i} className="content-step-card">
+            <span className="content-step-number">{String(i + 1).padStart(2, '0')}</span>
+            <h3 className="content-step-title">{step.title}</h3>
+            <hr className="content-step-divider" />
+            <p className="content-step-desc">{step.description}</p>
           </div>
         ))}
       </div>
     );
   };
 
+  const CARD_ICONS = {
+    '/icon-fiscal-optimization.svg': (
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+        <circle cx="12" cy="8" r="3"/><path d="M6 20v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2"/><line x1="12" y1="14" x2="12" y2="20"/><line x1="9" y1="17" x2="15" y2="17"/>
+      </svg>
+    ),
+    '/icon-treasury.svg': (
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/>
+      </svg>
+    ),
+    '/icon-retirement.svg': (
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+      </svg>
+    ),
+    '/icon-protection.svg': (
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/>
+      </svg>
+    ),
+  };
+
   const renderCards = () => {
     if (!content.cards || content.cards.length === 0) return null;
     return (
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 'var(--space-8)', marginTop: 'var(--space-8)' }}>
+      <div className="content-cards-grid">
         {content.cards.map((card, i) => (
-          <div key={i} style={{ padding: 'var(--space-6)', backgroundColor: 'var(--color-ivory)', borderRadius: 'var(--radius-md)', borderLeft: '3px solid var(--color-brass)' }}>
-            <div style={{ display: 'flex', alignItems: 'flex-start', gap: 'var(--space-4)' }}>
-              {card.icon && (
-                <Image src={card.icon} alt={card.title || 'Icône'} width={48} height={48} style={{ objectFit: 'contain', flexShrink: 0 }} />
+          <div key={i} className="content-card-item">
+            <div className="content-card-icon">
+              {CARD_ICONS[card.icon] || (
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                  <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
+                </svg>
               )}
-              <div>
-                <h3 style={{ fontFamily: 'var(--font-heading)', fontSize: 'var(--text-lg)', color: '#444b3f', margin: 0, marginBottom: 'var(--space-3)' }}>{card.title}</h3>
-                <p style={{ fontSize: 'var(--text-sm)', color: 'var(--color-text-muted)', lineHeight: 1.8, margin: 0 }}>{card.description}</p>
-              </div>
+            </div>
+            <div className="content-card-body">
+              <h3 className="content-card-title">{card.title}</h3>
+              <div className="content-card-divider" />
+              <p className="content-card-desc">{card.description}</p>
             </div>
           </div>
         ))}
@@ -236,6 +308,32 @@ function ServicesBlock({ content }) {
   );
 }
 
+const METHODOLOGY_ICONS = [
+  /* 0 – Premier contact : location pin */
+  <svg key="0" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/>
+    <circle cx="12" cy="9" r="2.5"/>
+  </svg>,
+  /* 1 – Bilan patrimonial : document / clipboard */
+  <svg key="1" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <path d="M9 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-5-6H9z"/>
+    <polyline points="14 2 14 8 20 8"/>
+    <line x1="8" y1="13" x2="16" y2="13"/>
+    <line x1="8" y1="17" x2="13" y2="17"/>
+  </svg>,
+  /* 2 – Stratégie sur-mesure : layers / stack */
+  <svg key="2" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <polygon points="12 2 2 7 12 12 22 7 12 2"/>
+    <polyline points="2 12 12 17 22 12"/>
+    <polyline points="2 17 12 22 22 17"/>
+  </svg>,
+  /* 3 – Suivi régulier : trending up */
+  <svg key="3" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/>
+    <polyline points="17 6 23 6 23 12"/>
+  </svg>,
+];
+
 function MethodologyBlock({ content }) {
   const ref = useAnimateOnScroll();
   return (
@@ -248,7 +346,7 @@ function MethodologyBlock({ content }) {
           {(content.steps || []).map((step, i) => (
             <div key={i} className="timeline-item animate-item">
               <div className="timeline-icon-box">
-                <span style={{ fontSize: '1.5rem', fontWeight: 700, color: 'var(--color-brass)' }}>{String(i + 1).padStart(2, '0')}</span>
+                {METHODOLOGY_ICONS[i % METHODOLOGY_ICONS.length]}
               </div>
               <div className="timeline-content">
                 <h3>{step.title}</h3>
@@ -337,16 +435,17 @@ function CTABlock({ content }) {
 }
 
 function PageHeroBlock({ content }) {
-  const hasImage = !!content.image;
+  const imageSrc = content.backgroundImage || content.image || '';
+  const hasImage = !!imageSrc;
   return (
-    <section className={`page-hero ${hasImage ? 'page-hero-has-bg' : ''}`} style={hasImage ? { backgroundImage: `url("${content.image}")`, backgroundSize: 'cover', backgroundPosition: 'center' } : {}}>
+    <section className={`page-hero ${hasImage ? 'page-hero-has-bg' : ''}`} style={hasImage ? { backgroundImage: `url("${safeBgUrl(imageSrc)}")`, backgroundSize: 'cover', backgroundPosition: 'center' } : {}}>
       <div className="container">
         <div className="page-hero-content">
           {content.badge && <span className="page-hero-badge">{content.badge}</span>}
           <h1 className="page-hero-title">{content.title}</h1>
           {content.subtitle && <p className="page-hero-subtitle">{content.subtitle}</p>}
           {content.ctaText && (
-            <SmartLink href={content.ctaLink || 'https://calendly.com/amana-patrimoine/30min'} className="btn btn-primary">
+            <SmartLink href={content.ctaLink || 'https://calendly.com/amana-patrimoine/30min'} className="btn btn-white-outline">
               {content.ctaText}
             </SmartLink>
           )}
@@ -386,11 +485,20 @@ function CaseStudyBlock({ content }) {
     <section className="case-study-section">
       <div className="container">
         {content.title && <h2 className="section-title">{content.title}</h2>}
-        <div dangerouslySetInnerHTML={{ __html: content.body || '' }} />
+        <div dangerouslySetInnerHTML={{ __html: sanitize(content.body) }} />
       </div>
     </section>
   );
 }
+
+const REASSURANCE_ICONS = [
+  /* Shield */
+  <svg key="0" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>,
+  /* Check circle */
+  <svg key="1" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="9 12 11 14 15 10"/></svg>,
+  /* Lock */
+  <svg key="2" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>,
+];
 
 function ReassuranceBlock({ content }) {
   return (
@@ -399,6 +507,9 @@ function ReassuranceBlock({ content }) {
         <div className="reassurance-grid">
           {(content.items || []).map((item, i) => (
             <div key={i} className="reassurance-item">
+              <div className="reassurance-icon-circle">
+                {REASSURANCE_ICONS[i % REASSURANCE_ICONS.length]}
+              </div>
               <h3>{item.title}</h3>
               <p>{item.description}</p>
             </div>
@@ -409,17 +520,38 @@ function ReassuranceBlock({ content }) {
   );
 }
 
+function FAQItem({ item, index }) {
+  const [open, setOpen] = useState(false);
+  return (
+    <div className={`faq-item ${open ? 'faq-item-open' : ''}`}>
+      <button
+        className="faq-question"
+        aria-expanded={open}
+        onClick={() => setOpen(!open)}
+      >
+        <span className="faq-question-text">{item.question}</span>
+        <span className="faq-icon" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+            <polyline points="6 9 12 15 18 9" />
+          </svg>
+        </span>
+      </button>
+      {open && <p className="faq-answer">{item.answer}</p>}
+    </div>
+  );
+}
+
 function FAQBlock({ content }) {
   return (
     <section className="faq-section">
       <div className="container">
-        {content.title && <h2 className="section-title">{content.title}</h2>}
+        <div className="faq-header">
+          <span className="section-label">FAQ</span>
+          <h2 className="section-title">{content.title || 'Questions fréquentes'}</h2>
+        </div>
         <div className="faq-list">
           {(content.items || []).map((item, i) => (
-            <details key={i} className="faq-item">
-              <summary className="faq-question">{item.question}</summary>
-              <p className="faq-answer">{item.answer}</p>
-            </details>
+            <FAQItem key={i} item={item} index={i} />
           ))}
         </div>
       </div>
@@ -461,23 +593,32 @@ function IntroBlock({ content }) {
 }
 
 function FoundersBlock({ content }) {
-  const style = content.background ? {
-    backgroundImage: `url("${content.background}")`,
+  const hasBg = !!content.background;
+  const style = hasBg ? {
+    backgroundImage: `url("${safeBgUrl(content.background)}")`,
     backgroundSize: 'cover',
     backgroundPosition: 'center',
   } : {};
 
   return (
-    <section className={`founders-section ${content.background ? 'content-section-navy' : ''}`} style={style}>
+    <section className={`founders-section ${hasBg ? 'content-section-navy' : ''}`} style={style}>
       <div className="container">
-        {content.label && <span className="section-label" style={content.background ? { color: 'var(--color-brass-light)' } : {}}>{content.label}</span>}
+        {content.label && (
+          <div className="section-header" style={{ textAlign: 'center' }}>
+            <h2 className="founders-title">{content.label}</h2>
+          </div>
+        )}
         <div className="founders-grid">
           {(content.items || []).map((f, i) => (
             <div key={i} className="founder-card">
-              {f.image && <Image src={f.image} alt={`${f.name} - ${f.role}`} width={200} height={200} className="founder-image" style={{ objectFit: 'cover' }} />}
-              <h3>{f.name}</h3>
+              {f.image && (
+                <div className="founder-photo-wrapper">
+                  <Image src={f.image} alt={`${f.name} - ${f.role}`} width={200} height={200} className="founder-image" />
+                </div>
+              )}
+              <h3 className="founder-name">{f.name}</h3>
               <span className="founder-role">{f.role}</span>
-              <p style={{ whiteSpace: 'pre-line' }}>{f.description}</p>
+              <p className="founder-bio" style={{ whiteSpace: 'pre-line' }}>{f.description}</p>
             </div>
           ))}
         </div>
@@ -490,7 +631,7 @@ function LegalBlock({ content }) {
   return (
     <section className="legal-section">
       <div className="container">
-        <div className="legal-content" dangerouslySetInnerHTML={{ __html: content.body || '' }} />
+        <div className="legal-content" dangerouslySetInnerHTML={{ __html: sanitize(content.body) }} />
       </div>
     </section>
   );

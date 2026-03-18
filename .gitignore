@@ -1,12 +1,48 @@
-.vercel
-node_modules
-.next
-*.db
-*.db-journal
+# ─── Environment variables — NEVER commit ──────────
 .env
 .env.local
 .env.production
 .env.preprod
-out/
-*.zip
+.env*.local
+**/.env
+**/.env.local
+**/.env.production
+
+# ─── Node modules ───────────────────────────────────
+node_modules/
+**/node_modules/
+
+# ─── Next.js ────────────────────────────────────────
+frontend/.next/
+frontend/out/
+
+# ─── Database files (use PostgreSQL in prod) ────────
+**/*.db
+**/*.db-journal
+frontend/prisma/prisma/
+
+# ─── Backups ────────────────────────────────────────
+frontend/backups/
+
+# ─── SSL certificates ───────────────────────────────
+nginx/ssl/*.pem
+nginx/ssl/*.crt
+nginx/ssl/*.key
+
+# ─── Build artifacts ────────────────────────────────
+.vercel/
+frontend/.htaccess
+frontend/.png
+
+# ─── Uploaded media (use volume in prod) ─────────────
 frontend/public/uploads/
+
+# ─── OS ─────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+
+# ─── Logs ───────────────────────────────────────────
+*.log
+npm-debug.log*

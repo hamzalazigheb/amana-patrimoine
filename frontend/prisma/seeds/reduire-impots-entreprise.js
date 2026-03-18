@@ -2,7 +2,7 @@ const { createPage } = require('./_helpers');
 
 module.exports = async function seedReduireImpotsEntreprise(prisma) {
   await createPage(prisma, 'reduire-impots-entreprise', {
-    title: 'Optimiser la Fiscalité de son Entreprise : Conseil Fiscal Pro | Amana',
+    title: 'Optimiser la Fiscalité de son Entreprise : Conseil Fiscal Pro',
     description: 'Optimisation fiscale entreprise : structuration, rémunération dirigeant, transmission. Conseil fiscal professionnel conforme finance islamique.',
     keywords: 'fiscalité entreprise, optimisation fiscale professionnelle, impôt société, rémunération dirigeant, transmission entreprise',
   }, [
