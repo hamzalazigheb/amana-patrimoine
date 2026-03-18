@@ -57,13 +57,16 @@ COPY --from=builder /app/.next/standalone ./
 COPY --from=builder /app/.next/static ./.next/static
 COPY --from=builder /app/public ./public
 
-# Copy Prisma schema and migrations for runtime migrations
+# Copy Prisma schema, client, and CLI for runtime migrations
 COPY --from=builder /app/prisma ./prisma
 COPY --from=builder /app/node_modules/.prisma ./node_modules/.prisma
 COPY --from=builder /app/node_modules/@prisma ./node_modules/@prisma
+COPY --from=builder /app/node_modules/prisma ./node_modules/prisma
+COPY --from=builder /app/node_modules/.bin/prisma ./node_modules/.bin/prisma
 
-# Copy seed files
+# Copy seed files and bcryptjs (needed by seed)
 COPY --from=builder /app/scripts ./scripts
+COPY --from=builder /app/node_modules/bcryptjs ./node_modules/bcryptjs
 
 # Set correct permissions
 RUN chown -R nextjs:nodejs /app
