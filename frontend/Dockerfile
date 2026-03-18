@@ -62,8 +62,8 @@ COPY --from=builder /app/prisma ./prisma
 COPY --from=builder /app/node_modules/.prisma ./node_modules/.prisma
 COPY --from=builder /app/node_modules/@prisma ./node_modules/@prisma
 
-# Install Prisma CLI + bcryptjs properly (avoids broken symlinks/WASM issues)
-RUN npm install --no-save prisma@5.22.0 bcryptjs@2.4.3
+# Install Prisma CLI, bcryptjs, and sharp (required for Next.js image optimization)
+RUN npm install --no-save prisma@5.22.0 bcryptjs@2.4.3 sharp@0.33.2
 
 # Copy seed files
 COPY --from=builder /app/scripts ./scripts
