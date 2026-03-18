@@ -32,7 +32,9 @@ RUN npx prisma generate
 ENV NEXT_TELEMETRY_DISABLED=1
 ENV NODE_ENV=production
 ARG JWT_SECRET=build-placeholder
+ARG DATABASE_URL=postgresql://placeholder:placeholder@localhost:5432/placeholder
 ENV JWT_SECRET=$JWT_SECRET
+ENV DATABASE_URL=$DATABASE_URL
 RUN npm run build
 
 # ─────────────────────────────────────────────
