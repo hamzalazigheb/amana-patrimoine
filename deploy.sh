@@ -69,7 +69,7 @@ fi
 
 # Pull latest code
 log "Pulling latest code from git..."
-git pull origin main
+git pull origin master
 
 # Build and restart containers
 log "Building Docker images..."

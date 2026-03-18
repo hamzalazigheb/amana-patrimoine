@@ -31,6 +31,8 @@ RUN npx prisma generate
 # Build Next.js (output: standalone)
 ENV NEXT_TELEMETRY_DISABLED=1
 ENV NODE_ENV=production
+ARG JWT_SECRET=build-placeholder
+ENV JWT_SECRET=$JWT_SECRET
 RUN npm run build
 
 # ─────────────────────────────────────────────

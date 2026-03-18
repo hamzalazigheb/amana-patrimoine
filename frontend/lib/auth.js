@@ -1,20 +1,22 @@
 import jwt from 'jsonwebtoken';
 import { cookies } from 'next/headers';
 
-const JWT_SECRET = process.env.JWT_SECRET;
-if (!JWT_SECRET) {
-  throw new Error('JWT_SECRET environment variable is not set. Set it in your .env file.');
-}
 const TOKEN_NAME = 'amana_admin_token';
 const TOKEN_MAX_AGE = 60 * 60 * 24 * 7; // 7 days
 
+function getSecret() {
+  const secret = process.env.JWT_SECRET;
+  if (!secret) throw new Error('JWT_SECRET environment variable is not set. Set it in your .env file.');
+  return secret;
+}
+
 export function signToken(payload) {
-  return jwt.sign(payload, JWT_SECRET, { expiresIn: TOKEN_MAX_AGE });
+  return jwt.sign(payload, getSecret(), { expiresIn: TOKEN_MAX_AGE });
 }
 
 export function verifyToken(token) {
   try {
-    return jwt.verify(token, JWT_SECRET);
+    return jwt.verify(token, getSecret());
   } catch {
     return null;
   }
