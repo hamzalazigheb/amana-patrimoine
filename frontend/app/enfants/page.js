@@ -7,8 +7,6 @@ import EnfantsSimulator from '../../components/EnfantsSimulator';
 import { getPageBySlug } from '../../lib/cms';
 import { buildMetadata, buildBreadcrumbJsonLd, buildServiceJsonLd, buildFaqJsonLd } from '../../lib/seo';
 
-export const dynamic = 'force-dynamic';
-
 export async function generateMetadata() {
     const page = await getPageBySlug('enfants');
     return buildMetadata(

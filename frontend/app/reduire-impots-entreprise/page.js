@@ -6,8 +6,6 @@ import BlockRenderer from '../../components/BlockRenderer';
 import { getPageBySlug } from '../../lib/cms';
 import { buildMetadata, buildBreadcrumbJsonLd, buildServiceJsonLd } from '../../lib/seo';
 
-export const dynamic = 'force-dynamic';
-
 export async function generateMetadata() {
     const page = await getPageBySlug('reduire-impots-entreprise');
     return buildMetadata(

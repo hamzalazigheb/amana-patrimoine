@@ -7,8 +7,6 @@ import { getPageBySlug, getBlogArticles } from '../../../lib/cms';
 import { buildMetadata, buildBreadcrumbJsonLd, buildFaqJsonLd } from '../../../lib/seo';
 import Link from 'next/link';
 
-export const dynamic = 'force-dynamic';
-
 export async function generateMetadata({ params }) {
     const { slug } = await params;
     const page = await getPageBySlug(`blog/${slug}`);

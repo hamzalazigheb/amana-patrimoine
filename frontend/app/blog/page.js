@@ -5,8 +5,6 @@ import Footer from '../../components/Footer';
 import Link from 'next/link';
 import { getBlogArticles } from '../../lib/cms';
 
-export const dynamic = 'force-dynamic';
-
 export const metadata = {
     title: 'Blog Finance Islamique - Conseils Patrimoniaux & Guides',
     description: 'Articles et guides pratiques sur la finance islamique, l\'investissement halal, la Zakat, la retraite islamique et la transmission de patrimoine.',
