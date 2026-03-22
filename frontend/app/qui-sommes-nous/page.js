@@ -1,4 +1,4 @@
-export const dynamic = 'force-dynamic';
+// export const dynamic = 'force-dynamic';
 
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
@@ -27,7 +27,7 @@ export default async function QuiSommesNousPage() {
             <Header />
             <main id="main-content">
                 {page ? (
-                    <BlockRenderer blocks={page.blocks} />
+                    <BlockRenderer blocks={(page.blocks || []).filter(b => b.type !== 'hero' && b.type !== 'pageHero')} />
                 ) : (
                     <div className="container" style={{ padding: '4rem 0', textAlign: 'center' }}>
                         <p>Contenu en cours de chargement...</p>

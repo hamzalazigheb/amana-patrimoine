@@ -1,19 +1,17 @@
-export const dynamic = 'force-dynamic';
+const baseUrl = 'https://amana-patrimoine.fr';
 
-import prisma from '../lib/db';
-
-export default async function sitemap() {
-  const baseUrl = 'https://amana-patrimoine.fr';
-
-  const pages = await prisma.page.findMany({
-    where: { published: true },
-    select: { slug: true, updatedAt: true },
-  });
-
-  return pages.map((page) => ({
-    url: page.slug === 'home' ? baseUrl : `${baseUrl}/${page.slug}`,
-    lastModified: page.updatedAt,
-    changeFrequency: page.slug === 'mentions-legales' ? 'yearly' : 'monthly',
-    priority: page.slug === 'home' ? 1.0 : page.slug === 'mentions-legales' ? 0.3 : 0.8,
-  }));
+export default function sitemap() {
+    return [
+        { url: baseUrl, lastModified: new Date(), changeFrequency: 'monthly', priority: 1.0 },
+        { url: `${baseUrl}/qui-sommes-nous`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.8 },
+        { url: `${baseUrl}/immobilier`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.8 },
+        { url: `${baseUrl}/retraite`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.8 },
+        { url: `${baseUrl}/enfants`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.8 },
+        { url: `${baseUrl}/investissement`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.8 },
+        { url: `${baseUrl}/strategie`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.8 },
+        { url: `${baseUrl}/succession`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.8 },
+        { url: `${baseUrl}/reduire-impots`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.8 },
+        { url: `${baseUrl}/reduire-impots-entreprise`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.8 },
+        { url: `${baseUrl}/mentions-legales`, lastModified: new Date(), changeFrequency: 'yearly', priority: 0.3 },
+    ];
 }

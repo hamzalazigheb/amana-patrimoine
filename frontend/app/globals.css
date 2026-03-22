@@ -966,12 +966,12 @@ a {
 }
 
 .partners-grid {
-  display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  gap: var(--space-8);
+  display: flex;
+  flex-wrap: nowrap;
+  gap: var(--space-4);
   margin-top: var(--space-16);
   align-items: center;
-  justify-items: center;
+  justify-content: center;
 }
 
 .partner-item {
@@ -1674,7 +1674,7 @@ a {
   }
 
   .partners-grid {
-    grid-template-columns: repeat(4, 1fr);
+    gap: var(--space-6);
   }
 
   .footer-grid {
@@ -1791,7 +1791,6 @@ a {
   .methodology-grid,
   .education-grid,
   .testimonials-grid,
-  .partners-grid,
   .vision-features,
   .reassurance-grid {
     grid-template-columns: 1fr;
@@ -1932,7 +1931,6 @@ a {
 
   /* Partners */
   .partners-grid {
-    grid-template-columns: repeat(3, 1fr);
     gap: var(--space-4);
   }
 
@@ -2002,7 +2000,7 @@ a {
   }
 
   .partners-grid {
-    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-4);
   }
 
   .founder-image {
@@ -2946,8 +2944,8 @@ a {
    PARTNER LOGO WRAPPER (for image logos)
    ============================================ */
 .partner-logo-wrapper {
-  width: 120px;
-  height: 60px;
+  width: 100px;
+  height: 52px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -5405,4 +5403,256 @@ a {
   .blog-cta-box {
     padding: var(--space-10) var(--space-6);
   }
+}
+
+/* ============================================
+   EID AL-FITR POPUP (temporary — disable via eidConfig.enabled)
+   ============================================ */
+
+.eid-popup-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(10, 28, 22, 0.72);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  padding: var(--space-4);
+  animation: eidFadeIn 0.35s ease-out;
+}
+
+.eid-popup {
+  position: relative;
+  background: linear-gradient(165deg, #0d2218 0%, #1a3c34 45%, #0d2218 100%);
+  border: 1px solid rgba(212, 175, 55, 0.22);
+  border-radius: 18px;
+  padding: 52px 44px 44px;
+  max-width: 460px;
+  width: 100%;
+  text-align: center;
+  box-shadow:
+    0 0 0 1px rgba(212, 175, 55, 0.08),
+    0 0 60px rgba(212, 175, 55, 0.12),
+    0 30px 60px rgba(0, 0, 0, 0.45);
+  overflow: hidden;
+  animation: eidSlideUp 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Close button */
+.eid-popup-close {
+  position: absolute;
+  top: 14px;
+  right: 18px;
+  background: none;
+  border: none;
+  color: rgba(212, 175, 55, 0.45);
+  font-size: 26px;
+  line-height: 1;
+  cursor: pointer;
+  z-index: 5;
+  transition: color 0.2s;
+  padding: 0;
+}
+
+.eid-popup-close:hover {
+  color: #D4AF37;
+}
+
+/* Stars */
+.eid-popup-stars {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.eid-popup-star {
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  background: #E8D48B;
+  border-radius: 50%;
+  animation: eidTwinkle 3s ease-in-out infinite;
+}
+
+.eid-popup-star:nth-child(1)  { top: 8%;  left: 10%; animation-delay: 0s; }
+.eid-popup-star:nth-child(2)  { top: 14%; left: 78%; animation-delay: 0.5s; }
+.eid-popup-star:nth-child(3)  { top: 5%;  left: 48%; animation-delay: 1.2s; }
+.eid-popup-star:nth-child(4)  { top: 20%; left: 90%; animation-delay: 0.8s; }
+.eid-popup-star:nth-child(5)  { top: 11%; left: 32%; animation-delay: 1.8s; }
+.eid-popup-star:nth-child(6)  { top: 17%; left: 62%; animation-delay: 0.3s; }
+.eid-popup-star:nth-child(7)  { top: 27%; left: 18%; animation-delay: 2.2s; }
+.eid-popup-star:nth-child(8)  { top: 6%;  left: 87%; animation-delay: 1.5s; }
+.eid-popup-star:nth-child(9)  { top: 30%; left: 94%; animation-delay: 0.7s; }
+.eid-popup-star:nth-child(10) { top: 23%; left: 52%; animation-delay: 2.0s; }
+.eid-popup-star:nth-child(11) { top: 9%;  left: 4%;  animation-delay: 1.0s; }
+.eid-popup-star:nth-child(12) { top: 33%; left: 40%; animation-delay: 1.6s; }
+
+/* Lanterns */
+.eid-popup-lantern {
+  position: absolute;
+  top: 0;
+  opacity: 0.45;
+  transform-origin: top center;
+}
+
+.eid-popup-lantern-left {
+  left: 18px;
+  animation: eidSway 4s ease-in-out infinite;
+}
+
+.eid-popup-lantern-right {
+  right: 18px;
+  animation: eidSway 4s ease-in-out infinite;
+  animation-delay: -1.8s;
+}
+
+/* Logo */
+.eid-popup-logo {
+  position: relative;
+  z-index: 2;
+  margin-bottom: 18px;
+}
+
+.eid-popup-logo img {
+  filter: brightness(0) invert(1);
+  opacity: 0.92;
+}
+
+/* Gold gradient separator */
+.eid-popup-separator {
+  width: 72px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #D4AF37, transparent);
+  border-radius: 1px;
+  margin: 0 auto 22px;
+}
+
+/* Crescent */
+.eid-popup-crescent {
+  margin: 0 auto 10px;
+  position: relative;
+  z-index: 2;
+  animation: eidFloat 5s ease-in-out infinite;
+}
+
+/* Title */
+.eid-popup-title {
+  font-family: var(--font-heading);
+  font-size: clamp(1.8rem, 5vw, 2.6rem);
+  color: #D4AF37;
+  font-weight: 600;
+  line-height: 1.2;
+  margin-bottom: 14px;
+  position: relative;
+  z-index: 2;
+}
+
+/* Message */
+.eid-popup-message {
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.78);
+  line-height: 1.75;
+  max-width: 340px;
+  margin: 0 auto 30px;
+  position: relative;
+  z-index: 2;
+}
+
+/* New version badge */
+.eid-popup-new-version {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(212, 175, 55, 0.08);
+  border: 1px solid rgba(212, 175, 55, 0.2);
+  border-radius: 100px;
+  padding: 6px 16px;
+  margin-bottom: 20px;
+  position: relative;
+  z-index: 2;
+}
+
+.eid-popup-new-version-badge {
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: #D4AF37;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+}
+
+.eid-popup-new-version-text {
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.65);
+  font-weight: 400;
+}
+
+/* Button */
+.eid-popup-btn {
+  display: inline-block;
+  background: linear-gradient(135deg, #D4AF37 0%, #B8962E 100%);
+  color: #0d2218;
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  font-weight: 600;
+  padding: 13px 36px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  letter-spacing: 0.4px;
+  transition: transform 0.2s ease, box-shadow 0.3s ease;
+  position: relative;
+  z-index: 2;
+}
+
+.eid-popup-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 28px rgba(212, 175, 55, 0.38);
+}
+
+.eid-popup-btn:active {
+  transform: translateY(0);
+}
+
+/* Animations */
+@keyframes eidFadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes eidSlideUp {
+  from { opacity: 0; transform: translateY(28px) scale(0.96); }
+  to   { opacity: 1; transform: translateY(0)    scale(1); }
+}
+
+@keyframes eidTwinkle {
+  0%, 100% { opacity: 0.2; transform: scale(1); }
+  50%       { opacity: 1;   transform: scale(2.2); }
+}
+
+@keyframes eidFloat {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-7px); }
+}
+
+@keyframes eidSway {
+  0%, 100% { transform: rotate(-4deg); }
+  50%       { transform: rotate(4deg); }
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  .eid-popup {
+    padding: 44px 22px 36px;
+    border-radius: 14px;
+  }
+  .eid-popup-lantern { display: none; }
+  .eid-popup-title { font-size: 1.6rem; }
+  .eid-popup-message { font-size: 0.82rem; }
+  .eid-popup-btn { padding: 12px 28px; }
 }

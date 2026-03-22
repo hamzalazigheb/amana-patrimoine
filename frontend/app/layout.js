@@ -1,6 +1,7 @@
 import './globals.css';
 import { Playfair_Display, Inter } from 'next/font/google';
 import WhatsAppFab from '../components/WhatsAppFab';
+import EidPopup from '../components/eid/EidPopup';
 
 const playfair = Playfair_Display({
     subsets: ['latin'],
@@ -196,7 +197,7 @@ export default function RootLayout({ children }) {
             <body>
                 <a href="#main-content" className="skip-to-content">Aller au contenu principal</a>
                 {children}
-                <WhatsAppFab />
+                <EidPopup />
             </body>
         </html>
     );

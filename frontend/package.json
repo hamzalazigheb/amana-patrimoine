@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "next lint",
     "seed": "node prisma/seed.js",
-    "backup": "node scripts/backup.js"
+    "backup": "node scripts/backup.js",
+    "build:static": "node scripts/static-build.js"
   },
   "prisma": {
     "seed": "node prisma/seed.js"

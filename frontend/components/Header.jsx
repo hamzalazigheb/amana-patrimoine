@@ -11,18 +11,19 @@ export default function Header() {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const [mobileServicesOpen, setMobileServicesOpen] = useState(false);
     const [mobileRessourcesOpen, setMobileRessourcesOpen] = useState(false);
-    const [simulateursVisible, setSimulateursVisible] = useState(true);
+    const [simulateursVisible, setSimulateursVisible] = useState(false);
     const pathname = usePathname();
 
-    useEffect(() => {
-        fetch('/api/public/features')
-            .then((r) => r.json())
-            .then((data) => {
-                const val = data.simulateurs_visible;
-                setSimulateursVisible(val !== false && val !== 'false');
-            })
-            .catch(() => {});
-    }, []);
+    // simulateurs hidden — re-enable by restoring the fetch below
+    // useEffect(() => {
+    //     fetch('/api/public/features')
+    //         .then((r) => r.json())
+    //         .then((data) => {
+    //             const val = data.simulateurs_visible;
+    //             setSimulateursVisible(val !== false && val !== 'false');
+    //         })
+    //         .catch(() => {});
+    // }, []);
 
     useEffect(() => {
         const handleScroll = () => {
@@ -140,54 +141,10 @@ export default function Header() {
                             </div>
                         )}
                     </div>
-                    <div
-                        className="nav-dropdown"
-                        onMouseEnter={() => setRessourcesOpen(true)}
-                        onMouseLeave={() => setRessourcesOpen(false)}
-                    >
-                        <button className="nav-link" style={{ cursor: 'pointer', background: 'none', border: 'none', color: 'inherit' }} aria-expanded={ressourcesOpen} aria-haspopup="true" aria-controls="ressources-dropdown">
-                            Ressources
-                            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" style={{ marginLeft: '6px' }} aria-hidden="true">
-                                <polyline points="6 9 12 15 18 9" />
-                            </svg>
-                        </button>
-                        {ressourcesOpen && (
-                            <div className="nav-dropdown-menu" id="ressources-dropdown" style={{ minWidth: '260px' }}>
-                                <Link href="/finance-islamique" className="nav-dropdown-item">
-                                    <span className="mega-menu-item-title">Finance islamique</span>
-                                    <span className="mega-menu-item-desc">Principes et solutions</span>
-                                </Link>
-                                <Link href="/scpi-halal" className="nav-dropdown-item">
-                                    <span className="mega-menu-item-title">SCPI Halal</span>
-                                    <span className="mega-menu-item-desc">Immobilier sans riba</span>
-                                </Link>
-                                <Link href="/assurance-vie-islamique" className="nav-dropdown-item">
-                                    <span className="mega-menu-item-title">Assurance-vie islamique</span>
-                                    <span className="mega-menu-item-desc">Épargner et transmettre</span>
-                                </Link>
-                                <Link href="/zakat" className="nav-dropdown-item">
-                                    <span className="mega-menu-item-title">Zakat</span>
-                                    <span className="mega-menu-item-desc">Guide et calcul</span>
-                                </Link>
-                                {simulateursVisible && (
-                                    <Link href="/simulateurs" className="nav-dropdown-item">
-                                        <span className="mega-menu-item-title">Simulateur Zakat</span>
-                                        <span className="mega-menu-item-desc">Calculez en ligne</span>
-                                    </Link>
-                                )}
-                                <Link href="/lexique" className="nav-dropdown-item">
-                                    <span className="mega-menu-item-title">Lexique</span>
-                                    <span className="mega-menu-item-desc">Termes et définitions</span>
-                                </Link>
-                                <Link href="/blog" className="nav-dropdown-item">
-                                    <span className="mega-menu-item-title">Blog</span>
-                                    <span className="mega-menu-item-desc">Guides et analyses</span>
-                                </Link>
-                            </div>
-                        )}
-                    </div>
+                    {/* Ressources dropdown hidden — restore this block to re-enable */}
                     <Link href="/qui-sommes-nous" className="nav-link">Qui sommes-nous</Link>
-                    <Link href="/bilan-patrimonial" className="btn btn-primary btn-sm">Bilan Patrimonial</Link>
+                    <Link href="/#methodology" className="nav-link">Notre Approche</Link>
+                    <a href="https://calendly.com/amana-patrimoine/30min" target="_blank" rel="noopener noreferrer" className="btn btn-primary btn-sm">Bilan Patrimonial</a>
                 </nav>
 
                 {/* Mobile nav */}
@@ -217,31 +174,12 @@ export default function Header() {
                                     </div>
                                 )}
                             </div>
-                            <div className="mobile-nav-item">
-                                <button className="mobile-nav-link" onClick={() => setMobileRessourcesOpen(!mobileRessourcesOpen)}>
-                                    Ressources
-                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" style={{ transform: mobileRessourcesOpen ? 'rotate(180deg)' : 'none', transition: 'transform 0.3s' }}>
-                                        <polyline points="6 9 12 15 18 9" />
-                                    </svg>
-                                </button>
-                                {mobileRessourcesOpen && (
-                                    <div className="mobile-sub-menu">
-                                        <Link href="/finance-islamique" className="mobile-sub-link" onClick={closeMobile}>Finance islamique</Link>
-                                        <Link href="/scpi-halal" className="mobile-sub-link" onClick={closeMobile}>SCPI Halal</Link>
-                                        <Link href="/assurance-vie-islamique" className="mobile-sub-link" onClick={closeMobile}>Assurance-vie islamique</Link>
-                                        <Link href="/zakat" className="mobile-sub-link" onClick={closeMobile}>Zakat — Guide complet</Link>
-                                        {simulateursVisible && (
-                                            <Link href="/simulateurs" className="mobile-sub-link" onClick={closeMobile}>Simulateur Zakat</Link>
-                                        )}
-                                        <Link href="/lexique" className="mobile-sub-link" onClick={closeMobile}>Lexique finance islamique</Link>
-                                        <Link href="/blog" className="mobile-sub-link" onClick={closeMobile}>Blog</Link>
-                                    </div>
-                                )}
-                            </div>
+                            {/* Ressources mobile menu hidden — restore this block to re-enable */}
                             <Link href="/qui-sommes-nous" className="mobile-nav-link" onClick={closeMobile}>Qui sommes-nous</Link>
-                            <Link href="/bilan-patrimonial" className="btn btn-gold mobile-nav-cta" onClick={closeMobile}>
+                            <Link href="/#methodology" className="mobile-nav-link" onClick={closeMobile}>Notre Approche</Link>
+                            <a href="https://calendly.com/amana-patrimoine/30min" target="_blank" rel="noopener noreferrer" className="btn btn-gold mobile-nav-cta" onClick={closeMobile}>
                                 Bilan Patrimonial
-                            </Link>
+                            </a>
                         </nav>
                     </div>
                 )}

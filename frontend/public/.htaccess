@@ -1,0 +1,25 @@
+Options -Indexes
+Options +FollowSymLinks
+
+RewriteEngine On
+
+# Force HTTPS
+RewriteCond %{HTTPS} off
+RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# Serve _next/static files directly (no rewriting)
+RewriteRule ^_next/(.*)$ _next/$1 [L]
+
+# Handle Next.js static export — serve .html files without extension
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}.html -f
+RewriteRule ^(.*)$ $1.html [L]
+
+# Handle trailing slash — serve index.html inside folder
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^(.*)/$ $1/index.html [L]
+
+# Custom 404
+ErrorDocument 404 /404.html

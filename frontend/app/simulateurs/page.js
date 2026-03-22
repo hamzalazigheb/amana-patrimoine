@@ -1,21 +1,6 @@
-import Header from '../../components/Header';
-import Footer from '../../components/Footer';
-import ZakatCalculator from '../../components/ZakatCalculator';
-import './zakat.css';
+import { notFound } from 'next/navigation';
 
-export const metadata = {
-    title: 'Calculateur de Zakat Islamique - Simulateur Gratuit',
-    description: 'Calculez votre Zakat en ligne avec notre simulateur islamique complet : liquidités, or, investissements, immobilier, commerce, cheptel. Conforme à la jurisprudence islamique.',
-};
-
+// Page hidden — remove notFound() call to restore
 export default function SimulateursPage() {
-    return (
-        <>
-            <Header />
-            <main id="main-content">
-                <ZakatCalculator />
-            </main>
-            <Footer />
-        </>
-    );
+    notFound();
 }

@@ -41,29 +41,26 @@ const securityHeaders = [
   },
 ];
 
+const isStaticBuild = process.env.STATIC_BUILD === 'true';
+
 const nextConfig = {
   reactStrictMode: true,
-  trailingSlash: false,
-  // Required for Docker deployment — creates a minimal self-contained build
-  output: 'standalone',
+  trailingSlash: isStaticBuild,
+  // Static export only when STATIC_BUILD=true (for o2switch deployment)
+  // In dev mode this is OFF so API routes and admin work normally
+  ...(isStaticBuild && { output: 'export' }),
   images: {
+    unoptimized: isStaticBuild,
     remotePatterns: [
       { protocol: 'https', hostname: 'images.unsplash.com' },
-      // localhost only in dev — never in production
       ...(process.env.NODE_ENV !== 'production'
         ? [{ protocol: 'http', hostname: 'localhost' }]
         : []),
     ],
     formats: ['image/avif', 'image/webp'],
   },
-  async headers() {
-    return [
-      {
-        source: '/(.*)',
-        headers: securityHeaders,
-      },
-    ];
-  },
+  // headers() is not supported in static export — security headers
+  // should instead be configured via .htaccess on o2switch
 };
 
 module.exports = nextConfig;
