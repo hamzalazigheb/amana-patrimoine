@@ -16,13 +16,22 @@ export default function Header() {
     const pathname = usePathname();
 
     useEffect(() => {
-        fetch('/api/public/features')
-            .then((r) => r.json())
-            .then((data) => {
-                const val = data.simulateurs_visible;
-                setSimulateursVisible(val !== false && val !== 'false');
-            })
-            .catch(() => {});
+        // Read from server-injected window.__FEATURES__ (set in layout.js) — no API call needed
+        if (typeof window !== 'undefined' && window.__FEATURES__) {
+            const val = window.__FEATURES__.simulateurs_visible;
+            setSimulateursVisible(val !== false && val !== 'false');
+        } else {
+            // Fallback: fetch from API if window.__FEATURES__ is not available
+            fetch('/api/public/features')
+                .then((r) => r.ok ? r.json() : null)
+                .then((data) => {
+                    if (data) {
+                        const val = data.simulateurs_visible;
+                        setSimulateursVisible(val !== false && val !== 'false');
+                    }
+                })
+                .catch(() => {});
+        }
     }, []);
 
     useEffect(() => {

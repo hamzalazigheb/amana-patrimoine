@@ -2,6 +2,7 @@ import './globals.css';
 import { Playfair_Display, Inter } from 'next/font/google';
 import ConsentManager from '../components/ConsentManager';
 import WhatsAppFab from '../components/WhatsAppFab';
+import prisma from '../lib/db';
 
 const playfair = Playfair_Display({
     subsets: ['latin'],
@@ -224,10 +225,32 @@ const aggregateRatingJsonLd = {
 // GTM_ID: set process.env.NEXT_PUBLIC_GTM_ID in your .env to enable Google Tag Manager
 const GTM_ID = process.env.NEXT_PUBLIC_GTM_ID;
 
-export default function RootLayout({ children }) {
+async function getFeatureFlags() {
+    try {
+        const settings = await prisma.globalSetting.findMany({
+            where: { key: { in: ['simulateurs_visible'] } },
+        });
+        const flags = { simulateurs_visible: true };
+        for (const s of settings) {
+            try { flags[s.key] = JSON.parse(s.value); } catch { flags[s.key] = s.value; }
+        }
+        return flags;
+    } catch {
+        return { simulateurs_visible: true };
+    }
+}
+
+export default async function RootLayout({ children }) {
+    const featureFlags = await getFeatureFlags();
     return (
         <html lang="fr" className={`${playfair.variable} ${inter.variable}`}>
             <head>
+                {/* Feature flags — injected server-side so Header reads instantly without a network request */}
+                <script
+                    dangerouslySetInnerHTML={{
+                        __html: `window.__FEATURES__=${JSON.stringify(featureFlags)};`,
+                    }}
+                />
                 {/* Google Consent Mode v2 — default DENY before GTM fires */}
                 <script
                     dangerouslySetInnerHTML={{

@@ -33,7 +33,7 @@ async function main() {
     contact_email: 'contact@amana-patrimoine.fr',
     contact_address: 'Paris et Île-de-France',
     calendly_url: 'https://calendly.com/amana-patrimoine/30min',
-    simulateurs_visible: 'true',
+    simulateurs_visible: true,
   };
   for (const [key, value] of Object.entries(settings)) {
     await prisma.globalSetting.upsert({
