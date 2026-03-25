@@ -3,6 +3,9 @@ import prisma from '@/lib/db';
 import { requireAdmin } from '@/lib/auth-guard';
 
 export async function GET() {
+  const { error } = await requireAdmin();
+  if (error) return error;
+
   try {
     const pages = await prisma.page.findMany({
       orderBy: { updatedAt: 'desc' },

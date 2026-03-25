@@ -3,6 +3,10 @@
 import { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import StatsSection from './StatsSection';
+import Testimonials from './Testimonials';
+import CertBadges from './CertBadges';
+import { trackCalendlyClick } from '../lib/track';
 /**
  * Sanitize HTML from the database to prevent XSS.
  * - Browser: uses native DOMParser (no dependency, no eval)
@@ -92,6 +96,8 @@ function SmartLink({ href, children, className, ...props }) {
 
 function HeroBlock({ content }) {
   const ref = useRef(null);
+  const isCalendly = (url) => url && url.includes('calendly');
+
   useEffect(() => {
     const els = ref.current?.querySelectorAll('.animate-on-load');
     els?.forEach((el, i) => {
@@ -105,23 +111,34 @@ function HeroBlock({ content }) {
     });
   }, []);
 
+  const bgSrc = safeBgUrl(content.backgroundImage);
+
   return (
     <section className="hero" ref={ref}>
-      <div
-        className="hero-slide active"
-        style={{
-          backgroundImage: `url("${safeBgUrl(content.backgroundImage)}")`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          backgroundRepeat: 'no-repeat',
-        }}
-      />
+      {bgSrc ? (
+        <div className="hero-slide active" aria-hidden="true" style={{ position: 'absolute', inset: 0, overflow: 'hidden', zIndex: 0 }}>
+          <Image
+            src={bgSrc}
+            alt=""
+            fill
+            priority
+            sizes="100vw"
+            style={{ objectFit: 'cover', objectPosition: 'center' }}
+          />
+        </div>
+      ) : (
+        <div className="hero-slide active" />
+      )}
       <div className="container">
         <div className="hero-content">
           <h1 className="animate-on-load">{content.title}</h1>
           <p className="hero-subtitle animate-on-load">{content.subtitle}</p>
           <div className="hero-cta animate-on-load">
-            <SmartLink href={content.ctaLink || '#'} className="btn btn-primary">
+            <SmartLink
+              href={content.ctaLink || '#'}
+              className="btn btn-primary"
+              onClick={isCalendly(content.ctaLink) ? () => trackCalendlyClick('hero-cta') : undefined}
+            >
               {content.ctaText || 'Prendre rendez-vous'}
             </SmartLink>
           </div>
@@ -416,6 +433,7 @@ function PartnersBlock({ content }) {
 }
 
 function CTABlock({ content }) {
+  const href = content.ctaLink || 'https://calendly.com/amana-patrimoine/30min';
   return (
     <section className="cta-section" id="contact">
       <div className="container">
@@ -424,10 +442,15 @@ function CTABlock({ content }) {
           <p className="cta-desc">{content.subtitle}</p>
           {content.description && <p className="cta-desc" style={{ marginTop: 'var(--space-4)' }}>{content.description}</p>}
           <div className="cta-buttons">
-            <SmartLink href={content.ctaLink || 'https://calendly.com/amana-patrimoine/30min'} className="btn btn-gold">
+            <SmartLink
+              href={href}
+              className="btn btn-gold"
+              onClick={() => trackCalendlyClick('cta-block')}
+            >
               {content.ctaText || 'Prendre rendez-vous'}
             </SmartLink>
           </div>
+          <CertBadges className="cta-cert-badges" />
         </div>
       </div>
     </section>
@@ -437,15 +460,33 @@ function CTABlock({ content }) {
 function PageHeroBlock({ content }) {
   const imageSrc = content.backgroundImage || content.image || '';
   const hasImage = !!imageSrc;
+  const bgSrc = hasImage ? safeBgUrl(imageSrc) : '';
+  const ctaHref = content.ctaLink || 'https://calendly.com/amana-patrimoine/30min';
   return (
-    <section className={`page-hero ${hasImage ? 'page-hero-has-bg' : ''}`} style={hasImage ? { backgroundImage: `url("${safeBgUrl(imageSrc)}")`, backgroundSize: 'cover', backgroundPosition: 'center' } : {}}>
-      <div className="container">
+    <section className={`page-hero ${hasImage ? 'page-hero-has-bg' : ''}`} style={{ position: 'relative' }}>
+      {bgSrc && (
+        <div aria-hidden="true" style={{ position: 'absolute', inset: 0, overflow: 'hidden', zIndex: 0 }}>
+          <Image
+            src={bgSrc}
+            alt=""
+            fill
+            priority
+            sizes="100vw"
+            style={{ objectFit: 'cover', objectPosition: 'center' }}
+          />
+        </div>
+      )}
+      <div className="container" style={{ position: 'relative', zIndex: 1 }}>
         <div className="page-hero-content">
           {content.badge && <span className="page-hero-badge">{content.badge}</span>}
           <h1 className="page-hero-title">{content.title}</h1>
           {content.subtitle && <p className="page-hero-subtitle">{content.subtitle}</p>}
           {content.ctaText && (
-            <SmartLink href={content.ctaLink || 'https://calendly.com/amana-patrimoine/30min'} className="btn btn-white-outline">
+            <SmartLink
+              href={ctaHref}
+              className="btn btn-white-outline"
+              onClick={() => trackCalendlyClick('page-hero')}
+            >
               {content.ctaText}
             </SmartLink>
           )}
@@ -637,6 +678,14 @@ function LegalBlock({ content }) {
   );
 }
 
+function StatsBlock({ content }) {
+  return <StatsSection stats={content?.items} />;
+}
+
+function TestimonialsBlock({ content }) {
+  return <Testimonials testimonials={content?.items} sectionTitle={content?.title} />;
+}
+
 const BLOCK_MAP = {
   hero: HeroBlock,
   pageHero: PageHeroBlock,
@@ -655,6 +704,8 @@ const BLOCK_MAP = {
   profiles: ProfilesBlock,
   founders: FoundersBlock,
   legal: LegalBlock,
+  stats: StatsBlock,
+  testimonials: TestimonialsBlock,
 };
 
 export default function BlockRenderer({ blocks }) {

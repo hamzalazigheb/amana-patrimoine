@@ -5,9 +5,9 @@ import { writeFile, mkdir } from 'fs/promises';
 import path from 'path';
 
 const UPLOAD_DIR = path.join(process.cwd(), 'public', 'uploads');
-const ALLOWED_MIME_TYPES = ['image/jpeg', 'image/png', 'image/webp', 'image/gif', 'image/svg+xml'];
+const ALLOWED_MIME_TYPES = ['image/jpeg', 'image/png', 'image/webp', 'image/gif'];
 const MAX_SIZE_BYTES = 5 * 1024 * 1024; // 5MB
-const MIME_TO_EXT = { 'image/jpeg': '.jpg', 'image/png': '.png', 'image/webp': '.webp', 'image/gif': '.gif', 'image/svg+xml': '.svg' };
+const MIME_TO_EXT = { 'image/jpeg': '.jpg', 'image/png': '.png', 'image/webp': '.webp', 'image/gif': '.gif' };
 
 export async function GET() {
   const { error } = await requireAdmin();
@@ -35,7 +35,7 @@ export async function POST(request) {
     }
 
     if (!ALLOWED_MIME_TYPES.includes(file.type)) {
-      return NextResponse.json({ error: 'Type de fichier non autorisé. Formats acceptés : JPEG, PNG, WebP, GIF, SVG.' }, { status: 400 });
+      return NextResponse.json({ error: 'Type de fichier non autorisé. Formats acceptés : JPEG, PNG, WebP, GIF.' }, { status: 400 });
     }
 
     await mkdir(UPLOAD_DIR, { recursive: true });

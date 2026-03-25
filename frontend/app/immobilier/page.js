@@ -3,6 +3,7 @@ export const dynamic = 'force-dynamic';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import BlockRenderer from '../../components/BlockRenderer';
+import Breadcrumb from '../../components/Breadcrumb';
 import { getPageBySlug } from '../../lib/cms';
 import { buildMetadata, buildBreadcrumbJsonLd, buildServiceJsonLd, buildFaqJsonLd } from '../../lib/seo';
 
@@ -25,7 +26,7 @@ export default async function ImmobilierPage() {
     const service = buildServiceJsonLd('Investissement Immobilier Halal', 'Conseil en investissement immobilier halal : SCPI conformes, financement islamique, SCI, locatif éthique.', 'immobilier');
 
     const faqBlock = page?.blocks?.find(b => b.type === 'faq');
-    const faqJsonLd = faqBlock ? buildFaqJsonLd(faqBlock.content?.items) : null;
+    const faqJsonLd = buildFaqJsonLd(faqBlock?.content?.items, 'immobilier');
 
     return (
         <>
@@ -33,6 +34,7 @@ export default async function ImmobilierPage() {
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(service) }} />
             {faqJsonLd && <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }} />}
             <Header />
+            <Breadcrumb items={[{ name: 'SCPI Halal & Immobilier Islamique', href: '/immobilier' }]} />
             <main id="main-content">
                 {page ? (
                     <BlockRenderer blocks={page.blocks} />

@@ -3,6 +3,7 @@ export const dynamic = 'force-dynamic';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import BlockRenderer from '../../components/BlockRenderer';
+import Breadcrumb from '../../components/Breadcrumb';
 import { getPageBySlug } from '../../lib/cms';
 import { buildMetadata, buildBreadcrumbJsonLd } from '../../lib/seo';
 
@@ -25,6 +26,7 @@ export default async function QuiSommesNousPage() {
         <>
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumb) }} />
             <Header />
+            <Breadcrumb items={[{ name: 'Qui sommes-nous', href: '/qui-sommes-nous' }]} />
             <main id="main-content">
                 {page ? (
                     <BlockRenderer blocks={page.blocks} />

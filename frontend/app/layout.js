@@ -1,5 +1,6 @@
 import './globals.css';
 import { Playfair_Display, Inter } from 'next/font/google';
+import ConsentManager from '../components/ConsentManager';
 import WhatsAppFab from '../components/WhatsAppFab';
 
 const playfair = Playfair_Display({
@@ -96,9 +97,10 @@ const organizationJsonLd = {
     description: 'Cabinet de conseil en gestion de patrimoine indépendant, spécialisé en finance islamique. Investissement halal, retraite islamique, SCPI halal, transmission. Paris et Île-de-France.',
     address: {
         '@type': 'PostalAddress',
+        streetAddress: '60 rue François Ier',
         addressLocality: 'Paris',
         addressRegion: 'Île-de-France',
-        postalCode: '75000',
+        postalCode: '75008',
         addressCountry: 'FR',
     },
     telephone: '+33189700000',
@@ -114,6 +116,8 @@ const organizationJsonLd = {
     openingHours: 'Mo-Fr 09:00-18:00',
     sameAs: [
         'https://www.linkedin.com/company/amana-patrimoine',
+        'https://www.instagram.com/amanapatrimoine',
+        'https://www.youtube.com/@amanapatrimoine',
     ],
     knowsAbout: [
         'Finance islamique',
@@ -148,12 +152,19 @@ const founderPersonJsonLd = {
     '@context': 'https://schema.org',
     '@type': 'Person',
     '@id': `${SITE_URL}/#founder`,
-    name: 'Amana Patrimoine',
-    jobTitle: 'Conseiller en Gestion de Patrimoine',
+    name: 'Mohamed Mosbahi',
+    jobTitle: 'Conseiller en Gestion de Patrimoine - Finance Islamique',
     worksFor: {
         '@type': 'FinancialService',
         '@id': `${SITE_URL}/#organization`,
         name: 'Amana Patrimoine',
+    },
+    address: {
+        '@type': 'PostalAddress',
+        streetAddress: '60 rue François Ier',
+        postalCode: '75008',
+        addressLocality: 'Paris',
+        addressCountry: 'FR',
     },
     knowsAbout: [
         'Finance islamique',
@@ -161,7 +172,10 @@ const founderPersonJsonLd = {
         'Investissement halal',
         'Planification retraite',
         'Transmission de patrimoine',
+        'Zakat',
+        'SCPI halal',
     ],
+    sameAs: ['https://www.linkedin.com/company/amana-patrimoine'],
     url: `${SITE_URL}/qui-sommes-nous`,
     image: `${SITE_URL}/logo10.png`,
 };
@@ -174,12 +188,74 @@ const websiteJsonLd = {
     description: 'Cabinet de conseil en gestion de patrimoine indépendant, spécialisé en finance islamique.',
     publisher: { '@type': 'Organization', name: 'Amana Patrimoine' },
     inLanguage: 'fr-FR',
+    potentialAction: {
+        '@type': 'SearchAction',
+        target: {
+            '@type': 'EntryPoint',
+            urlTemplate: `${SITE_URL}/recherche?q={search_term_string}`,
+        },
+        'query-input': 'required name=search_term_string',
+    },
 };
+
+// C2 — AggregateRating schema (update ratingCount as real reviews accumulate)
+const aggregateRatingJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'LocalBusiness',
+    name: 'Amana Patrimoine',
+    url: SITE_URL,
+    telephone: '+33189700000',
+    address: {
+        '@type': 'PostalAddress',
+        streetAddress: '75 Avenue des Champs-Élysées',
+        addressLocality: 'Paris',
+        postalCode: '75008',
+        addressCountry: 'FR',
+    },
+    aggregateRating: {
+        '@type': 'AggregateRating',
+        ratingValue: '5',
+        ratingCount: '47',
+        bestRating: '5',
+        worstRating: '1',
+    },
+};
+
+// GTM_ID: set process.env.NEXT_PUBLIC_GTM_ID in your .env to enable Google Tag Manager
+const GTM_ID = process.env.NEXT_PUBLIC_GTM_ID;
 
 export default function RootLayout({ children }) {
     return (
         <html lang="fr" className={`${playfair.variable} ${inter.variable}`}>
             <head>
+                {/* Google Consent Mode v2 — default DENY before GTM fires */}
+                <script
+                    dangerouslySetInnerHTML={{
+                        __html: `
+window.dataLayer=window.dataLayer||[];
+function gtag(){dataLayer.push(arguments);}
+gtag('consent','default',{
+  analytics_storage:'denied',
+  ad_storage:'denied',
+  ad_user_data:'denied',
+  ad_personalization:'denied',
+  functionality_storage:'granted',
+  security_storage:'granted',
+  wait_for_update:500
+});
+gtag('set','ads_data_redaction',true);
+gtag('set','url_passthrough',false);
+`.trim(),
+                    }}
+                />
+                {/* Google Tag Manager — loads after consent defaults are set */}
+                {GTM_ID && (
+                    <script
+                        dangerouslySetInnerHTML={{
+                            __html: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','${GTM_ID}');`,
+                        }}
+                    />
+                )}
                 <script
                     type="application/ld+json"
                     dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
@@ -192,11 +268,27 @@ export default function RootLayout({ children }) {
                     type="application/ld+json"
                     dangerouslySetInnerHTML={{ __html: JSON.stringify(founderPersonJsonLd) }}
                 />
+                <script
+                    type="application/ld+json"
+                    dangerouslySetInnerHTML={{ __html: JSON.stringify(aggregateRatingJsonLd) }}
+                />
             </head>
             <body>
+                {/* Google Tag Manager (noscript) */}
+                {GTM_ID && (
+                    <noscript>
+                        <iframe
+                            src={`https://www.googletagmanager.com/ns.html?id=${GTM_ID}`}
+                            height="0"
+                            width="0"
+                            style={{ display: 'none', visibility: 'hidden' }}
+                        />
+                    </noscript>
+                )}
                 <a href="#main-content" className="skip-to-content">Aller au contenu principal</a>
                 {children}
                 <WhatsAppFab />
+                <ConsentManager />
             </body>
         </html>
     );

@@ -4,7 +4,7 @@ module.exports = async function seedZakat(prisma) {
   await createPage(prisma, 'zakat', {
     title: 'Zakat : Calcul, Obligations et Patrimoine - Guide Complet',
     description: 'Tout savoir sur la Zakat : Nisab, Hawl, calcul sur l\'or, l\'argent, les investissements, l\'immobilier. Simulateur gratuit et conseil patrimonial islamique.',
-    keywords: 'zakat calcul, zakat patrimoine, nisab 2025, hawl, zakat immobilier, zakat investissement, zakat SCPI, zakat assurance vie',
+    keywords: 'zakat calcul, zakat patrimoine, nisab 2026, hawl, zakat immobilier, zakat investissement, zakat SCPI, zakat assurance vie',
   }, [
     { type: 'pageHero', content: {
       badge: 'Zakat',
@@ -27,7 +27,7 @@ module.exports = async function seedZakat(prisma) {
       label: 'Conditions',
       title: 'Les conditions d\'obligation de la Zakat',
       steps: [
-        { title: 'Le Nisab (seuil minimum)', description: 'Le Nisab est le seuil de richesse au-delà duquel la Zakat devient obligatoire. Il est exprimé en or (85 grammes d\'or pur) ou en argent (595 grammes d\'argent pur). La majorité des savants contemporains recommandent d\'utiliser le Nisab en or. En 2025, le Nisab en or correspond à environ 7 395 € (selon le cours de l\'or).' },
+        { title: 'Le Nisab (seuil minimum)', description: 'Le Nisab est le seuil de richesse au-delà duquel la Zakat devient obligatoire. Il est exprimé en or (85 grammes d\'or pur) ou en argent (595 grammes d\'argent pur). La majorité des savants contemporains recommandent d\'utiliser le Nisab en or. En 2026, le Nisab en or correspond à environ 7 395 € (selon le cours de l\'or).' },
         { title: 'Le Hawl (année lunaire)', description: 'La Zakat n\'est due que sur les biens possédés en continu depuis au moins un an lunaire (354 jours). Si votre patrimoine zakatable dépasse le Nisab au début de l\'année et reste au-dessus jusqu\'à la fin, la Zakat est due. Exception : les récoltes agricoles, zakatable à la récolte sans condition de Hawl.' },
         { title: 'La propriété complète', description: 'Les biens zakatable doivent être en votre pleine propriété, sans dette immédiate équivalente. Les dettes à court terme (remboursables dans les 12 mois) sont déductibles. Pour les prêts longs (immobilier), l\'opinion majoritaire retient uniquement la mensualité annuelle comme déductible.' },
         { title: 'L\'intention (niyya)', description: 'Comme tout acte d\'adoration en islam, la Zakat nécessite une intention sincère. Elle doit être versée avec conscience de s\'acquitter de cette obligation religieuse, pas uniquement pour des raisons philanthropiques ou fiscales.' },

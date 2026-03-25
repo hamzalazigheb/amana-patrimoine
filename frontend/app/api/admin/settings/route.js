@@ -20,7 +20,8 @@ export async function GET() {
 
   try {
     const settings = await prisma.globalSetting.findMany();
-    const obj = {};
+    // Apply defaults for feature flags so the toggle always reflects reality
+    const obj = { simulateurs_visible: true };
     for (const s of settings) {
       try { obj[s.key] = JSON.parse(s.value); } catch { obj[s.key] = s.value; }
     }

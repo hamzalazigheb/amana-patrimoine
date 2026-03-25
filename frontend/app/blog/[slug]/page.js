@@ -4,7 +4,7 @@ import Header from '../../../components/Header';
 import Footer from '../../../components/Footer';
 import BlockRenderer from '../../../components/BlockRenderer';
 import { getPageBySlug, getBlogArticles } from '../../../lib/cms';
-import { buildMetadata, buildBreadcrumbJsonLd, buildFaqJsonLd } from '../../../lib/seo';
+import { buildMetadata, buildBreadcrumbJsonLd, buildFaqJsonLd, buildBlogPostingJsonLd } from '../../../lib/seo';
 import Link from 'next/link';
 
 export async function generateMetadata({ params }) {
@@ -46,10 +46,20 @@ export default async function BlogArticlePage({ params }) {
     ]);
     const faqBlock = page?.blocks?.find(b => b.type === 'faq');
     const faqJsonLd = faqBlock ? buildFaqJsonLd(faqBlock.content?.items) : null;
+    const heroBlock = page?.blocks?.find(b => b.type === 'hero' || b.type === 'pageHero');
+    const blogPostingJsonLd = buildBlogPostingJsonLd({
+        title: page.title,
+        description: page.description,
+        slug,
+        createdAt: page.createdAt,
+        updatedAt: page.updatedAt,
+        image: heroBlock?.content?.backgroundImage || heroBlock?.content?.image || null,
+    });
 
     return (
         <>
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumb) }} />
+            <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(blogPostingJsonLd) }} />
             {faqJsonLd && <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }} />}
             <Header />
             <main id="main-content">

@@ -3,6 +3,7 @@ export const dynamic = 'force-dynamic';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import BlockRenderer from '../../components/BlockRenderer';
+import Breadcrumb from '../../components/Breadcrumb';
 import EnfantsSimulator from '../../components/EnfantsSimulator';
 import { getPageBySlug } from '../../lib/cms';
 import { buildMetadata, buildBreadcrumbJsonLd, buildServiceJsonLd, buildFaqJsonLd } from '../../lib/seo';
@@ -24,7 +25,7 @@ export default async function EnfantsPage() {
     const service = buildServiceJsonLd('Épargne Enfants Halal', 'Conseil en épargne halal pour financer les études des enfants sans riba, conforme à la finance islamique.', 'enfants');
 
     const faqBlock = page?.blocks?.find(b => b.type === 'faq');
-    const faqJsonLd = faqBlock ? buildFaqJsonLd(faqBlock.content?.items) : null;
+    const faqJsonLd = buildFaqJsonLd(faqBlock?.content?.items, 'enfants');
 
     if (!page) {
         return (
@@ -51,6 +52,7 @@ export default async function EnfantsPage() {
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(service) }} />
             {faqJsonLd && <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }} />}
             <Header />
+            <Breadcrumb items={[{ name: 'Épargne Enfants', href: '/enfants' }]} />
             <main id="main-content">
                 <BlockRenderer blocks={blocksBefore} />
                 <section className="content-section">

@@ -2,13 +2,13 @@ const { createPage } = require('./_helpers');
 
 module.exports = async function seedBlogPerHalal(prisma) {
   await createPage(prisma, 'blog/per-halal-retraite-islamique', {
-    title: 'PER Halal : Préparez votre Retraite et Réduisez vos Impôts (2025)',
-    description: 'Le PER halal expliqué : comment déduire ses versements, choisir des fonds conformes, préparer sa retraite islamique. Guide pratique 2025.',
-    keywords: 'PER halal 2025, plan épargne retraite islamique, PER Shariah Compliant, retraite islamique France, déduction fiscale PER halal',
+    title: 'PER Halal : Préparez votre Retraite et Réduisez vos Impôts (2026)',
+    description: 'Le PER halal expliqué : comment déduire ses versements, choisir des fonds conformes, préparer sa retraite islamique. Guide pratique 2026.',
+    keywords: 'PER halal 2026, plan épargne retraite islamique, PER Shariah Compliant, retraite islamique France, déduction fiscale PER halal',
   }, [
     { type: 'pageHero', content: {
       badge: 'Retraite Islamique',
-      title: 'PER halal 2025 : préparez votre retraite islamique en réduisant vos impôts',
+      title: 'PER halal 2026 : préparez votre retraite islamique en réduisant vos impôts',
       subtitle: 'Le Plan d\'Épargne Retraite (PER) est l\'outil fiscal le plus puissant pour préparer sa retraite en France. Il peut être rendu 100% halal en choisissant les bons supports. Déduction fiscale immédiate, fonds Shariah Compliant, sortie en capital à la retraite.',
       image: '/Site 29.png',
       ctaText: 'Prendre rendez-vous',
@@ -17,7 +17,7 @@ module.exports = async function seedBlogPerHalal(prisma) {
       label: 'Rappel',
       title: 'Qu\'est-ce que le PER et pourquoi est-il si puissant fiscalement ?',
       paragraphs: [
-        'Le Plan d\'Épargne Retraite (PER) est un produit d\'épargne créé par la loi PACTE en 2019. Son principal avantage : les versements effectués sont déductibles du revenu imposable, dans la limite d\'un plafond annuel (généralement 10% des revenus professionnels, plafonné à 35 194 € en 2025).',
+        'Le Plan d\'Épargne Retraite (PER) est un produit d\'épargne créé par la loi PACTE en 2019. Son principal avantage : les versements effectués sont déductibles du revenu imposable, dans la limite d\'un plafond annuel (généralement 10% des revenus professionnels, plafonné à 35 194 € en 2026).',
         'Concrètement, si vous versez 10 000 € sur un PER et que vous êtes dans la tranche marginale d\'imposition (TMI) à 30%, vous économisez 3 000 € d\'impôts dès l\'année suivante. À 41%, c\'est 4 100 € d\'économie. À 45%, c\'est 4 500 €.',
         'Le capital est généralement bloqué jusqu\'à la retraite (sauf accidents de la vie et achat de résidence principale), ce qui incite à une épargne de long terme. À la retraite, vous pouvez sortir en capital (imposition sur les gains uniquement) ou en rente. La sortie en capital est généralement la plus avantageuse.',
       ],

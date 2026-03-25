@@ -3,6 +3,7 @@ export const dynamic = 'force-dynamic';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import BlockRenderer from '../../components/BlockRenderer';
+import Breadcrumb from '../../components/Breadcrumb';
 import { getPageBySlug } from '../../lib/cms';
 import { buildMetadata, buildBreadcrumbJsonLd, buildServiceJsonLd, buildFaqJsonLd } from '../../lib/seo';
 
@@ -23,7 +24,7 @@ export default async function StrategiePage() {
     const service = buildServiceJsonLd('Stratégie Patrimoniale Islamique', 'Conseil en stratégie patrimoniale personnalisée et conforme à la finance islamique : bilan, investissements halal, transmission.', 'strategie');
 
     const faqBlock = page?.blocks?.find(b => b.type === 'faq');
-    const faqJsonLd = faqBlock ? buildFaqJsonLd(faqBlock.content?.items) : null;
+    const faqJsonLd = buildFaqJsonLd(faqBlock?.content?.items, 'strategie');
 
     return (
         <>
@@ -31,6 +32,7 @@ export default async function StrategiePage() {
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(service) }} />
             {faqJsonLd && <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }} />}
             <Header />
+            <Breadcrumb items={[{ name: 'Stratégie Patrimoniale', href: '/strategie' }]} />
             <main id="main-content">
                 {page ? (
                     <BlockRenderer blocks={page.blocks} />

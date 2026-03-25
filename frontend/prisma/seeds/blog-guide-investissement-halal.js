@@ -2,13 +2,13 @@ const { createPage } = require('./_helpers');
 
 module.exports = async function seedBlogInvestissementHalal(prisma) {
   await createPage(prisma, 'blog/guide-investissement-halal', {
-    title: 'Guide Complet de l\'Investissement Halal en France (2025)',
-    description: 'Tout savoir sur l\'investissement halal en France : SCPI, PER, assurance-vie, actions. Principes, solutions et pièges à éviter. Guide expert 2025.',
-    keywords: 'investissement halal guide, placements halal 2025, comment investir halal France, SCPI halal guide',
+    title: 'Guide Complet de l\'Investissement Halal en France (2026)',
+    description: 'Tout savoir sur l\'investissement halal en France : SCPI, PER, assurance-vie, actions. Principes, solutions et pièges à éviter. Guide expert 2026.',
+    keywords: 'investissement halal guide, placements halal 2026, comment investir halal France, SCPI halal guide',
   }, [
     { type: 'pageHero', content: {
       badge: 'Guide',
-      title: 'Guide complet de l\'investissement halal en France (2025)',
+      title: 'Guide complet de l\'investissement halal en France (2026)',
       subtitle: 'Vous souhaitez investir en accord avec vos convictions islamiques mais vous ne savez pas par où commencer ? Ce guide vous explique tout : les principes, les solutions disponibles, les pièges à éviter et les étapes concrètes pour démarrer.',
       image: '/edu-heritage.png',
       ctaText: 'Prendre rendez-vous',

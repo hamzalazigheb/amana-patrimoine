@@ -23,6 +23,8 @@ const BLOCK_TYPES = [
   { value: 'education', label: 'Ressources éducatives', fields: ['title', 'description', 'items'] },
   { value: 'legal', label: 'Mentions légales', fields: ['body'] },
   { value: 'caseStudy', label: 'Étude de cas', fields: ['title', 'body'] },
+  { value: 'stats', label: 'Chiffres clés (KPI)', fields: ['items'] },
+  { value: 'testimonials', label: 'Témoignages clients', fields: ['title', 'items'] },
   { value: 'custom', label: 'Bloc personnalisé', fields: ['body'] },
 ];
 
@@ -37,7 +39,9 @@ const ITEM_FIELDS = {
   partners:    [{ key: 'name', label: 'Nom', type: 'text' }, { key: 'logo', label: 'Logo (chemin)', type: 'text' }],
   founders:    [{ key: 'name', label: 'Nom', type: 'text' }, { key: 'role', label: 'Rôle', type: 'text' }, { key: 'image', label: 'Photo (chemin)', type: 'text' }, { key: 'description', label: 'Description', type: 'textarea' }],
   reassurance: [{ key: 'title', label: 'Titre', type: 'text' }, { key: 'description', label: 'Description', type: 'textarea' }],
-  education:   [{ key: 'image', label: 'Image (chemin)', type: 'text' }, { key: 'tag', label: 'Tag', type: 'text' }, { key: 'title', label: 'Titre', type: 'text' }],
+  education:      [{ key: 'image', label: 'Image (chemin)', type: 'text' }, { key: 'tag', label: 'Tag', type: 'text' }, { key: 'title', label: 'Titre', type: 'text' }],
+  stats:          [{ key: 'value', label: 'Valeur (nombre)', type: 'text' }, { key: 'suffix', label: 'Suffixe (ex: +, %)', type: 'text' }, { key: 'prefix', label: 'Préfixe (optionnel)', type: 'text' }, { key: 'label', label: 'Libellé', type: 'text' }],
+  testimonials:   [{ key: 'name', label: 'Prénom (ex: Karim B.)', type: 'text' }, { key: 'location', label: 'Ville', type: 'text' }, { key: 'context', label: 'Contexte (ex: SCPI halal)', type: 'text' }, { key: 'text', label: 'Témoignage', type: 'textarea' }, { key: 'rating', label: 'Note (1-5)', type: 'text' }],
 };
 
 function ItemsEditor({ blockType, items, onChange }) {

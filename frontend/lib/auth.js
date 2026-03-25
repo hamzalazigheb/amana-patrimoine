@@ -32,7 +32,8 @@ export async function getSession() {
 export function setTokenCookie(response, token) {
   response.cookies.set(TOKEN_NAME, token, {
     httpOnly: true,
-    secure: process.env.ENABLE_HSTS === 'true',
+    // Secure flag only when HTTPS is active — set HTTPS_ENABLED=true in .env once SSL is configured
+    secure: process.env.HTTPS_ENABLED === 'true',
     sameSite: 'lax',
     maxAge: TOKEN_MAX_AGE,
     path: '/',
@@ -42,7 +43,7 @@ export function setTokenCookie(response, token) {
 export function clearTokenCookie(response) {
   response.cookies.set(TOKEN_NAME, '', {
     httpOnly: true,
-    secure: process.env.ENABLE_HSTS === 'true',
+    secure: process.env.HTTPS_ENABLED === 'true',
     sameSite: 'lax',
     maxAge: 0,
     path: '/',

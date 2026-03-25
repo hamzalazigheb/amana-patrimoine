@@ -3,6 +3,7 @@ export const dynamic = 'force-dynamic';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import BlockRenderer from '../../components/BlockRenderer';
+import Breadcrumb from '../../components/Breadcrumb';
 import SuccessionCalculator from '../../components/SuccessionCalculator';
 import { getPageBySlug } from '../../lib/cms';
 import { buildMetadata, buildBreadcrumbJsonLd, buildServiceJsonLd, buildFaqJsonLd } from '../../lib/seo';
@@ -24,7 +25,7 @@ export default async function SuccessionPage() {
     const service = buildServiceJsonLd('Transmission de Patrimoine', 'Conseil en transmission et succession conforme à la finance islamique.', 'succession');
 
     const faqBlock = page?.blocks?.find(b => b.type === 'faq');
-    const faqJsonLd = faqBlock ? buildFaqJsonLd(faqBlock.content?.items) : null;
+    const faqJsonLd = buildFaqJsonLd(faqBlock?.content?.items, 'succession');
 
     if (!page) {
         return (
@@ -51,6 +52,7 @@ export default async function SuccessionPage() {
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(service) }} />
             {faqJsonLd && <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }} />}
             <Header />
+            <Breadcrumb items={[{ name: 'Succession & Transmission', href: '/succession' }]} />
             <main id="main-content">
                 <BlockRenderer blocks={blocksBefore} />
                 <SuccessionCalculator />

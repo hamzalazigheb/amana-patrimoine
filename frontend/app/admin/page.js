@@ -11,6 +11,13 @@ import EducationEditor from '@/components/admin/blocks/EducationEditor';
 import PartnersEditor from '@/components/admin/blocks/PartnersEditor';
 import CTAEditor from '@/components/admin/blocks/CTAEditor';
 import FAQEditor from '@/components/admin/blocks/FAQEditor';
+import StatsEditor from '@/components/admin/blocks/StatsEditor';
+import TestimonialsEditor from '@/components/admin/blocks/TestimonialsEditor';
+import ProfilesEditor from '@/components/admin/blocks/ProfilesEditor';
+import ToolsEditor from '@/components/admin/blocks/ToolsEditor';
+import FoundersEditor from '@/components/admin/blocks/FoundersEditor';
+import IntroEditor from '@/components/admin/blocks/IntroEditor';
+import CaseStudyEditor from '@/components/admin/blocks/CaseStudyEditor';
 
 const BLOCK_LABELS = {
   hero: 'Hero (bannière principale)',
@@ -29,6 +36,8 @@ const BLOCK_LABELS = {
   profiles: 'Profils',
   founders: 'Fondateurs',
   legal: 'Mentions légales',
+  stats: 'Chiffres clés (KPI)',
+  testimonials: 'Témoignages clients',
 };
 
 function getBlockEditor(type) {
@@ -54,6 +63,20 @@ function getBlockEditor(type) {
       return CTAEditor;
     case 'faq':
       return FAQEditor;
+    case 'stats':
+      return StatsEditor;
+    case 'testimonials':
+      return TestimonialsEditor;
+    case 'profiles':
+      return ProfilesEditor;
+    case 'tools':
+      return ToolsEditor;
+    case 'founders':
+      return FoundersEditor;
+    case 'intro':
+      return IntroEditor;
+    case 'caseStudy':
+      return CaseStudyEditor;
     default:
       return null;
   }
@@ -339,6 +362,14 @@ export default function AdminDashboard() {
     }
   }, []);
 
+  const fetchFeatures = useCallback(async () => {
+    const fr = await fetch('/api/admin/settings');
+    if (fr.ok) {
+      const data = await fr.json();
+      if (data.settings) setFeatures((prev) => ({ ...prev, ...data.settings }));
+    }
+  }, []);
+
   useEffect(() => {
     const checkAuth = async () => {
       try {
@@ -347,8 +378,7 @@ export default function AdminDashboard() {
         const data = await res.json();
         setUser(data.user);
         await fetchPages();
-        const fr = await fetch('/api/public/features');
-        if (fr.ok) setFeatures(await fr.json());
+        await fetchFeatures();
       } catch {
         router.push('/admin/login');
       } finally {
@@ -356,7 +386,7 @@ export default function AdminDashboard() {
       }
     };
     checkAuth();
-  }, [router, fetchPages]);
+  }, [router, fetchPages, fetchFeatures]);
 
   const toggleFeature = async (key) => {
     const newVal = !features[key];
@@ -368,12 +398,16 @@ export default function AdminDashboard() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ [key]: newVal }),
       });
-      if (!res.ok) throw new Error();
-      setFeatures((prev) => ({ ...prev, [key]: newVal }));
+      if (!res.ok) {
+        const body = await res.json().catch(() => ({}));
+        throw new Error(body.error || 'Erreur');
+      }
+      // Re-read from DB to confirm the value was actually saved
+      await fetchFeatures();
       setFeatureMsg('Sauvegardé !');
       setTimeout(() => setFeatureMsg(''), 2500);
-    } catch {
-      setFeatureMsg('Erreur de sauvegarde');
+    } catch (err) {
+      setFeatureMsg(err.message || 'Erreur de sauvegarde');
     } finally {
       setFeatureSaving(false);
     }

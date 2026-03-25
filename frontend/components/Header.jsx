@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { trackCalendlyClick } from '../lib/track';
 
 export default function Header() {
     const [scrolled, setScrolled] = useState(false);
@@ -187,7 +188,24 @@ export default function Header() {
                         )}
                     </div>
                     <Link href="/qui-sommes-nous" className="nav-link">Qui sommes-nous</Link>
-                    <Link href="/bilan-patrimonial" className="btn btn-primary btn-sm">Bilan Patrimonial</Link>
+                    <a
+                        href="tel:+33189700000"
+                        className="header-phone"
+                        aria-label="Appeler Amana Patrimoine"
+                        onClick={() => typeof window !== 'undefined' && (window.dataLayer = window.dataLayer || []) && window.dataLayer.push({ event: 'phone_click', event_label: 'header' })}
+                    >
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true" style={{ marginRight: '5px', flexShrink: 0 }}>
+                            <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.12 1.24 2 2 0 012.11 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 14.92z" />
+                        </svg>
+                        01 89 70 00 00
+                    </a>
+                    <a
+                        href="/bilan-patrimonial"
+                        className="btn btn-primary btn-sm"
+                        onClick={() => trackCalendlyClick('header-nav')}
+                    >
+                        Bilan Patrimonial
+                    </a>
                 </nav>
 
                 {/* Mobile nav */}
@@ -239,9 +257,19 @@ export default function Header() {
                                 )}
                             </div>
                             <Link href="/qui-sommes-nous" className="mobile-nav-link" onClick={closeMobile}>Qui sommes-nous</Link>
-                            <Link href="/bilan-patrimonial" className="btn btn-gold mobile-nav-cta" onClick={closeMobile}>
+                            <a href="tel:+33189700000" className="mobile-nav-phone" onClick={closeMobile}>
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true" style={{ marginRight: '6px' }}>
+                                    <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.12 1.24 2 2 0 012.11 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 14.92z" />
+                                </svg>
+                                01 89 70 00 00
+                            </a>
+                            <a
+                                href="/bilan-patrimonial"
+                                className="btn btn-gold mobile-nav-cta"
+                                onClick={() => { closeMobile(); trackCalendlyClick('header-mobile'); }}
+                            >
                                 Bilan Patrimonial
-                            </Link>
+                            </a>
                         </nav>
                     </div>
                 )}

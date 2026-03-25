@@ -3,6 +3,9 @@ import prisma from '@/lib/db';
 import { requireAdmin } from '@/lib/auth-guard';
 
 export async function GET(request, { params }) {
+  const { error } = await requireAdmin();
+  if (error) return error;
+
   try {
     const page = await prisma.page.findUnique({
       where: { id: params.id },

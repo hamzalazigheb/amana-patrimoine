@@ -9,8 +9,8 @@ const securityHeaders = [
   { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
   // Disable browser features not needed by this site
   { key: 'Permissions-Policy', value: 'camera=(), microphone=(), geolocation=(), payment=()' },
-  // Force HTTPS (only when ENABLE_HSTS=true, i.e. after SSL is configured)
-  ...(process.env.ENABLE_HSTS === 'true'
+  // Force HTTPS (only when HTTPS_ENABLED=true, i.e. after SSL is configured)
+  ...(process.env.HTTPS_ENABLED === 'true'
     ? [{ key: 'Strict-Transport-Security', value: 'max-age=31536000; includeSubDomains; preload' }]
     : []),
   // Content Security Policy
@@ -36,7 +36,7 @@ const securityHeaders = [
       "object-src 'none'",
       "base-uri 'self'",
       "form-action 'self'",
-      ...(process.env.ENABLE_HSTS === 'true' ? ["upgrade-insecure-requests"] : []),
+      ...(process.env.HTTPS_ENABLED === 'true' ? ["upgrade-insecure-requests"] : []),
     ].join('; '),
   },
 ];
