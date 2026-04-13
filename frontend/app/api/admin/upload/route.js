@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { getSession } from '@/lib/auth';
 import { writeFile, mkdir } from 'fs/promises';
 import path from 'path';
+import prisma from '@/lib/db';
 
 const ALLOWED_MIME_TYPES = ['image/jpeg', 'image/png', 'image/webp', 'image/gif'];
 const MAX_SIZE_BYTES = 5 * 1024 * 1024; // 5MB
@@ -40,6 +41,20 @@ export async function POST(request) {
 
     const filePath = path.join(uploadDir, safeName);
     await writeFile(filePath, buffer);
+
+    // Save to Media library so it appears in /admin/media
+    try {
+      await prisma.media.create({
+        data: {
+          filename: safeName,
+          path: `/uploads/${safeName}`,
+          mimeType: file.type,
+          size: buffer.length,
+        },
+      });
+    } catch {
+      // Non-blocking: media record failure doesn't break the upload
+    }
 
     return NextResponse.json({ url: `/uploads/${safeName}`, filename: safeName });
   } catch (error) {

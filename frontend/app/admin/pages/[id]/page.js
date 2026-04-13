@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import AdminShell from '../../AdminShell';
+import ImageUpload from '../../../components/admin/ImageUpload';
 
 const BLOCK_TYPES = [
   { value: 'pageHero', label: 'Hero de page', fields: ['badge', 'title', 'subtitle', 'image', 'ctaText'] },
@@ -36,10 +37,10 @@ const ITEM_FIELDS = {
   profiles:    [{ key: 'profile', label: 'Profil', type: 'text' }, { key: 'solutions', label: 'Solutions', type: 'text' }],
   trust:       [{ key: 'title', label: 'Titre', type: 'text' }, { key: 'description', label: 'Description', type: 'textarea' }],
   methodology: [{ key: 'title', label: 'Titre', type: 'text' }, { key: 'description', label: 'Description', type: 'textarea' }],
-  partners:    [{ key: 'name', label: 'Nom', type: 'text' }, { key: 'logo', label: 'Logo (chemin)', type: 'text' }],
-  founders:    [{ key: 'name', label: 'Nom', type: 'text' }, { key: 'role', label: 'Rôle', type: 'text' }, { key: 'image', label: 'Photo (chemin)', type: 'text' }, { key: 'description', label: 'Description', type: 'textarea' }],
+  partners:    [{ key: 'name', label: 'Nom', type: 'text' }, { key: 'logo', label: 'Logo', type: 'image' }],
+  founders:    [{ key: 'name', label: 'Nom', type: 'text' }, { key: 'role', label: 'Rôle', type: 'text' }, { key: 'image', label: 'Photo', type: 'image' }, { key: 'description', label: 'Description', type: 'textarea' }],
   reassurance: [{ key: 'title', label: 'Titre', type: 'text' }, { key: 'description', label: 'Description', type: 'textarea' }],
-  education:      [{ key: 'image', label: 'Image (chemin)', type: 'text' }, { key: 'tag', label: 'Tag', type: 'text' }, { key: 'title', label: 'Titre', type: 'text' }],
+  education:      [{ key: 'image', label: 'Image', type: 'image' }, { key: 'tag', label: 'Tag', type: 'text' }, { key: 'title', label: 'Titre', type: 'text' }],
   stats:          [{ key: 'value', label: 'Valeur (nombre)', type: 'text' }, { key: 'suffix', label: 'Suffixe (ex: +, %)', type: 'text' }, { key: 'prefix', label: 'Préfixe (optionnel)', type: 'text' }, { key: 'label', label: 'Libellé', type: 'text' }],
   testimonials:   [{ key: 'name', label: 'Prénom (ex: Karim B.)', type: 'text' }, { key: 'location', label: 'Ville', type: 'text' }, { key: 'context', label: 'Contexte (ex: SCPI halal)', type: 'text' }, { key: 'text', label: 'Témoignage', type: 'textarea' }, { key: 'rating', label: 'Note (1-5)', type: 'text' }],
 };
@@ -87,28 +88,39 @@ function ItemsEditor({ blockType, items, onChange }) {
           </div>
           {fields.map((field) => (
             <div key={field.key} className="admin-form-group" style={{ marginBottom: '10px' }}>
-              <label style={{ fontSize: '12px' }}>{field.label}</label>
-              {field.type === 'textarea' ? (
-                <textarea
-                  className="admin-textarea"
-                  style={{ minHeight: '70px' }}
+              {field.type === 'image' ? (
+                <ImageUpload
+                  label={field.label}
+                  hint="400 × 400 px"
                   value={item[field.key] || ''}
-                  onChange={(e) => updateItem(idx, field.key, e.target.value)}
-                />
-              ) : field.type === 'features' ? (
-                <textarea
-                  className="admin-textarea"
-                  style={{ minHeight: '60px' }}
-                  placeholder="Une caractéristique par ligne"
-                  value={(item[field.key] || []).join('\n')}
-                  onChange={(e) => updateItem(idx, field.key, e.target.value.split('\n').filter(l => l.trim()))}
+                  onChange={(url) => updateItem(idx, field.key, url)}
                 />
               ) : (
-                <input
-                  className="admin-input"
-                  value={item[field.key] || ''}
-                  onChange={(e) => updateItem(idx, field.key, e.target.value)}
-                />
+                <>
+                  <label style={{ fontSize: '12px' }}>{field.label}</label>
+                  {field.type === 'textarea' ? (
+                    <textarea
+                      className="admin-textarea"
+                      style={{ minHeight: '70px' }}
+                      value={item[field.key] || ''}
+                      onChange={(e) => updateItem(idx, field.key, e.target.value)}
+                    />
+                  ) : field.type === 'features' ? (
+                    <textarea
+                      className="admin-textarea"
+                      style={{ minHeight: '60px' }}
+                      placeholder="Une caractéristique par ligne"
+                      value={(item[field.key] || []).join('\n')}
+                      onChange={(e) => updateItem(idx, field.key, e.target.value.split('\n').filter(l => l.trim()))}
+                    />
+                  ) : (
+                    <input
+                      className="admin-input"
+                      value={item[field.key] || ''}
+                      onChange={(e) => updateItem(idx, field.key, e.target.value)}
+                    />
+                  )}
+                </>
               )}
             </div>
           ))}
@@ -330,12 +342,18 @@ export default function PageEditorPage() {
                 <textarea className="admin-textarea" style={{ minHeight: '150px' }} value={(block.content.paragraphs || []).join('\n')} onChange={(e) => updateBlockContent(index, 'paragraphs', e.target.value.split('\n'))} />
               </div>
             )}
-            {(blockDef.fields.includes('image') || blockDef.fields.includes('backgroundImage')) && (
-              <div className="admin-form-group">
-                <label>Image (chemin)</label>
-                <input className="admin-input" value={block.content.image || block.content.backgroundImage || ''} onChange={(e) => updateBlockContent(index, blockDef.fields.includes('backgroundImage') ? 'backgroundImage' : 'image', e.target.value)} placeholder="/uploads/image.jpg" />
-              </div>
-            )}
+            {(blockDef.fields.includes('image') || blockDef.fields.includes('backgroundImage')) && (() => {
+              const imgKey = blockDef.fields.includes('backgroundImage') ? 'backgroundImage' : 'image';
+              const hint = imgKey === 'backgroundImage' ? '1920 × 800 px' : '800 × 600 px';
+              return (
+                <ImageUpload
+                  label="Image"
+                  hint={hint}
+                  value={block.content[imgKey] || block.content.image || block.content.backgroundImage || ''}
+                  onChange={(url) => updateBlockContent(index, imgKey, url)}
+                />
+              );
+            })()}
             {blockDef.fields.includes('background') && (
               <div className="admin-form-group">
                 <label>Fond</label>

@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
+import Image from 'next/image';
 
 const resources = [
     {
@@ -68,7 +69,14 @@ export default function Education() {
                     {resources.map((resource, index) => (
                         <div key={index} className="education-card">
                             <div className="education-image">
-                                <img src={resource.image} alt={resource.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                                <Image
+                                    src={resource.image}
+                                    alt={resource.title}
+                                    width={400}
+                                    height={250}
+                                    sizes="(max-width: 768px) 72vw, 33vw"
+                                    style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                                />
                             </div>
                             <div className="education-content">
                                 <div style={{ display: 'flex', gap: '8px', alignItems: 'center', flexWrap: 'wrap' }}>

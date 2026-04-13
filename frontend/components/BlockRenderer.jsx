@@ -41,11 +41,16 @@ function sanitize(html) {
   }
 }
 
-/** Validate a URL is safe to use as a CSS background-image (prevents CSS injection). */
+/** Validate a URL is safe to use as an image src (prevents CSS injection). */
 function safeBgUrl(url) {
   if (!url) return '';
   const trimmed = String(url).trim();
-  if (trimmed.startsWith('/') || trimmed.startsWith('https://') || trimmed.startsWith('http://localhost')) {
+  // Allow relative paths and http(s) URLs — block javascript: and data: schemes
+  if (
+    trimmed.startsWith('/') ||
+    trimmed.startsWith('https://') ||
+    trimmed.startsWith('http://')
+  ) {
     return trimmed;
   }
   return '';
@@ -62,13 +67,9 @@ function useAnimateOnScroll(threshold = 0.1) {
           if (entry.isIntersecting) {
             const items = entry.target.querySelectorAll('.animate-item');
             items.forEach((item, i) => {
-              item.style.opacity = '0';
-              item.style.transform = 'translateY(15px)';
-              setTimeout(() => {
-                item.style.transition = 'all 0.8s cubic-bezier(0.16, 1, 0.3, 1)';
-                item.style.opacity = '1';
-                item.style.transform = 'translateY(0)';
-              }, i * 100);
+              item.style.animationDelay = `${i * 80}ms`;
+              item.classList.add('animate-item--visible');
+              observer.unobserve(entry.target);
             });
           }
         });
@@ -95,26 +96,12 @@ function SmartLink({ href, children, className, ...props }) {
 }
 
 function HeroBlock({ content }) {
-  const ref = useRef(null);
   const isCalendly = (url) => url && url.includes('calendly');
-
-  useEffect(() => {
-    const els = ref.current?.querySelectorAll('.animate-on-load');
-    els?.forEach((el, i) => {
-      el.style.opacity = '0';
-      el.style.transform = 'translateY(20px)';
-      setTimeout(() => {
-        el.style.transition = 'all 0.8s cubic-bezier(0.16, 1, 0.3, 1)';
-        el.style.opacity = '1';
-        el.style.transform = 'translateY(0)';
-      }, 100 + i * 100);
-    });
-  }, []);
 
   const bgSrc = safeBgUrl(content.backgroundImage);
 
   return (
-    <section className="hero" ref={ref}>
+    <section className="hero">
       {bgSrc ? (
         <div className="hero-slide active" aria-hidden="true" style={{ position: 'absolute', inset: 0, overflow: 'hidden', zIndex: 0 }}>
           <Image
@@ -153,6 +140,30 @@ function HeroBlock({ content }) {
   );
 }
 
+function TrustItem({ item, index }) {
+  const [open, setOpen] = useState(false);
+  return (
+    <div className={`trust-item animate-item ${open ? 'trust-item--open' : ''}`}>
+      <button
+        className="trust-item-btn"
+        onClick={() => setOpen(!open)}
+        aria-expanded={open}
+      >
+        <span className="trust-item-num">0{index + 1}</span>
+        <span className="trust-title">{item.title}</span>
+        <span className="trust-item-arrow" aria-hidden="true">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+            <polyline points="6 9 12 15 18 9"/>
+          </svg>
+        </span>
+      </button>
+      <div className="trust-item-body">
+        <p className="trust-desc">{item.description}</p>
+      </div>
+    </div>
+  );
+}
+
 function TrustBlock({ content }) {
   const ref = useAnimateOnScroll();
   return (
@@ -163,14 +174,38 @@ function TrustBlock({ content }) {
         </div>
         <div className="trust-grid">
           {(content.items || []).map((item, i) => (
-            <div key={i} className="trust-item animate-item">
-              <h3 className="trust-title">{item.title}</h3>
-              <p className="trust-desc">{item.description}</p>
-            </div>
+            <TrustItem key={i} item={item} index={i} />
           ))}
         </div>
       </div>
     </section>
+  );
+}
+
+const PRINCIPLE_META = [
+  { icon: <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/></svg>, label: 'Exclusion riba & secteurs' },
+  { icon: <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>, label: 'Conseillers certifiés' },
+  { icon: <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>, label: 'Performance & éthique' },
+];
+
+function PrincipleParagraph({ text, index }) {
+  const [open, setOpen] = useState(false);
+  const meta = PRINCIPLE_META[index] || PRINCIPLE_META[0];
+  return (
+    <div className={`principle-item ${open ? 'principle-item--open' : ''}`}>
+      <button className="principle-btn" onClick={() => setOpen(!open)} aria-expanded={open}>
+        <span className="principle-icon" aria-hidden="true">{meta.icon}</span>
+        <span className="principle-label">{meta.label}</span>
+        <span className="principle-arrow" aria-hidden="true">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+            <polyline points="6 9 12 15 18 9"/>
+          </svg>
+        </span>
+      </button>
+      <div className="principle-body">
+        <p>{text}</p>
+      </div>
+    </div>
   );
 }
 
@@ -268,16 +303,22 @@ function ContentBlock({ content }) {
             </div>
             <div className="content-section-body">
               {content.bigText && (
-                <p style={{ fontSize: '1.25rem', color: 'var(--color-brass-dark)', fontWeight: 500, marginBottom: '1.5rem' }}>
-                  {content.bigText}
-                </p>
+                <p className="content-big-text">{content.bigText}</p>
               )}
               {(content.paragraphs || []).length > 0 && (
-                <div className="text-content">
-                  {content.paragraphs.map((p, i) => (
-                    <p key={i}>{p}</p>
-                  ))}
-                </div>
+                content.background === 'beige' ? (
+                  <div className="text-content principles-list">
+                    {content.paragraphs.map((p, i) => (
+                      <PrincipleParagraph key={i} text={p} index={i} />
+                    ))}
+                  </div>
+                ) : (
+                  <div className="text-content">
+                    {content.paragraphs.map((p, i) => (
+                      <p key={i}>{p}</p>
+                    ))}
+                  </div>
+                )
               )}
               {content.highlight && (
                 <div className="highlight-box">
@@ -631,13 +672,52 @@ function ProfilesBlock({ content }) {
 }
 
 function IntroBlock({ content }) {
+  const [expanded, setExpanded] = useState(false);
+  const paragraphs = content.paragraphs || [];
+
   return (
     <section className="intro-section">
       <div className="container">
         <div className="intro-content">
-          {(content.paragraphs || []).map((p, i) => (
-            <p key={i}>{p}</p>
-          ))}
+          {/* First paragraph — always visible, styled as pull-quote on mobile */}
+          {paragraphs[0] && (
+            <p className="intro-lead">{paragraphs[0]}</p>
+          )}
+
+          {/* Pillars row — extracted from the second paragraph on mobile */}
+          <div className="intro-pillars">
+            <span className="intro-pillar">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+              Indépendance totale
+            </span>
+            <span className="intro-pillar">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+              Transparence absolue
+            </span>
+            <span className="intro-pillar">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+              Conforme charia
+            </span>
+          </div>
+
+          {/* Remaining paragraphs — collapsible on mobile */}
+          {paragraphs.length > 1 && (
+            <div className={`intro-extra ${expanded ? 'intro-extra--open' : ''}`}>
+              {paragraphs.slice(1).map((p, i) => (
+                <p key={i}>{p}</p>
+              ))}
+            </div>
+          )}
+
+          {paragraphs.length > 1 && (
+            <button
+              className="intro-toggle"
+              onClick={() => setExpanded(!expanded)}
+              aria-expanded={expanded}
+            >
+              {expanded ? 'Réduire ↑' : 'En savoir plus ↓'}
+            </button>
+          )}
         </div>
       </div>
     </section>

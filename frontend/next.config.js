@@ -23,12 +23,12 @@ const securityHeaders = [
       process.env.NODE_ENV === 'development'
         ? "script-src 'self' 'unsafe-inline' 'unsafe-eval'"
         : "script-src 'self' 'unsafe-inline'",
-      // Inline styles used throughout the site
-      "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
-      // Fonts
-      "font-src 'self' https://fonts.gstatic.com",
+      // Inline styles used throughout the site (fonts are self-hosted via next/font)
+      "style-src 'self' 'unsafe-inline'",
+      // Fonts are self-hosted via next/font — no external font CDN needed
+      "font-src 'self'",
       // Images: self + data URIs + unsplash + uploads
-      "img-src 'self' data: blob: https://images.unsplash.com http://localhost:8000",
+      "img-src 'self' data: blob: https://images.unsplash.com http://localhost:8000 http://localhost:3000 http://54.89.244.17:8000 https://amana-patrimoine.fr",
       // API calls, Calendly embed, and Chatbot Widget API
       "connect-src 'self' https://calendly.com https://wa.me http://localhost:8000 ws://localhost:8000 http://54.89.244.17:8000 https://amana-patrimoine.fr",
       // No iframes except Calendly
@@ -53,12 +53,12 @@ const nextConfig = {
   images: {
     remotePatterns: [
       { protocol: 'https', hostname: 'images.unsplash.com' },
-      // localhost only in dev — never in production
-      ...(process.env.NODE_ENV !== 'production'
-        ? [{ protocol: 'http', hostname: 'localhost' }]
-        : []),
+      { protocol: 'http', hostname: 'localhost' },
+      { protocol: 'http', hostname: '54.89.244.17' },
+      { protocol: 'https', hostname: 'amana-patrimoine.fr' },
     ],
     formats: ['image/avif', 'image/webp'],
+    minimumCacheTTL: 2592000,
   },
   async headers() {
     return [

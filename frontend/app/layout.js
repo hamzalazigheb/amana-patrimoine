@@ -260,6 +260,10 @@ export default async function RootLayout({ children }) {
     return (
         <html lang="fr" className={`${playfair.variable} ${inter.variable}`}>
             <head>
+                {/* Preconnect to third-party origins for faster resource fetching */}
+                <link rel="preconnect" href="https://calendly.com" />
+                <link rel="preconnect" href="https://assets.calendly.com" />
+                <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
                 {/* Feature flags — injected server-side so Header reads instantly without a network request */}
                 <script
                     dangerouslySetInnerHTML={{

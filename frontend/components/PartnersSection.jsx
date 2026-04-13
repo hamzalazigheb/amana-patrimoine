@@ -1,5 +1,7 @@
 'use client';
 
+import Image from 'next/image';
+
 const partners = [
     { name: 'SURAVENIR', logo: '/logo-2025.svg' },
     { name: 'VIE PLUS', logo: '/logo-vieplus.png' },
@@ -25,7 +27,15 @@ export default function PartnersSection() {
                     {partners.map((partner, index) => (
                         <div key={index} className="partner-item">
                             <div className="partner-logo-wrapper">
-                                <img src={partner.logo} alt={partner.name} className="partner-img" />
+                                <Image
+                                    src={partner.logo}
+                                    alt={partner.name}
+                                    className="partner-img"
+                                    width={120}
+                                    height={60}
+                                    sizes="120px"
+                                    style={{ objectFit: 'contain', width: '100%', height: '100%' }}
+                                />
                             </div>
                             <span className="partner-name">{partner.name}</span>
                         </div>

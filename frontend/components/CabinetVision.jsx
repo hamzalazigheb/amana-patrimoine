@@ -1,12 +1,22 @@
 'use client';
 
+import Image from 'next/image';
+
 export default function CabinetVision() {
     return (
         <section className="vision-section">
             <div className="container">
                 <div className="vision-grid">
                     <div className="vision-image-wrapper">
-                        <img src="/hero-bg.png" alt="Cabinet Amana Patrimoine" className="vision-image" />
+                        <Image
+                            src="/hero-bg.png"
+                            alt="Cabinet Amana Patrimoine"
+                            className="vision-image"
+                            width={720}
+                            height={540}
+                            sizes="(max-width: 768px) 100vw, 50vw"
+                            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                        />
                     </div>
                     <div className="vision-content">
                         <span className="section-label">Notre ADN</span>
