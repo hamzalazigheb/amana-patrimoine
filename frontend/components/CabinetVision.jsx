@@ -12,7 +12,7 @@ export default function CabinetVision() {
                         <span className="section-label">Notre ADN</span>
                         <h2 className="section-title">Une approche personnalisée et éthique</h2>
                         <p>
-                            Chez Amana Patrimoine, nous considérons que la gestion patrimoniale commence avant tout par une écoute attentive et une compréhension fine de l'histoire, des objectifs et de la situation personnelle et professionnelle de nos clients.
+                            Chez Amana Patrimoine, nous considérons que la gestion patrimoniale commence avant tout par une écoute attentive et une compréhension fine de l&apos;histoire, des objectifs et de la situation personnelle et professionnelle de nos clients.
                         </p>
                         <p>
                             Nous tenons à bâtir des relations de confiance, fondées sur la transparence et la rigueur, afin de co-concevoir avec chaque client une stratégie patrimoniale intégrant à la fois les souhaits de performance financière, de protection juridique et de transmission équilibrée.

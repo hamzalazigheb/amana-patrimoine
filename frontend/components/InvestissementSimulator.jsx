@@ -211,7 +211,7 @@ export default function InvestissementSimulator() {
                 <p>
                     <strong>Note :</strong> Cette répartition est indicative et doit être ajustée en fonction de votre profil de risque, 
                     de votre situation patrimoniale et de vos objectifs personnels. Un entretien avec un conseiller AMANA Patrimoine 
-                    permettra d'affiner cette stratégie d'allocation.
+                    permettra d&apos;affiner cette stratégie d&apos;allocation.
                 </p>
             </div>
         </div>

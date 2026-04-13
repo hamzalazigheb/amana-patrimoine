@@ -41,8 +41,8 @@ export default function PolitiqueConfidentialitePage() {
                     <Section title="3. Finalités du traitement">
                         <ul>
                             <li>Répondre à vos demandes de contact et de rendez-vous</li>
-                            <li>Améliorer l'expérience utilisateur sur notre site</li>
-                            <li>Analyser l'audience du site (statistiques anonymisées)</li>
+                            <li>Améliorer l&apos;expérience utilisateur sur notre site</li>
+                            <li>Analyser l&apos;audience du site (statistiques anonymisées)</li>
                             <li>Vous contacter dans le cadre de notre relation commerciale</li>
                         </ul>
                     </Section>
@@ -51,7 +51,7 @@ export default function PolitiqueConfidentialitePage() {
                         <ul>
                             <li><strong>Consentement</strong> : cookies analytics et publicitaires</li>
                             <li><strong>Intérêt légitime</strong> : amélioration de nos services</li>
-                            <li><strong>Exécution d'un contrat</strong> : traitement de vos demandes de rendez-vous</li>
+                            <li><strong>Exécution d&apos;un contrat</strong> : traitement de vos demandes de rendez-vous</li>
                         </ul>
                     </Section>
 
@@ -67,7 +67,7 @@ export default function PolitiqueConfidentialitePage() {
                             <tbody>
                                 <tr style={{ borderBottom: '1px solid #eee' }}>
                                     <td style={{ padding: '8px' }}>Google Analytics (_ga)</td>
-                                    <td style={{ padding: '8px' }}>Mesure d'audience</td>
+                                    <td style={{ padding: '8px' }}>Mesure d&apos;audience</td>
                                     <td style={{ padding: '8px' }}>13 mois</td>
                                 </tr>
                                 <tr style={{ borderBottom: '1px solid #eee' }}>
@@ -104,10 +104,10 @@ export default function PolitiqueConfidentialitePage() {
                     <Section title="8. Vos droits (RGPD)">
                         <p>Conformément au RGPD et à la loi Informatique et Libertés, vous disposez des droits suivants :</p>
                         <ul>
-                            <li><strong>Droit d'accès</strong> : obtenir une copie de vos données</li>
+                            <li><strong>Droit d&apos;accès</strong> : obtenir une copie de vos données</li>
                             <li><strong>Droit de rectification</strong> : corriger vos données inexactes</li>
-                            <li><strong>Droit à l'effacement</strong> : demander la suppression de vos données</li>
-                            <li><strong>Droit d'opposition</strong> : vous opposer au traitement de vos données</li>
+                            <li><strong>Droit à l&apos;effacement</strong> : demander la suppression de vos données</li>
+                            <li><strong>Droit d&apos;opposition</strong> : vous opposer au traitement de vos données</li>
                             <li><strong>Droit à la portabilité</strong> : recevoir vos données dans un format structuré</li>
                         </ul>
                         <p>

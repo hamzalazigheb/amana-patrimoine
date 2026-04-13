@@ -181,8 +181,8 @@ export default function SuccessionCalculator() {
                     <span className="section-label">Outil</span>
                     <h2 className="section-title">Simulateur de frais de transmission</h2>
                     <p className="section-desc" style={{ maxWidth: '800px', marginTop: 'var(--space-6)' }}>
-                        Cet outil est un simulateur simplifié pour vous permettre d'estimer vos droits de succession. 
-                        Seule la consultation d'un notaire vous permettra d'affiner ce calcul selon votre situation spécifique.
+                        Cet outil est un simulateur simplifié pour vous permettre d&apos;estimer vos droits de succession. 
+                        Seule la consultation d&apos;un notaire vous permettra d&apos;affiner ce calcul selon votre situation spécifique.
                     </p>
                 </div>
 
@@ -285,7 +285,7 @@ export default function SuccessionCalculator() {
                                 {formData.hasChildren === true && (
                                     <div className="calculator-input-group" style={{ marginTop: 'var(--space-8)' }}>
                                         <label className="calculator-label">
-                                            Nombre d'enfants
+                                            Nombre d&apos;enfants
                                         </label>
                                         <select
                                             className="calculator-select"
@@ -334,7 +334,7 @@ export default function SuccessionCalculator() {
                                     marginBottom: 'var(--space-8)',
                                     fontStyle: 'italic'
                                 }}>
-                                    Indiquez la part du défunt. Par exemple : le pourcentage de propriété mentionné dans l'acte d'achat d'un bien immobilier, 
+                                    Indiquez la part du défunt. Par exemple : le pourcentage de propriété mentionné dans l&apos;acte d&apos;achat d&apos;un bien immobilier, 
                                     moitié des comptes bancaires si les comptes sont joints...
                                 </p>
                                 
@@ -466,7 +466,7 @@ export default function SuccessionCalculator() {
                                             </div>
                                         </div>
                                         <div className="calculator-input-row">
-                                            <label className="calculator-label">Frais d'obsèques (€)</label>
+                                            <label className="calculator-label">Frais d&apos;obsèques (€)</label>
                                             <div className="calculator-input-wrapper">
                                                 <input
                                                     type="number"
@@ -491,7 +491,7 @@ export default function SuccessionCalculator() {
                         {currentStep === 4 && (
                             <div className="calculator-step-content">
                                 <h3 className="calculator-results-title">
-                                    Résultat de l'évaluation
+                                    Résultat de l&apos;évaluation
                                 </h3>
                                 
                                 <div className="calculator-results-box">
@@ -514,7 +514,7 @@ export default function SuccessionCalculator() {
                                             {[...Array(Math.min(formData.numberOfChildren, 7))].map((_, i) => (
                                                 <div key={i} className="calculator-result-item">
                                                     <span className="calculator-result-label">
-                                                        Part taxable de l'enfant {i + 1}
+                                                        Part taxable de l&apos;enfant {i + 1}
                                                     </span>
                                                     <span className="calculator-result-value">
                                                         {Math.max(0, Math.round(((results.netEstate || 0) / formData.numberOfChildren) - 100000)).toLocaleString('fr-FR')} €
@@ -531,7 +531,7 @@ export default function SuccessionCalculator() {
                                         <>
                                             {[...Array(Math.min(formData.numberOfChildren, 7))].map((_, i) => (
                                                 <div key={i} className="calculator-rights-item">
-                                                    <span>Droits de succession dus par l'enfant {i + 1}</span>
+                                                    <span>Droits de succession dus par l&apos;enfant {i + 1}</span>
                                                     <span className="calculator-rights-amount">
                                                         {Math.round(results.perChild).toLocaleString('fr-FR')} €
                                                     </span>
@@ -546,7 +546,7 @@ export default function SuccessionCalculator() {
                                         </>
                                     ) : (
                                         <p style={{ color: 'var(--color-text-muted)', fontStyle: 'italic' }}>
-                                            Aucun enfant déclaré. Veuillez retourner à l'étape 2 pour compléter les informations.
+                                            Aucun enfant déclaré. Veuillez retourner à l&apos;étape 2 pour compléter les informations.
                                         </p>
                                     )}
                                 </div>

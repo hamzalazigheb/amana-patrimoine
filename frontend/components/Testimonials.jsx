@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 
 const DEFAULT_TESTIMONIALS = [
     {
@@ -42,6 +42,23 @@ export default function Testimonials({ testimonials, sectionTitle }) {
     const items = testimonials && testimonials.length > 0 ? testimonials : DEFAULT_TESTIMONIALS;
     const [active, setActive] = useState(0);
     const title = sectionTitle || 'Ce que disent nos clients';
+    const touchStartX = useRef(null);
+
+    const prev = () => setActive((a) => (a - 1 + items.length) % items.length);
+    const next = () => setActive((a) => (a + 1) % items.length);
+
+    const handleTouchStart = (e) => {
+        touchStartX.current = e.touches[0].clientX;
+    };
+
+    const handleTouchEnd = (e) => {
+        if (touchStartX.current === null) return;
+        const delta = touchStartX.current - e.changedTouches[0].clientX;
+        if (Math.abs(delta) > 50) {
+            delta > 0 ? next() : prev();
+        }
+        touchStartX.current = null;
+    };
 
     return (
         <section className="testimonials-section">
@@ -51,7 +68,11 @@ export default function Testimonials({ testimonials, sectionTitle }) {
                     <h2 className="section-title">{title}</h2>
                 </div>
 
-                <div className="testimonials-carousel">
+                <div
+                    className="testimonials-carousel"
+                    onTouchStart={handleTouchStart}
+                    onTouchEnd={handleTouchEnd}
+                >
                     <div className="testimonial-card">
                         <Stars count={items[active]?.rating} />
                         <blockquote className="testimonial-text">
@@ -69,15 +90,35 @@ export default function Testimonials({ testimonials, sectionTitle }) {
                     </div>
 
                     {items.length > 1 && (
-                        <div className="testimonial-dots">
-                            {items.map((_, i) => (
-                                <button
-                                    key={i}
-                                    className={`testimonial-dot${i === active ? ' active' : ''}`}
-                                    onClick={() => setActive(i)}
-                                    aria-label={`Témoignage ${i + 1}`}
-                                />
-                            ))}
+                        <div className="testimonial-nav">
+                            <button
+                                className="testimonial-nav-btn"
+                                onClick={prev}
+                                aria-label="Témoignage précédent"
+                            >
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                                    <polyline points="15 18 9 12 15 6"/>
+                                </svg>
+                            </button>
+                            <div className="testimonial-dots">
+                                {items.map((_, i) => (
+                                    <button
+                                        key={i}
+                                        className={`testimonial-dot${i === active ? ' active' : ''}`}
+                                        onClick={() => setActive(i)}
+                                        aria-label={`Témoignage ${i + 1}`}
+                                    />
+                                ))}
+                            </div>
+                            <button
+                                className="testimonial-nav-btn"
+                                onClick={next}
+                                aria-label="Témoignage suivant"
+                            >
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                                    <polyline points="9 18 15 12 9 6"/>
+                                </svg>
+                            </button>
                         </div>
                     )}
                 </div>

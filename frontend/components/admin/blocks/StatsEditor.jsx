@@ -20,7 +20,7 @@ export default function StatsEditor({ content, onChange }) {
   return (
     <div className="block-editor-fields">
       <p style={{ fontSize: '0.8rem', color: 'var(--admin-text-muted)', marginBottom: '12px', lineHeight: 1.5 }}>
-        Entrez le chiffre tel qu'il doit s'afficher (ex: <strong>100+</strong>, <strong>100%</strong>, <strong>2020</strong>). L'animation de décompte se déclenche automatiquement.
+        Entrez le chiffre tel qu&apos;il doit s&apos;afficher (ex: <strong>100+</strong>, <strong>100%</strong>, <strong>2020</strong>). L&apos;animation de décompte se déclenche automatiquement.
       </p>
 
       <div className="admin-repeater">

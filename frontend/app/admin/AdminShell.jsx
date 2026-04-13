@@ -53,6 +53,12 @@ export default function AdminShell({ children }) {
     )},
   ];
 
+  // Settings is highlighted on any /admin/settings/* path
+  const isActive = (href) => {
+    if (href === '/admin') return pathname === '/admin';
+    return pathname.startsWith(href);
+  };
+
   return (
     <div className="admin-layout">
       <aside className="admin-sidebar">
@@ -65,7 +71,7 @@ export default function AdminShell({ children }) {
             <a
               key={item.href}
               href={item.href}
-              className={pathname === item.href ? 'active' : ''}
+              className={isActive(item.href) ? 'active' : ''}
             >
               {item.icon}
               {item.label}

@@ -514,9 +514,9 @@ export default function AdminDashboard() {
           >
             Visibilité
           </button>
-          <button className={`admin-nav-item ${showSettings ? 'active' : ''}`} onClick={() => { setShowSettings(true); setActiveSection(null); }}>
+          <a href="/admin/settings" className="admin-nav-item">
             Paramètres globaux
-          </button>
+          </a>
         </nav>
 
         <div className="admin-sidebar-footer">

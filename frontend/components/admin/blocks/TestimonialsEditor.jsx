@@ -98,7 +98,7 @@ export default function TestimonialsEditor({ content, onChange }) {
 
         {(content.items || []).length === 0 && (
           <p style={{ fontSize: '0.8rem', color: 'var(--admin-text-muted)', textAlign: 'center', padding: '16px 0' }}>
-            Aucun témoignage. Cliquez sur "+ Ajouter" pour commencer.
+            Aucun témoignage. Cliquez sur &quot;+ Ajouter&quot; pour commencer.
           </p>
         )}
       </div>

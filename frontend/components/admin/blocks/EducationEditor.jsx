@@ -84,6 +84,7 @@ export default function EducationEditor({ content, onChange }) {
             </div>
             <ImageUpload
               label="Image"
+              hint="800 × 500 px"
               value={item.image || ''}
               onChange={(url) => updateItem(i, 'image', url)}
             />

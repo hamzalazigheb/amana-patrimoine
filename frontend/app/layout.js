@@ -1,8 +1,15 @@
 import './globals.css';
 import { Playfair_Display, Inter } from 'next/font/google';
+import Script from 'next/script';
 import ConsentManager from '../components/ConsentManager';
 import WhatsAppFab from '../components/WhatsAppFab';
 import prisma from '../lib/db';
+
+/** MongoDB ObjectId of the chatbot (admin → chatbot details). Override via NEXT_PUBLIC_CHATBOT_ID in .env */
+const CHATBOT_WIDGET_ID =
+    process.env.NEXT_PUBLIC_CHATBOT_ID || '69cefcc8cdd78aded2e4c7be';
+
+const CHATBOT_ENABLED = process.env.NEXT_PUBLIC_CHATBOT_ENABLED === 'true';
 
 const playfair = Playfair_Display({
     subsets: ['latin'],
@@ -228,7 +235,16 @@ const GTM_ID = process.env.NEXT_PUBLIC_GTM_ID;
 async function getFeatureFlags() {
     try {
         const settings = await prisma.globalSetting.findMany({
-            where: { key: { in: ['simulateurs_visible'] } },
+            where: {
+                key: {
+                    in: [
+                        'simulateurs_visible',
+                        'nav_phone', 'nav_phone_href',
+                        'nav_cta_text', 'nav_cta_link',
+                        'nav_items',
+                    ],
+                },
+            },
         });
         const flags = { simulateurs_visible: true };
         for (const s of settings) {
@@ -310,7 +326,37 @@ gtag('set','url_passthrough',false);
                 )}
                 <a href="#main-content" className="skip-to-content">Aller au contenu principal</a>
                 {children}
+                {/* Sticky CTA bar — mobile only (hidden via CSS on desktop) */}
+                <div className="sticky-cta-bar">
+                    <a
+                        href="https://calendly.com/amana-patrimoine/30min"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="sticky-cta-btn"
+                    >
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+                            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>
+                        </svg>
+                        Prendre rendez-vous
+                    </a>
+                    <a
+                        href="tel:+33668603619"
+                        className="sticky-cta-phone"
+                        aria-label="Appeler Amana Patrimoine"
+                    >
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+                            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.18h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.91a16 16 0 0 0 6 6l.91-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/>
+                        </svg>
+                    </a>
+                </div>
                 <WhatsAppFab />
+                {CHATBOT_ENABLED && (
+                    <Script
+                        src="http://54.89.244.17:8000/static/widget.bundle.js"
+                        strategy="afterInteractive"
+                        data-chatbot-id={CHATBOT_WIDGET_ID}
+                    />
+                )}
                 <ConsentManager />
             </body>
         </html>

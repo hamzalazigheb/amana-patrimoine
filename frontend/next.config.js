@@ -9,8 +9,8 @@ const securityHeaders = [
   { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
   // Disable browser features not needed by this site
   { key: 'Permissions-Policy', value: 'camera=(), microphone=(), geolocation=(), payment=()' },
-  // Force HTTPS (only when HTTPS_ENABLED=true, i.e. after SSL is configured)
-  ...(process.env.HTTPS_ENABLED === 'true'
+  // Force HTTPS (only when ENABLE_HSTS=true, i.e. after SSL is configured)
+  ...(process.env.ENABLE_HSTS === 'true'
     ? [{ key: 'Strict-Transport-Security', value: 'max-age=31536000; includeSubDomains; preload' }]
     : []),
   // Content Security Policy
@@ -28,15 +28,15 @@ const securityHeaders = [
       // Fonts
       "font-src 'self' https://fonts.gstatic.com",
       // Images: self + data URIs + unsplash + uploads
-      "img-src 'self' data: blob: https://images.unsplash.com",
-      // API calls and Calendly embed
-      "connect-src 'self' https://calendly.com https://wa.me",
+      "img-src 'self' data: blob: https://images.unsplash.com http://localhost:8000",
+      // API calls, Calendly embed, and Chatbot Widget API
+      "connect-src 'self' https://calendly.com https://wa.me http://localhost:8000 ws://localhost:8000 http://54.89.244.17:8000 https://amana-patrimoine.fr",
       // No iframes except Calendly
       "frame-src https://calendly.com",
       "object-src 'none'",
       "base-uri 'self'",
       "form-action 'self'",
-      ...(process.env.HTTPS_ENABLED === 'true' ? ["upgrade-insecure-requests"] : []),
+      ...(process.env.ENABLE_HSTS === 'true' ? ["upgrade-insecure-requests"] : []),
     ].join('; '),
   },
 ];
@@ -46,6 +46,10 @@ const nextConfig = {
   trailingSlash: false,
   // Required for Docker deployment — creates a minimal self-contained build
   output: 'standalone',
+  // Browsers request /favicon.ico by default; we only ship public/favicon.svg
+  async rewrites() {
+    return [{ source: '/favicon.ico', destination: '/favicon.svg' }];
+  },
   images: {
     remotePatterns: [
       { protocol: 'https', hostname: 'images.unsplash.com' },

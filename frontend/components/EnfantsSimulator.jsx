@@ -68,7 +68,7 @@ export default function EnfantsSimulator() {
                             <span className="param-value">100&nbsp;€</span>
                         </div>
                         <div className="scenario-param">
-                            <span className="param-label">Durée d'épargne</span>
+                            <span className="param-label">Durée d&apos;épargne</span>
                             <span className="param-value">18&nbsp;ans</span>
                         </div>
                         <div className="scenario-param">
@@ -87,7 +87,7 @@ export default function EnfantsSimulator() {
                             <span className="result-value">{scenario1.totalPaid.toLocaleString('fr-FR').replace(/\s/g, '\u00A0')}&nbsp;€</span>
                         </div>
                         <div className="scenario-result-item success">
-                            <span className="result-label">Dont bénéfice lié à l'investissement</span>
+                            <span className="result-label">Dont bénéfice lié à l&apos;investissement</span>
                             <span className="result-value">{scenario1.profit.toLocaleString('fr-FR').replace(/\s/g, '\u00A0')}&nbsp;€</span>
                         </div>
                     </div>
@@ -108,7 +108,7 @@ export default function EnfantsSimulator() {
                             <span className="param-value">150&nbsp;€</span>
                         </div>
                         <div className="scenario-param">
-                            <span className="param-label">Durée d'épargne</span>
+                            <span className="param-label">Durée d&apos;épargne</span>
                             <span className="param-value">18&nbsp;ans</span>
                         </div>
                         <div className="scenario-param">
@@ -127,7 +127,7 @@ export default function EnfantsSimulator() {
                             <span className="result-value">{scenario2.totalPaid.toLocaleString('fr-FR').replace(/\s/g, '\u00A0')}&nbsp;€</span>
                         </div>
                         <div className="scenario-result-item success">
-                            <span className="result-label">Dont bénéfice lié à l'investissement</span>
+                            <span className="result-label">Dont bénéfice lié à l&apos;investissement</span>
                             <span className="result-value">{scenario2.profit.toLocaleString('fr-FR').replace(/\s/g, '\u00A0')}&nbsp;€</span>
                         </div>
                     </div>

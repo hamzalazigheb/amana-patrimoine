@@ -54,6 +54,7 @@ export default function PartnersEditor({ content, onChange }) {
               <button type="button" onClick={() => removeItem(i)} className="admin-partner-remove">×</button>
               <ImageUpload
                 label="Logo"
+                hint="200 × 80 px"
                 value={item.logo || ''}
                 onChange={(url) => updateItem(i, 'logo', url)}
               />

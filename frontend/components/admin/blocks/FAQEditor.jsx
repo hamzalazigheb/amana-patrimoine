@@ -47,7 +47,7 @@ export default function FAQEditor({ content, onChange }) {
 
         {items.length === 0 && (
           <p style={{ color: 'var(--admin-text-muted)', fontSize: '0.85rem', padding: '12px 0' }}>
-            Aucune question pour l'instant. Cliquez sur "+ Ajouter une question".
+            Aucune question pour l&apos;instant. Cliquez sur &quot;+ Ajouter une question&quot;.
           </p>
         )}
 

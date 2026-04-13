@@ -6,10 +6,12 @@ import { getSession } from '@/lib/auth';
 const ALLOWED_SETTING_KEYS = new Set([
   'site_name', 'site_description',
   'hero_title', 'hero_subtitle', 'hero_cta_text', 'hero_cta_link', 'hero_image',
-  'footer_description',
-  'contact_phone', 'contact_email', 'contact_address',
+  'footer_description', 'footer_columns',
+  'contact_phone', 'contact_email', 'contact_address', 'contact_hours',
+  'social_linkedin', 'social_instagram', 'social_youtube', 'social_whatsapp',
   'calendly_url',
   'simulateurs_visible',
+  'nav_phone', 'nav_phone_href', 'nav_cta_text', 'nav_cta_link', 'nav_items',
 ]);
 
 export async function GET() {

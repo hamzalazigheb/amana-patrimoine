@@ -24,7 +24,7 @@ export default function ReassuranceBlock() {
                             </svg>
                         </div>
                         <h3>Conformité Shariah</h3>
-                        <p>Placements audités par un comité d'experts en finance éthique musulmane.</p>
+                        <p>Placements audités par un comité d&apos;experts en finance éthique musulmane.</p>
                     </div>
                     <div className="reassurance-item">
                         <div className="reassurance-icon-wrapper">

@@ -2,7 +2,7 @@
 
 import { useState, useRef } from 'react';
 
-export default function ImageUpload({ value, onChange, label }) {
+export default function ImageUpload({ value, onChange, label, hint }) {
   const [uploading, setUploading] = useState(false);
   const fileRef = useRef(null);
 
@@ -29,7 +29,26 @@ export default function ImageUpload({ value, onChange, label }) {
 
   return (
     <div className="admin-image-upload">
-      {label && <label className="admin-field-label">{label}</label>}
+      {label && (
+        <label className="admin-field-label" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+          {label}
+          {hint && (
+            <span style={{
+              fontSize: '0.7rem',
+              fontWeight: 600,
+              color: '#92660a',
+              background: '#fef3c7',
+              border: '1px solid #fcd34d',
+              borderRadius: '4px',
+              padding: '1px 7px',
+              letterSpacing: '0.03em',
+              whiteSpace: 'nowrap',
+            }}>
+              {hint}
+            </span>
+          )}
+        </label>
+      )}
       <div className="admin-image-preview-area">
         {value ? (
           <div className="admin-image-preview">

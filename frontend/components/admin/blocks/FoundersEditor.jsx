@@ -46,7 +46,12 @@ export default function FoundersEditor({ content, onChange }) {
               </div>
             </div>
             <div className="admin-field">
-              <label className="admin-field-label-sm">Photo (chemin, ex: /uploads/photo.jpg)</label>
+              <label className="admin-field-label-sm" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                Photo (chemin, ex: /uploads/photo.jpg)
+                <span style={{ fontSize: '0.7rem', fontWeight: 600, color: '#92660a', background: '#fef3c7', border: '1px solid #fcd34d', borderRadius: '4px', padding: '1px 7px', whiteSpace: 'nowrap' }}>
+                  400 × 400 px
+                </span>
+              </label>
               <input value={item.image || ''} onChange={(e) => updateItem(i, 'image', e.target.value)} className="admin-field-input" placeholder="/uploads/photo.jpg" />
             </div>
             <div className="admin-field">
