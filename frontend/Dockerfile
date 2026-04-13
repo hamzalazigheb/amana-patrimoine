@@ -33,8 +33,12 @@ ENV NEXT_TELEMETRY_DISABLED=1
 ENV NODE_ENV=production
 ARG JWT_SECRET=build-placeholder
 ARG DATABASE_URL=postgresql://placeholder:placeholder@localhost:5432/placeholder
+ARG NEXT_PUBLIC_CHATBOT_ENABLED=false
+ARG NEXT_PUBLIC_CHATBOT_ID=69cefcc8cdd78aded2e4c7be
 ENV JWT_SECRET=$JWT_SECRET
 ENV DATABASE_URL=$DATABASE_URL
+ENV NEXT_PUBLIC_CHATBOT_ENABLED=$NEXT_PUBLIC_CHATBOT_ENABLED
+ENV NEXT_PUBLIC_CHATBOT_ID=$NEXT_PUBLIC_CHATBOT_ID
 RUN npm run build
 
 # ─────────────────────────────────────────────

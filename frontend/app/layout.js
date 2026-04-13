@@ -5,7 +5,6 @@ import ConsentManager from '../components/ConsentManager';
 import WhatsAppFab from '../components/WhatsAppFab';
 import prisma from '../lib/db';
 
-/** MongoDB ObjectId of the chatbot (admin → chatbot details). Override via NEXT_PUBLIC_CHATBOT_ID in .env */
 const CHATBOT_WIDGET_ID =
     process.env.NEXT_PUBLIC_CHATBOT_ID || '69cefcc8cdd78aded2e4c7be';
 
