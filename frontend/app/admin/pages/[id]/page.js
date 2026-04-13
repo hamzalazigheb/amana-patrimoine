@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import AdminShell from '../../AdminShell';
-import ImageUpload from '../../../components/admin/ImageUpload';
+import ImageUpload from '../../../../components/admin/ImageUpload';
 
 const BLOCK_TYPES = [
   { value: 'pageHero', label: 'Hero de page', fields: ['badge', 'title', 'subtitle', 'image', 'ctaText'] },

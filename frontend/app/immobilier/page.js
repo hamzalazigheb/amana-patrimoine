@@ -1,4 +1,4 @@
-﻿export const revalidate = 300;
+export const revalidate = 300;
 
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
@@ -6,8 +6,6 @@ import BlockRenderer from '../../components/BlockRenderer';
 import Breadcrumb from '../../components/Breadcrumb';
 import { getPageBySlug } from '../../lib/cms';
 import { buildMetadata, buildBreadcrumbJsonLd, buildServiceJsonLd, buildFaqJsonLd } from '../../lib/seo';
-
-export const revalidate = 3600;
 
 export async function generateMetadata() {
     const page = await getPageBySlug('immobilier');
