@@ -355,7 +355,7 @@ gtag('set','url_passthrough',false);
                 <WhatsAppFab />
                 {CHATBOT_ENABLED && (
                     <Script
-                        src="http://54.89.244.17:8000/static/widget.bundle.js"
+                        src="/widget.bundle.js"
                         strategy="afterInteractive"
                         data-chatbot-id={CHATBOT_WIDGET_ID}
                     />
