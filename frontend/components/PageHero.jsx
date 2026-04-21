@@ -15,6 +15,7 @@ export default function PageHero({
     const heroRef = useRef(null);
 
     useEffect(() => {
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
         const elements = heroRef.current?.querySelectorAll('.animate-on-load');
         elements?.forEach((el, index) => {
             el.style.opacity = '0';

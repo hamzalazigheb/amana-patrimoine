@@ -25,7 +25,10 @@ RUN apk add --no-cache openssl
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
-# Generate Prisma client for linux
+# Patch schema for PostgreSQL (source schema uses sqlite for local dev)
+RUN sed -i 's/provider = "sqlite"/provider = "postgresql"/' prisma/schema.prisma
+
+# Generate Prisma client for linux/PostgreSQL
 RUN npx prisma generate
 
 # Build Next.js (output: standalone)
@@ -35,10 +38,12 @@ ARG JWT_SECRET=build-placeholder
 ARG DATABASE_URL=postgresql://placeholder:placeholder@localhost:5432/placeholder
 ARG NEXT_PUBLIC_CHATBOT_ENABLED=false
 ARG NEXT_PUBLIC_CHATBOT_ID=69cefcc8cdd78aded2e4c7be
+ARG NEXT_PUBLIC_CHATBOT_API_URL=https://amana-patrimoine.fr/chatbot
 ENV JWT_SECRET=$JWT_SECRET
 ENV DATABASE_URL=$DATABASE_URL
 ENV NEXT_PUBLIC_CHATBOT_ENABLED=$NEXT_PUBLIC_CHATBOT_ENABLED
 ENV NEXT_PUBLIC_CHATBOT_ID=$NEXT_PUBLIC_CHATBOT_ID
+ENV NEXT_PUBLIC_CHATBOT_API_URL=$NEXT_PUBLIC_CHATBOT_API_URL
 RUN npm run build
 
 # ─────────────────────────────────────────────

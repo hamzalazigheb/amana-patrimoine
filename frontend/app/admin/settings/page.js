@@ -30,7 +30,7 @@ const SOCIAL_FIELDS = [
 
 const NAV_FIELDS = [
   { key: 'nav_phone', label: 'Téléphone affiché dans la barre de navigation (ex: 06 68 60 36 19)', type: 'text' },
-  { key: 'nav_phone_href', label: 'Lien téléphone (ex: tel:+33668603619)', type: 'text' },
+  { key: 'nav_phone_href', label: 'Lien téléphone (ex: tel:+33189700000)', type: 'text' },
   { key: 'nav_cta_text', label: 'Texte du bouton CTA (ex: Bilan Patrimonial)', type: 'text' },
   { key: 'nav_cta_link', label: 'Lien du bouton CTA (ex: /bilan-patrimonial)', type: 'text' },
 ];

@@ -11,7 +11,7 @@ module.exports = async function seedHome(prisma) {
       subtitle: '15 ans d\'expérience pour construire une stratégie patrimoniale sur-mesure, en accord avec vos convictions',
       ctaText: 'Prendre rendez-vous',
       ctaLink: 'https://calendly.com/amana-patrimoine/30min',
-      backgroundImage: '/Design sans titre (1) (1).png',
+      backgroundImage: '/hero-conseil-patrimoine-islamique.png',
     } },
     { type: 'intro', content: {
       paragraphs: [
@@ -72,11 +72,29 @@ module.exports = async function seedHome(prisma) {
     } },
     { type: 'education', content: {
       title: 'Nos ressources pédagogiques',
-      description: 'Découvrez prochainement nos guides, livres blancs et analyses pour approfondir vos connaissances en gestion de patrimoine et finance islamique.',
+      description: 'Guides pratiques et analyses pour approfondir vos connaissances en gestion de patrimoine et finance islamique.',
       items: [
-        { image: '/edu-heritage.png', tag: 'Livre Blanc', title: 'Bientôt disponible' },
-        { image: '/edu-paris.png', tag: 'Analyse', title: 'Bientôt disponible' },
-        { image: '/transmisison.png', tag: 'Guide', title: 'Bientôt disponible' },
+        {
+          image: '/edu-heritage.png',
+          tag: 'Guide',
+          title: 'Guide complet de l\'investissement halal en France (2026)',
+          description: 'SCPI, PER, assurance-vie, actions : tous les placements conformes expliqués avec des exemples concrets.',
+          link: '/blog/guide-investissement-halal',
+        },
+        {
+          image: '/edu-paris.png',
+          tag: 'Guide',
+          title: 'PER Halal : préparez votre retraite et réduisez vos impôts',
+          description: 'Comment déduire vos versements, choisir des fonds conformes et maximiser votre retraite islamique.',
+          link: '/blog/per-halal-retraite-islamique',
+        },
+        {
+          image: '/transmisison.png',
+          tag: 'Analyse',
+          title: 'Zakat sur un patrimoine diversifié : calcul pratique',
+          description: 'SCPI, assurance-vie, PER, actions, or : calculez votre Zakat pas à pas avec des exemples chiffrés.',
+          link: '/blog/zakat-patrimoine-diversifie',
+        },
       ],
     } },
     { type: 'cta', content: {

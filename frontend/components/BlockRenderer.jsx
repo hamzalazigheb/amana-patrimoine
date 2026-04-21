@@ -6,6 +6,7 @@ import Link from 'next/link';
 import StatsSection from './StatsSection';
 import Testimonials from './Testimonials';
 import CertBadges from './CertBadges';
+import ContactForm from './ContactForm';
 import { trackCalendlyClick } from '../lib/track';
 /**
  * Sanitize HTML from the database to prevent XSS.
@@ -61,6 +62,7 @@ function useAnimateOnScroll(threshold = 0.1) {
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -109,7 +111,9 @@ function HeroBlock({ content }) {
             alt=""
             fill
             priority
+            fetchPriority="high"
             sizes="100vw"
+            quality={85}
             style={{ objectFit: 'cover', objectPosition: 'center' }}
           />
         </div>
@@ -331,7 +335,7 @@ function ContentBlock({ content }) {
           </div>
           {hasImage && (
             <div className="content-section-image">
-              <Image src={content.image} alt={content.title || 'Illustration'} width={600} height={400} style={{ width: '100%', height: 'auto', objectFit: 'cover', borderRadius: 'var(--radius-md)' }} />
+              <Image src={content.image} alt={content.title || 'Illustration'} width={600} height={400} sizes="(max-width: 768px) 100vw, 600px" style={{ width: '100%', height: 'auto', objectFit: 'cover', borderRadius: 'var(--radius-md)' }} />
             </div>
           )}
         </div>
@@ -433,22 +437,38 @@ function EducationBlock({ content }) {
           {content.description && <p className="section-desc">{content.description}</p>}
         </div>
         <div className="education-grid">
-          {(content.items || []).map((item, i) => (
-            <div key={i} className="education-card animate-item">
-              {item.image && (
-                <div className="education-image">
-                  <Image src={item.image} alt={item.title || 'Article'} width={400} height={250} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+          {(content.items || []).map((item, i) => {
+            const cardInner = (
+              <>
+                {item.image && (
+                  <div className="education-image">
+                    <Image src={item.image} alt={item.title || 'Article'} width={400} height={250} sizes="(max-width: 768px) 90vw, 33vw" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                  </div>
+                )}
+                <div className="education-content">
+                  <div style={{ display: 'flex', gap: '8px', alignItems: 'center', flexWrap: 'wrap' }}>
+                    {item.tag && <span className="education-tag">{item.tag}</span>}
+                  </div>
+                  <h3>{item.title}</h3>
+                  {item.description && <p className="education-desc">{item.description}</p>}
+                  {item.link && (
+                    <span style={{ display: 'inline-block', marginTop: '0.75rem', fontSize: 'var(--text-sm)', color: 'var(--color-brass-dark)', fontWeight: 500 }}>
+                      Lire l&apos;article →
+                    </span>
+                  )}
                 </div>
-              )}
-              <div className="education-content">
-                <div style={{ display: 'flex', gap: '8px', alignItems: 'center', flexWrap: 'wrap' }}>
-                  {item.tag && <span className="education-tag">{item.tag}</span>}
-                </div>
-                <h3>{item.title}</h3>
-                {item.description && <p className="education-desc">{item.description}</p>}
+              </>
+            );
+            return item.link ? (
+              <Link key={i} href={item.link} className="education-card animate-item" style={{ textDecoration: 'none', color: 'inherit', display: 'block' }}>
+                {cardInner}
+              </Link>
+            ) : (
+              <div key={i} className="education-card animate-item">
+                {cardInner}
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
     </section>
@@ -467,7 +487,7 @@ function PartnersBlock({ content }) {
           {(content.items || []).map((p, i) => (
             <div key={i} className="partner-item">
               <div className="partner-logo-wrapper">
-                <Image src={p.logo} alt={`Logo ${p.name}`} width={120} height={60} style={{ objectFit: 'contain' }} className="partner-img" />
+                <Image src={p.logo} alt={`Logo ${p.name}`} width={120} height={60} sizes="120px" style={{ objectFit: 'contain' }} className="partner-img" />
               </div>
               <span className="partner-name">{p.name}</span>
             </div>
@@ -495,7 +515,7 @@ function CTABlock({ content }) {
             >
               {content.ctaText || 'Prendre rendez-vous'}
             </SmartLink>
-            <a href="tel:+33668603619" className="cta-phone-alt">
+            <a href="tel:+33189700000" className="cta-phone-alt">
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
                 <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.18h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.91a16 16 0 0 0 6 6l.91-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/>
               </svg>
@@ -523,7 +543,9 @@ function PageHeroBlock({ content }) {
             alt=""
             fill
             priority
+            fetchPriority="high"
             sizes="100vw"
+            quality={85}
             style={{ objectFit: 'cover', objectPosition: 'center' }}
           />
         </div>
@@ -745,7 +767,7 @@ function FoundersBlock({ content }) {
             <div key={i} className="founder-card">
               {f.image && (
                 <div className="founder-photo-wrapper">
-                  <Image src={f.image} alt={`${f.name} - ${f.role}`} width={200} height={200} className="founder-image" />
+                  <Image src={f.image} alt={`${f.name} - ${f.role}`} width={200} height={200} sizes="200px" className="founder-image" />
                 </div>
               )}
               <h3 className="founder-name">{f.name}</h3>
@@ -777,6 +799,19 @@ function TestimonialsBlock({ content }) {
   return <Testimonials testimonials={content?.items} sectionTitle={content?.title} />;
 }
 
+function ContactFormBlock({ content }) {
+  return (
+    <section className="contact-section">
+      <div className="container">
+        <ContactForm
+          title={content?.title || 'Contactez-nous'}
+          description={content?.description || ''}
+        />
+      </div>
+    </section>
+  );
+}
+
 const BLOCK_MAP = {
   hero: HeroBlock,
   pageHero: PageHeroBlock,
@@ -797,6 +832,7 @@ const BLOCK_MAP = {
   legal: LegalBlock,
   stats: StatsBlock,
   testimonials: TestimonialsBlock,
+  contact: ContactFormBlock,
 };
 
 export default function BlockRenderer({ blocks }) {

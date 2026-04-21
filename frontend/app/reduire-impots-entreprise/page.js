@@ -1,8 +1,9 @@
-﻿export const dynamic = 'force-dynamic';
+export const revalidate = 3600;
 
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import BlockRenderer from '../../components/BlockRenderer';
+import Breadcrumb from '../../components/Breadcrumb';
 import { getPageBySlug } from '../../lib/cms';
 import { buildMetadata, buildBreadcrumbJsonLd, buildServiceJsonLd } from '../../lib/seo';
 
@@ -27,6 +28,7 @@ export default async function ReduireImpotsEntreprisePage() {
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumb) }} />
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(service) }} />
             <Header />
+            <Breadcrumb items={[{ name: 'Fiscalité d\'entreprise', href: '/reduire-impots-entreprise' }]} />
             <main id="main-content">
                 {page ? (
                     <BlockRenderer blocks={page.blocks} />

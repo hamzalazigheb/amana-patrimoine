@@ -26,6 +26,7 @@ const BLOCK_TYPES = [
   { value: 'caseStudy', label: 'Étude de cas', fields: ['title', 'body'] },
   { value: 'stats', label: 'Chiffres clés (KPI)', fields: ['items'] },
   { value: 'testimonials', label: 'Témoignages clients', fields: ['title', 'items'] },
+  { value: 'contact', label: 'Formulaire de contact', fields: ['title', 'description'] },
   { value: 'custom', label: 'Bloc personnalisé', fields: ['body'] },
 ];
 
@@ -40,7 +41,7 @@ const ITEM_FIELDS = {
   partners:    [{ key: 'name', label: 'Nom', type: 'text' }, { key: 'logo', label: 'Logo', type: 'image' }],
   founders:    [{ key: 'name', label: 'Nom', type: 'text' }, { key: 'role', label: 'Rôle', type: 'text' }, { key: 'image', label: 'Photo', type: 'image' }, { key: 'description', label: 'Description', type: 'textarea' }],
   reassurance: [{ key: 'title', label: 'Titre', type: 'text' }, { key: 'description', label: 'Description', type: 'textarea' }],
-  education:      [{ key: 'image', label: 'Image', type: 'image' }, { key: 'tag', label: 'Tag', type: 'text' }, { key: 'title', label: 'Titre', type: 'text' }],
+  education:      [{ key: 'image', label: 'Image', type: 'image' }, { key: 'tag', label: 'Tag (ex: Guide, Livre Blanc)', type: 'text' }, { key: 'title', label: 'Titre', type: 'text' }, { key: 'description', label: 'Description courte', type: 'textarea' }, { key: 'link', label: 'Lien (ex: /blog/mon-article)', type: 'text' }],
   stats:          [{ key: 'value', label: 'Valeur (nombre)', type: 'text' }, { key: 'suffix', label: 'Suffixe (ex: +, %)', type: 'text' }, { key: 'prefix', label: 'Préfixe (optionnel)', type: 'text' }, { key: 'label', label: 'Libellé', type: 'text' }],
   testimonials:   [{ key: 'name', label: 'Prénom (ex: Karim B.)', type: 'text' }, { key: 'location', label: 'Ville', type: 'text' }, { key: 'context', label: 'Contexte (ex: SCPI halal)', type: 'text' }, { key: 'text', label: 'Témoignage', type: 'textarea' }, { key: 'rating', label: 'Note (1-5)', type: 'text' }],
 };
@@ -243,24 +244,51 @@ export default function PageEditorPage() {
       {message && <div className="admin-alert admin-alert-success">{message}</div>}
 
       <div className="admin-card">
-        <h3>Paramètres de la page</h3>
+        <h3>Paramètres SEO de la page</h3>
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
           <div className="admin-form-group">
             <label>Slug</label>
             <input className="admin-input" value={page.slug} onChange={(e) => setPage({ ...page, slug: e.target.value })} />
           </div>
           <div className="admin-form-group">
-            <label>Titre SEO</label>
+            <label style={{ display: 'flex', justifyContent: 'space-between' }}>
+              <span>Titre SEO</span>
+              <span style={{ fontSize: '11px', color: (page.title || '').length >= 40 && (page.title || '').length <= 65 ? '#2e7d32' : '#c62828', fontWeight: 600 }}>
+                {(page.title || '').length}/65
+              </span>
+            </label>
             <input className="admin-input" value={page.title} onChange={(e) => setPage({ ...page, title: e.target.value })} />
+            <span style={{ fontSize: '11px', color: '#888' }}>Optimal : 40–65 caractères</span>
           </div>
         </div>
         <div className="admin-form-group">
-          <label>Description SEO</label>
-          <textarea className="admin-textarea" style={{ minHeight: '60px' }} value={page.description || ''} onChange={(e) => setPage({ ...page, description: e.target.value })} />
+          <label style={{ display: 'flex', justifyContent: 'space-between' }}>
+            <span>Description SEO (meta description)</span>
+            <span style={{ fontSize: '11px', color: (page.description || '').length >= 120 && (page.description || '').length <= 160 ? '#2e7d32' : (page.description || '').length > 0 ? '#c62828' : '#aaa', fontWeight: 600 }}>
+              {(page.description || '').length}/160
+            </span>
+          </label>
+          <textarea className="admin-textarea" style={{ minHeight: '70px' }} value={page.description || ''} onChange={(e) => setPage({ ...page, description: e.target.value })} />
+          <span style={{ fontSize: '11px', color: '#888' }}>Optimal : 120–160 caractères · Résumez la page, incluez le mot-clé principal</span>
         </div>
+        {/* SERP preview */}
+        {(page.title || page.description) && (
+          <div style={{ background: '#f8f9fa', border: '1px solid #e0e0e0', borderRadius: '8px', padding: '14px 16px', marginTop: '4px', marginBottom: '12px' }}>
+            <div style={{ fontSize: '11px', color: '#888', marginBottom: '6px', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Aperçu Google SERP</div>
+            <div style={{ fontSize: '18px', color: '#1a0dab', fontWeight: 400, lineHeight: 1.3, marginBottom: '2px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+              {(page.title || '').slice(0, 65) || 'Titre de la page'}
+            </div>
+            <div style={{ fontSize: '13px', color: '#006621', marginBottom: '4px' }}>
+              https://amana-patrimoine.fr/{page.slug}
+            </div>
+            <div style={{ fontSize: '13px', color: '#545454', lineHeight: 1.5, display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
+              {(page.description || '').slice(0, 160) || 'Aucune description renseignée — Google utilisera un extrait de la page.'}
+            </div>
+          </div>
+        )}
         <div className="admin-form-group">
-          <label>Mots-clés</label>
-          <input className="admin-input" value={page.keywords || ''} onChange={(e) => setPage({ ...page, keywords: e.target.value })} />
+          <label>Mots-clés (séparés par des virgules)</label>
+          <input className="admin-input" value={page.keywords || ''} onChange={(e) => setPage({ ...page, keywords: e.target.value })} placeholder="ex: finance islamique, SCPI halal, gestion patrimoine Paris" />
         </div>
         <div className="admin-checkbox-group">
           <input type="checkbox" checked={page.published} onChange={(e) => setPage({ ...page, published: e.target.checked })} id="published" />

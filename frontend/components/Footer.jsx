@@ -20,6 +20,7 @@ const DEFAULT_COLUMNS = [
         links: [
             { label: 'Qui sommes-nous', href: '/qui-sommes-nous' },
             { label: 'Notre Approche', href: '/#methodology' },
+            { label: 'Contact', href: '/contact' },
             { label: 'Mentions Légales', href: '/mentions-legales' },
             { label: 'Politique de confidentialité', href: '/politique-confidentialite' },
         ],
@@ -69,6 +70,8 @@ export default async function Footer() {
                                 src="/logo-amana.png"
                                 alt="Amana Patrimoine - Cabinet de gestion de patrimoine"
                                 className="footer-logo-img"
+                                width="200"
+                                height="60"
                             />
                         </div>
                         <p className="footer-desc">{description}</p>

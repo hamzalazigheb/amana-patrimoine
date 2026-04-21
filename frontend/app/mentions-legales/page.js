@@ -1,8 +1,9 @@
-﻿export const dynamic = 'force-dynamic';
+export const revalidate = 3600;
 
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import BlockRenderer from '../../components/BlockRenderer';
+import Breadcrumb from '../../components/Breadcrumb';
 import { getPageBySlug } from '../../lib/cms';
 import { buildMetadata, buildBreadcrumbJsonLd } from '../../lib/seo';
 
@@ -25,6 +26,7 @@ export default async function MentionsLegalesPage() {
         <>
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumb) }} />
             <Header />
+            <Breadcrumb items={[{ name: 'Mentions légales', href: '/mentions-legales' }]} />
             <main id="main-content">
                 {page ? (
                     <BlockRenderer blocks={page.blocks} />

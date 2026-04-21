@@ -1,5 +1,74 @@
 /** @type {import('next').NextConfig} */
 
+const isDev = process.env.NODE_ENV === 'development';
+
+// Additional runtime origins that must be whitelisted on top of 'self'.
+// Drive these via environment variables so staging/prod can differ from dev
+// without editing source.
+//
+//   NEXT_PUBLIC_SITE_URL           — canonical public URL, e.g. https://amana-patrimoine.fr
+//   NEXT_PUBLIC_CHATBOT_API_URL    — chatbot backend origin (override). Defaults to the
+//                                    current preprod backend on http://54.89.244.17:8000
+//                                    so the widget works out-of-the-box without extra env
+//                                    config. Swap for https://chat.amana-patrimoine.fr once
+//                                    the final domain is wired up.
+//
+// Any of these that are not set are simply omitted from the CSP (except the chatbot URL
+// which always has a working default).
+const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL || '').replace(/\/$/, '');
+const chatbotApiUrl = (
+  process.env.NEXT_PUBLIC_CHATBOT_API_URL || 'http://54.89.244.17:8000'
+).replace(/\/$/, '');
+
+function toWs(httpUrl) {
+  if (!httpUrl) return '';
+  if (httpUrl.startsWith('https://')) return httpUrl.replace(/^https:\/\//, 'wss://');
+  if (httpUrl.startsWith('http://')) return httpUrl.replace(/^http:\/\//, 'ws://');
+  return '';
+}
+
+// Host entries used by CSP — compact, deduplicated, env-aware.
+const csp = {
+  img: [
+    "'self'",
+    'data:',
+    'blob:',
+    'https://images.unsplash.com',
+    'https://amana-patrimoine.fr',
+    siteUrl,
+    chatbotApiUrl,
+    // Dev-only convenience: local backend + Next dev server
+    ...(isDev
+      ? ['http://localhost:3000', 'http://localhost:8000']
+      : []),
+  ],
+  connect: [
+    "'self'",
+    'https://calendly.com',
+    'https://wa.me',
+    'https://amana-patrimoine.fr',
+    siteUrl,
+    chatbotApiUrl,
+    toWs(chatbotApiUrl),
+    ...(isDev
+      ? [
+        'http://localhost:3000',
+        'http://localhost:8000',
+        'ws://localhost:3000',
+        'ws://localhost:8000',
+      ]
+      : []),
+  ],
+};
+
+// Remove empties and duplicates while preserving order
+function uniq(list) {
+  return Array.from(new Set(list.filter(Boolean)));
+}
+
+const imgSrc = uniq(csp.img).join(' ');
+const connectSrc = uniq(csp.connect).join(' ');
+
 const securityHeaders = [
   // Prevent clickjacking
   { key: 'X-Frame-Options', value: 'DENY' },
@@ -18,19 +87,16 @@ const securityHeaders = [
     key: 'Content-Security-Policy',
     value: [
       "default-src 'self'",
-      // Next.js inline scripts + JSON-LD
-      // 'unsafe-eval' required in dev for React Fast Refresh (hot reload)
-      process.env.NODE_ENV === 'development'
+      // 'unsafe-eval' required in dev for React Fast Refresh
+      isDev
         ? "script-src 'self' 'unsafe-inline' 'unsafe-eval'"
         : "script-src 'self' 'unsafe-inline'",
-      // Inline styles used throughout the site (fonts are self-hosted via next/font)
+      // Inline styles used throughout the site (fonts self-hosted via next/font)
       "style-src 'self' 'unsafe-inline'",
       // Fonts are self-hosted via next/font — no external font CDN needed
       "font-src 'self'",
-      // Images: self + data URIs + unsplash + uploads
-      "img-src 'self' data: blob: https://images.unsplash.com http://localhost:8000 http://localhost:3000 http://54.89.244.17:8000 https://amana-patrimoine.fr",
-      // API calls, Calendly embed, and Chatbot Widget API
-      "connect-src 'self' https://calendly.com https://wa.me http://localhost:8000 ws://localhost:8000 http://54.89.244.17:8000 https://amana-patrimoine.fr",
+      `img-src ${imgSrc}`,
+      `connect-src ${connectSrc}`,
       // No iframes except Calendly
       "frame-src https://calendly.com",
       "object-src 'none'",
@@ -53,11 +119,26 @@ const nextConfig = {
   images: {
     remotePatterns: [
       { protocol: 'https', hostname: 'images.unsplash.com' },
-      { protocol: 'http', hostname: 'localhost' },
-      { protocol: 'http', hostname: '54.89.244.17' },
       { protocol: 'https', hostname: 'amana-patrimoine.fr' },
+      // Chatbot backend — preprod default, overridable via NEXT_PUBLIC_CHATBOT_API_URL
+      ...(() => {
+        try {
+          const u = new URL(chatbotApiUrl);
+          return [{ protocol: u.protocol.replace(':', ''), hostname: u.hostname, port: u.port || undefined }];
+        } catch { return []; }
+      })(),
+      // Dev-only image sources — keep build working with uploads coming from local backend
+      ...(isDev
+        ? [
+          { protocol: 'http', hostname: 'localhost' },
+        ]
+        : []),
     ],
     formats: ['image/avif', 'image/webp'],
+    // Tailored to the real viewport mix of this site (mobile-first audience)
+    deviceSizes: [360, 420, 640, 768, 1024, 1280, 1600, 1920],
+    imageSizes: [16, 32, 48, 64, 96, 128, 200, 256, 384],
+    // Keep optimized variants cached aggressively — content rarely changes
     minimumCacheTTL: 2592000,
   },
   async headers() {

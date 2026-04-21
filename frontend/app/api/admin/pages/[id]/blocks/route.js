@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import { revalidatePath } from 'next/cache';
 import prisma from '@/lib/db';
 import { getSession } from '@/lib/auth';
 
@@ -25,6 +26,20 @@ export async function PUT(request, { params }) {
       },
     });
     created.push(block);
+  }
+
+  try {
+    const page = await prisma.page.findUnique({
+      where: { id: params.id },
+      select: { slug: true },
+    });
+    if (page?.slug) {
+      const path = page.slug === 'home' ? '/' : `/${page.slug}`;
+      revalidatePath(path);
+      revalidatePath('/sitemap.xml');
+    }
+  } catch (err) {
+    console.error('[revalidate] failed:', err?.message);
   }
 
   return NextResponse.json({ blocks: created });

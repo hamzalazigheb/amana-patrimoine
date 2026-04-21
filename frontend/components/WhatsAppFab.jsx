@@ -1,13 +1,17 @@
 'use client';
 import { usePathname } from 'next/navigation';
 
+// Set NEXT_PUBLIC_WHATSAPP_NUMBER in .env to your WhatsApp-enabled mobile number
+// Format: country code + number, no spaces or +  (e.g. 33612345678)
+const WA_NUMBER = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '33668603619';
+
 export default function WhatsAppFab() {
   const pathname = usePathname();
   if (pathname?.startsWith('/admin')) return null;
 
   return (
     <a
-      href="https://wa.me/33668603619"
+      href={`https://wa.me/${WA_NUMBER}`}
       target="_blank"
       rel="noopener noreferrer"
       className="whatsapp-fab"

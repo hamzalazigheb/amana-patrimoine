@@ -30,7 +30,7 @@ export default function EidPopup() {
 
                 {/* Logo */}
                 <div className="eid-popup-logo">
-                    <img src="/1amanap-patrimoine.svg" alt="Amana Patrimoine" style={{ height: '36px', width: 'auto' }} />
+                    <img src="/1amanap-patrimoine.svg" alt="Amana Patrimoine" width="36" height="36" style={{ height: '36px', width: 'auto' }} />
                 </div>
 
                 {/* New version badge */}

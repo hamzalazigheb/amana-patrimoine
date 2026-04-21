@@ -52,6 +52,11 @@ const DEFAULT_NAV_ITEMS = [
         type: 'link',
         href: '/qui-sommes-nous',
     },
+    {
+        label: 'Contact',
+        type: 'link',
+        href: '/contact',
+    },
 ];
 
 export default function Header() {
@@ -62,7 +67,7 @@ export default function Header() {
     const [features, setFeatures] = useState({ simulateurs_visible: true });
     const [navItems, setNavItems] = useState(DEFAULT_NAV_ITEMS);
     const [navPhone, setNavPhone] = useState('06 68 60 36 19');
-    const [navPhoneHref, setNavPhoneHref] = useState('tel:+33668603619');
+    const [navPhoneHref, setNavPhoneHref] = useState('tel:+33189700000');
     const [navCtaText, setNavCtaText] = useState('Bilan Patrimonial');
     const [navCtaLink, setNavCtaLink] = useState('/bilan-patrimonial');
 
@@ -216,6 +221,8 @@ export default function Header() {
                         src="/1amanap-patrimoine.svg"
                         alt="Amana Patrimoine - Cabinet de conseil en gestion de patrimoine"
                         className="logo-img logo-custom"
+                        width="120"
+                        height="120"
                         style={{ height: '120px', width: 'auto' }}
                     />
                 </Link>
@@ -227,11 +234,11 @@ export default function Header() {
                     onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
                 >
                     {mobileMenuOpen ? (
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden="true">
                             <line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" />
                         </svg>
                     ) : (
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden="true">
                             <line x1="3" y1="12" x2="21" y2="12" /><line x1="3" y1="6" x2="21" y2="6" /><line x1="3" y1="18" x2="21" y2="18" />
                         </svg>
                     )}

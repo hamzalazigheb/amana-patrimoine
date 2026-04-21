@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import { revalidatePath } from 'next/cache';
 import prisma from '@/lib/db';
 import { getSession } from '@/lib/auth';
 
@@ -44,6 +45,16 @@ export async function PUT(request, { params }) {
       data: updateData,
     });
 
+    try {
+      if (page?.slug) {
+        const path = page.slug === 'home' ? '/' : `/${page.slug}`;
+        revalidatePath(path);
+        revalidatePath('/sitemap.xml');
+      }
+    } catch (err) {
+      console.error('[revalidate] failed:', err?.message);
+    }
+
     return NextResponse.json({ page });
   } catch (error) {
     console.error('Page update error:', error);
@@ -58,7 +69,22 @@ export async function DELETE(request, { params }) {
   }
 
   try {
+    const page = await prisma.page.findUnique({
+      where: { id: params.id },
+      select: { slug: true },
+    });
     await prisma.page.delete({ where: { id: params.id } });
+
+    try {
+      if (page?.slug) {
+        const path = page.slug === 'home' ? '/' : `/${page.slug}`;
+        revalidatePath(path);
+        revalidatePath('/sitemap.xml');
+      }
+    } catch (err) {
+      console.error('[revalidate] failed:', err?.message);
+    }
+
     return NextResponse.json({ success: true });
   } catch {
     return NextResponse.json({ error: 'Erreur lors de la suppression de la page' }, { status: 500 });

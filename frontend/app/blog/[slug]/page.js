@@ -1,9 +1,10 @@
-export const dynamic = 'force-dynamic';
+export const revalidate = 3600;
 
 
 import Header from '../../../components/Header';
 import Footer from '../../../components/Footer';
 import BlockRenderer from '../../../components/BlockRenderer';
+import Breadcrumb from '../../../components/Breadcrumb';
 import { getPageBySlug, getBlogArticles } from '../../../lib/cms';
 import { buildMetadata, buildBreadcrumbJsonLd, buildFaqJsonLd, buildBlogPostingJsonLd } from '../../../lib/seo';
 import Link from 'next/link';
@@ -63,12 +64,13 @@ export default async function BlogArticlePage({ params }) {
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(blogPostingJsonLd) }} />
             {faqJsonLd && <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }} />}
             <Header />
+            <Breadcrumb
+                items={[
+                    { name: 'Blog', href: '/blog' },
+                    { name: page.title, href: `/blog/${slug}` },
+                ]}
+            />
             <main id="main-content">
-                <div className="blog-article-breadcrumb">
-                    <div className="container">
-                        <Link href="/blog">← Retour au blog</Link>
-                    </div>
-                </div>
                 <BlockRenderer blocks={page.blocks} />
             </main>
             <Footer />

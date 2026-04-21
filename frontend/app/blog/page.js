@@ -1,14 +1,34 @@
-﻿export const dynamic = 'force-dynamic';
+export const revalidate = 3600;
 
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
+import Breadcrumb from '../../components/Breadcrumb';
 import Link from 'next/link';
 import { getBlogArticles } from '../../lib/cms';
+import { buildBreadcrumbJsonLd } from '../../lib/seo';
+
+const SITE_URL = 'https://amana-patrimoine.fr';
 
 export const metadata = {
     title: 'Blog Finance Islamique - Conseils Patrimoniaux & Guides',
     description: 'Articles et guides pratiques sur la finance islamique, l\'investissement halal, la Zakat, la retraite islamique et la transmission de patrimoine.',
     keywords: 'blog finance islamique, articles halal investissement, guide patrimoine islamique',
+    alternates: { canonical: `${SITE_URL}/blog` },
+    openGraph: {
+        title: 'Blog Finance Islamique - Conseils Patrimoniaux & Guides',
+        description: 'Articles et guides pratiques sur la finance islamique, l\'investissement halal, la Zakat, la retraite islamique et la transmission de patrimoine.',
+        url: `${SITE_URL}/blog`,
+        type: 'website',
+        locale: 'fr_FR',
+        siteName: 'Amana Patrimoine',
+        images: [{ url: `${SITE_URL}/logo10.png`, width: 1200, height: 630, alt: 'Blog Amana Patrimoine' }],
+    },
+    twitter: {
+        card: 'summary_large_image',
+        title: 'Blog Finance Islamique - Conseils Patrimoniaux & Guides',
+        description: 'Articles et guides pratiques sur la finance islamique et le patrimoine.',
+        images: [`${SITE_URL}/logo10.png`],
+    },
 };
 
 const categoryColors = {
@@ -32,9 +52,36 @@ function getReadingTime(description) {
 export default async function BlogPage() {
     const articles = await getBlogArticles();
 
+    const breadcrumb = buildBreadcrumbJsonLd([{ name: 'Blog', slug: 'blog' }]);
+
+    const blogListJsonLd = {
+        '@context': 'https://schema.org',
+        '@type': 'Blog',
+        '@id': `${SITE_URL}/blog#blog`,
+        name: 'Blog Amana Patrimoine',
+        description: 'Articles et guides sur la finance islamique et la gestion de patrimoine.',
+        url: `${SITE_URL}/blog`,
+        inLanguage: 'fr-FR',
+        publisher: { '@type': 'Organization', name: 'Amana Patrimoine', url: SITE_URL },
+        blogPost: articles.map((a) => {
+            const slugPart = a.slug.replace('blog/', '');
+            return {
+                '@type': 'BlogPosting',
+                headline: a.title,
+                description: a.description || '',
+                url: `${SITE_URL}/blog/${slugPart}`,
+                datePublished: a.createdAt || a.updatedAt || undefined,
+                dateModified: a.updatedAt || a.createdAt || undefined,
+            };
+        }),
+    };
+
     return (
         <>
+            <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumb) }} />
+            <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(blogListJsonLd) }} />
             <Header />
+            <Breadcrumb items={[{ name: 'Blog', href: '/blog' }]} />
             <main id="main-content">
                 <section className="blog-page-header">
                     <div className="container">

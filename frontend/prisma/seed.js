@@ -27,7 +27,7 @@ async function main() {
     hero_subtitle: '15 ans d\'expérience pour construire une stratégie patrimoniale sur-mesure, en accord avec vos convictions',
     hero_cta_text: 'Prendre rendez-vous',
     hero_cta_link: 'https://calendly.com/amana-patrimoine/30min',
-    hero_image: '/Design sans titre (1) (1).png',
+    hero_image: '/hero-conseil-patrimoine-islamique.png',
     footer_description: 'Cabinet de conseil en gestion de patrimoine indépendant, spécialisé en finance islamique.',
     contact_phone: '+33 (0)1 89 70 00 00',
     contact_email: 'contact@amana-patrimoine.fr',

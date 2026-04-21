@@ -49,6 +49,7 @@ export default function Services() {
     const sectionRef = useRef(null);
 
     useEffect(() => {
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
         const observer = new IntersectionObserver(
             (entries) => {
                 entries.forEach((entry) => {

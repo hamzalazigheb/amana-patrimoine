@@ -214,8 +214,9 @@ const aggregateRatingJsonLd = {
     telephone: '+33189700000',
     address: {
         '@type': 'PostalAddress',
-        streetAddress: '75 Avenue des Champs-Élysées',
+        streetAddress: '60 rue François Ier',
         addressLocality: 'Paris',
+        addressRegion: 'Île-de-France',
         postalCode: '75008',
         addressCountry: 'FR',
     },
@@ -327,7 +328,6 @@ gtag('set','url_passthrough',false);
                         />
                     </noscript>
                 )}
-                <a href="#main-content" className="skip-to-content">Aller au contenu principal</a>
                 {children}
                 {/* Sticky CTA bar — mobile only (hidden via CSS on desktop) */}
                 <div className="sticky-cta-bar">
@@ -343,7 +343,7 @@ gtag('set','url_passthrough',false);
                         Prendre rendez-vous
                     </a>
                     <a
-                        href="tel:+33668603619"
+                        href="tel:+33189700000"
                         className="sticky-cta-phone"
                         aria-label="Appeler Amana Patrimoine"
                     >

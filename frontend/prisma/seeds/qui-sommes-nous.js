@@ -3,30 +3,24 @@ const { createPage } = require('./_helpers');
 module.exports = async function seedQuiSommesNous(prisma) {
   await createPage(prisma, 'qui-sommes-nous', {
     title: 'Qui sommes-nous - Cabinet de Gestion de Patrimoine Islamique',
-    description: 'Découvrez l\'équipe d\'Amana Patrimoine : des experts en gestion de patrimoine et finance islamique à Paris. Mohamed Mosbahi et Yanis Mahmoud, vos conseillers CGP.',
-    keywords: 'Amana Patrimoine équipe, Mohamed Mosbahi, Yanis Mahmoud, CGP finance islamique, cabinet gestion patrimoine Paris',
+    description: 'Découvrez l\'équipe d\'Amana Patrimoine : des experts en gestion de patrimoine et finance islamique à Paris. Mohamed Mosbahi, fondateur et président du cabinet.',
+    keywords: 'Amana Patrimoine équipe, Mohamed Mosbahi, CGP finance islamique, cabinet gestion patrimoine Paris, conseil patrimonial islamique',
   }, [
     { type: 'pageHero', content: {
       badge: 'Notre Cabinet',
       title: 'Un cabinet indépendant au service de votre patrimoine',
-      subtitle: 'Amana Patrimoine est né d\'une conviction simple : chaque investisseur mérite un conseil honnête, transparent et en accord avec ses valeurs. Fondé par Mohamed Mosbahi et Yanis Mahmoud, notre cabinet accompagne les particuliers et entrepreneurs dans la construction d\'un patrimoine durable, performant et conforme aux principes de la finance islamique.',
+      subtitle: 'Amana Patrimoine est né d\'une conviction simple : chaque investisseur mérite un conseil honnête, transparent et en accord avec ses valeurs. Notre cabinet accompagne les particuliers et entrepreneurs dans la construction d\'un patrimoine durable, performant et conforme aux principes de la finance islamique.',
       image: '/bureau-amana.jpeg',
       ctaText: 'Prendre rendez-vous',
     } },
     { type: 'founders', content: {
-      label: 'Nos Fondateurs',
+      label: 'Notre Fondateur',
       items: [
         {
           name: 'Mohamed Mosbahi',
-          role: 'Co-Fondateur et Président',
+          role: 'Fondateur et Président',
           image: '/mohamedF.webp',
           description: 'Président d\'Amana Patrimoine, Mohamed bénéficie de plus de 15 ans d\'expérience en gestion de patrimoine, au cours desquels il a développé une expertise approfondie dans la compréhension et la réponse aux besoins patrimoniaux complexes de ses clients. Son parcours l\'a conduit à conseiller une clientèle variée, comprenant des TNS, des particuliers, des chefs d\'entreprise, des professionnels de santé et des sportifs de haut niveau, lui permettant aujourd\'hui d\'identifier rapidement les besoins spécifiques de chacun.\n\nTitulaire d\'un certificat et d\'un EMBA en finance islamique, la solide expérience de Mohamed et ses connaissances théoriques font de lui un atout majeur dans l\'univers de la gestion de patrimoine islamique et participative.\n\nConscient de la nécessité d\'un service dédié et à forte valeur ajoutée, Mohamed a initié la création d\'Amana Patrimoine, avec l\'ambition de fonder un cabinet qui place la confiance, la transparence, et l\'éthique islamique au coeur de son accompagnement.',
-        },
-        {
-          name: 'Yanis Mahmoud',
-          role: 'Co-Fondateur et CGP',
-          image: '/YanisF.webp',
-          description: 'Yanis est titulaire d\'une licence d\'économie de la Sorbonne, d\'un master PGE et d\'un certificat en finance islamique de la Financia Business School. Co-producteur du podcast « Parlons Finance Islamique » sur YouTube, Yanis anime des échanges avec des professionnels du secteur, enrichissant ainsi la réflexion collective autour des enjeux et des innovations de la finance islamique.\n\nDiplômé en 2024 avec une majeure en finance d\'entreprise et quelques expériences en audit financier et private equity, Yanis s\'est rapidement intéressé à la finance islamique, et a développé un attrait naturel pour la gestion de patrimoine lors de sa rencontre avec Mohamed à l\'Islamic Finance Summer School de la Durham University.\n\nFormé dès 2024 à la gestion de patrimoine, Yanis met aujourd\'hui toute son expertise au service des clients d\'Amana Patrimoine, avec un engagement profond pour une gestion de patrimoine honnête, responsable et conforme aux principes de la finance islamique.',
         },
       ],
     } },
