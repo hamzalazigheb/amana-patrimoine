@@ -2,7 +2,7 @@ import ContactForm from '../../components/ContactForm';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 
-export const revalidate = 86400;
+export const dynamic = 'force-dynamic';
 
 export const metadata = {
   title: 'Contact — Amana Patrimoine | Conseil en Gestion de Patrimoine',
