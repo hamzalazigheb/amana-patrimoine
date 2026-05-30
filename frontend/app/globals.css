@@ -3322,6 +3322,24 @@ button:focus-visible {
   color: #f0d060;
 }
 
+.header-cta-group {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  flex-shrink: 0;
+}
+
+.header-cta-group--mobile {
+  flex-direction: column;
+  width: 100%;
+  gap: var(--space-3);
+}
+
+.header-cta-group--mobile .mobile-nav-cta {
+  width: 100%;
+  text-align: center;
+}
+
 @media (min-width: 769px) {
   .mobile-nav-overlay {
     display: none;

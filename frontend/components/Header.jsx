@@ -70,6 +70,8 @@ export default function Header() {
     const [navPhoneHref, setNavPhoneHref] = useState('tel:+33189700000');
     const [navCtaText, setNavCtaText] = useState('Bilan Patrimonial');
     const [navCtaLink, setNavCtaLink] = useState('/bilan-patrimonial');
+    const platformAuthUrl =
+        process.env.NEXT_PUBLIC_PLATFORM_AUTH_URL || 'https://platform.amana-patrimoine.fr/auth';
 
     useEffect(() => {
         if (typeof window !== 'undefined' && window.__FEATURES__) {
@@ -258,13 +260,23 @@ export default function Header() {
                         </svg>
                         {navPhone}
                     </a>
-                    <a
-                        href={navCtaLink}
-                        className="btn btn-primary btn-sm"
-                        onClick={() => trackCalendlyClick('header-nav')}
-                    >
-                        {navCtaText}
-                    </a>
+                    <div className="header-cta-group">
+                        <a
+                            href={navCtaLink}
+                            className="btn btn-primary btn-sm"
+                            onClick={() => trackCalendlyClick('header-nav')}
+                        >
+                            {navCtaText}
+                        </a>
+                        <a
+                            href={platformAuthUrl}
+                            className="btn btn-primary btn-sm"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            Mon espace
+                        </a>
+                    </div>
                 </nav>
 
                 {/* Mobile nav */}
@@ -278,13 +290,24 @@ export default function Header() {
                                 </svg>
                                 {navPhone}
                             </a>
-                            <a
-                                href={navCtaLink}
-                                className="btn btn-gold mobile-nav-cta"
-                                onClick={() => { closeMobile(); trackCalendlyClick('header-mobile'); }}
-                            >
-                                {navCtaText}
-                            </a>
+                            <div className="header-cta-group header-cta-group--mobile">
+                                <a
+                                    href={navCtaLink}
+                                    className="btn btn-gold mobile-nav-cta"
+                                    onClick={() => { closeMobile(); trackCalendlyClick('header-mobile'); }}
+                                >
+                                    {navCtaText}
+                                </a>
+                                <a
+                                    href={platformAuthUrl}
+                                    className="btn btn-primary mobile-nav-cta"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    onClick={closeMobile}
+                                >
+                                    Mon espace
+                                </a>
+                            </div>
                         </nav>
                     </div>
                 )}

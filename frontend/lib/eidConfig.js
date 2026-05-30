@@ -1,6 +1,6 @@
 // Set enabled: false to completely disable the Eid popup
 export const eidConfig = {
-    enabled: true,
+    enabled: false,
     greeting: 'Eid Mubarak 🌙',
     message: "L'équipe Amana Patrimoine vous souhaite un Eid Al-Fitr béni, rempli de paix, de joie et de prospérité pour vous et vos proches.",
     newVersionLabel: 'Nouveau site',
