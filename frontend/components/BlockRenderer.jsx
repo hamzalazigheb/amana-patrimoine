@@ -445,7 +445,12 @@ function EducationBlock({ content }) {
               <>
                 {item.image && (
                   <div className="education-image">
-                    <Image src={normalizeYouTubeThumbnail(item.image)} alt={item.title || 'Article'} width={400} height={250} sizes="(max-width: 768px) 90vw, 33vw" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                    {/* Plain img — matches admin preview; avoids _next/image 404 on runtime /uploads/ files */}
+                    <img
+                      src={normalizeYouTubeThumbnail(item.image)}
+                      alt={item.title || 'Article'}
+                      loading="lazy"
+                    />
                   </div>
                 )}
                 <div className="education-content">
