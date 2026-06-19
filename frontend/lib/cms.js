@@ -23,8 +23,31 @@ export async function getBlogArticles() {
   const pages = await prisma.page.findMany({
     where: { published: true, slug: { startsWith: 'blog/' } },
     orderBy: { createdAt: 'desc' },
+    include: {
+      blocks: {
+        where: { type: 'pageHero' },
+        orderBy: { order: 'asc' },
+        take: 1,
+      },
+    },
   });
-  return pages;
+
+  return pages.map((page) => {
+    let heroImage = null;
+    const heroBlock = page.blocks[0];
+    if (heroBlock) {
+      const content = typeof heroBlock.content === 'string'
+        ? JSON.parse(heroBlock.content || '{}')
+        : heroBlock.content;
+      heroImage = content?.image || content?.backgroundImage || null;
+    }
+
+    const { blocks, ...rest } = page;
+    return {
+      ...rest,
+      coverImage: page.coverImage || heroImage || null,
+    };
+  });
 }
 
 export async function getSettings() {

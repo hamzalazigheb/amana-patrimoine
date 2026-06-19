@@ -112,10 +112,20 @@ export default async function BlogPage() {
                                     const slugPart = article.slug.replace('blog/', '');
                                     const category = getCategoryFromTitle(article.title);
                                     const readTime = getReadingTime(article.description);
+                                    const hasBg = !!article.coverImage;
                                     return (
-                                        <Link key={article.id} href={`/blog/${slugPart}`} className="blog-card">
+                                        <Link
+                                            key={article.id}
+                                            href={`/blog/${slugPart}`}
+                                            className={`blog-card${hasBg ? ' blog-card-has-bg' : ''}`}
+                                            style={hasBg ? { backgroundImage: `url(${article.coverImage})` } : undefined}
+                                        >
+                                            {hasBg && <div className="blog-card-overlay" aria-hidden="true" />}
                                             <div className="blog-card-body">
-                                                <span className="blog-card-category" style={{ color: categoryColors[category] || 'var(--color-brass)' }}>
+                                                <span
+                                                    className="blog-card-category"
+                                                    style={{ color: hasBg ? 'var(--color-brass-light, #d4b896)' : (categoryColors[category] || 'var(--color-brass)') }}
+                                                >
                                                     {category}
                                                 </span>
                                                 <h2 className="blog-card-title">{article.title}</h2>

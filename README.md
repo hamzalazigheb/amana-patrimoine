@@ -8,12 +8,14 @@ Cabinet de conseil en gestion de patrimoine indépendant, spécialisé en financ
 
 ```
 amana-patrimoine/
-├── frontend/               # Next.js 14 app (App Router)
-├── backend/                # Express.js API (contact form)
+├── frontend/               # Next.js 14 app (App Router + API routes)
 ├── nginx/                  # Reverse proxy configuration
+├── docs/                   # Ops notes (SSL, etc.)
+├── archive/                # Deprecated code (not deployed)
 ├── docker-compose.yml      # Production deployment
 ├── docker-compose.dev.yml  # Local development (PostgreSQL only)
-└── deploy.sh               # AWS deployment script
+├── deploy.sh               # AWS deployment script
+└── deploy-ssl.sh           # SSL setup on AWS
 ```
 
 ---

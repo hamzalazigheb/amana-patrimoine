@@ -31,6 +31,8 @@ const STATIC_ROUTES = [
     { slug: 'assurance-vie-islamique', priority: 0.9, changeFrequency: 'monthly' },
     { slug: 'zakat', priority: 0.95, changeFrequency: 'monthly' },
     { slug: 'bilan-patrimonial', priority: 0.85, changeFrequency: 'monthly' },
+    { slug: 'livres-blancs', priority: 0.85, changeFrequency: 'monthly' },
+    { slug: 'nos-actualites', priority: 0.85, changeFrequency: 'weekly' },
     { slug: 'lexique', priority: 0.7, changeFrequency: 'monthly' },
 
     // Interactive tools, blog listing, contact

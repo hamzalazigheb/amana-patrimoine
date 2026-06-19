@@ -36,6 +36,7 @@ export async function PUT(request, { params }) {
         title: body.title,
         description: body.description,
         keywords: body.keywords,
+        coverImage: body.coverImage || null,
         published: body.published,
       },
     });

@@ -4,6 +4,8 @@ import { useState, useEffect } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import AdminShell from '../../AdminShell';
 import ImageUpload from '../../../../components/admin/ImageUpload';
+import WhitepapersEditor from '../../../../components/admin/blocks/WhitepapersEditor';
+import ActualitesEditor from '../../../../components/admin/blocks/ActualitesEditor';
 
 const BLOCK_TYPES = [
   { value: 'pageHero', label: 'Hero de page', fields: ['badge', 'title', 'subtitle', 'image', 'ctaText'] },
@@ -22,6 +24,8 @@ const BLOCK_TYPES = [
   { value: 'intro', label: 'Introduction', fields: ['paragraphs'] },
   { value: 'reassurance', label: 'Réassurance', fields: ['items'] },
   { value: 'education', label: 'Ressources éducatives', fields: ['title', 'description', 'items'] },
+  { value: 'whitepapers', label: 'Livres blancs (grille + formulaire)', fields: ['sectionTitle', 'items', 'form'] },
+  { value: 'actualites', label: 'Nos actualités (vidéos YouTube)', fields: ['sectionTitle', 'items'] },
   { value: 'legal', label: 'Mentions légales', fields: ['body'] },
   { value: 'caseStudy', label: 'Étude de cas', fields: ['title', 'body'] },
   { value: 'stats', label: 'Chiffres clés (KPI)', fields: ['items'] },
@@ -41,7 +45,7 @@ const ITEM_FIELDS = {
   partners:    [{ key: 'name', label: 'Nom', type: 'text' }, { key: 'logo', label: 'Logo', type: 'image' }],
   founders:    [{ key: 'name', label: 'Nom', type: 'text' }, { key: 'role', label: 'Rôle', type: 'text' }, { key: 'image', label: 'Photo', type: 'image' }, { key: 'description', label: 'Description', type: 'textarea' }],
   reassurance: [{ key: 'title', label: 'Titre', type: 'text' }, { key: 'description', label: 'Description', type: 'textarea' }],
-  education:      [{ key: 'image', label: 'Image', type: 'image' }, { key: 'tag', label: 'Tag (ex: Guide, Livre Blanc)', type: 'text' }, { key: 'title', label: 'Titre', type: 'text' }, { key: 'description', label: 'Description courte', type: 'textarea' }, { key: 'link', label: 'Lien (ex: /blog/mon-article)', type: 'text' }],
+  education:      [{ key: 'image', label: 'Image', type: 'image' }, { key: 'tag', label: 'Tag (ex: Guide, Livre Blanc)', type: 'text' }, { key: 'title', label: 'Titre', type: 'text' }, { key: 'description', label: 'Description courte', type: 'textarea' }, { key: 'link', label: 'Lien (ex: /blog/mon-article)', type: 'text' }, { key: 'linkLabel', label: 'Texte du lien (ex: Lire la suite)', type: 'text' }],
   stats:          [{ key: 'value', label: 'Valeur (nombre)', type: 'text' }, { key: 'suffix', label: 'Suffixe (ex: +, %)', type: 'text' }, { key: 'prefix', label: 'Préfixe (optionnel)', type: 'text' }, { key: 'label', label: 'Libellé', type: 'text' }],
   testimonials:   [{ key: 'name', label: 'Prénom (ex: Karim B.)', type: 'text' }, { key: 'location', label: 'Ville', type: 'text' }, { key: 'context', label: 'Contexte (ex: SCPI halal)', type: 'text' }, { key: 'text', label: 'Témoignage', type: 'textarea' }, { key: 'rating', label: 'Note (1-5)', type: 'text' }],
 };
@@ -166,6 +170,7 @@ export default function PageEditorPage() {
         title: page.title,
         description: page.description,
         keywords: page.keywords,
+        coverImage: page.coverImage || '',
         published: page.published,
       }),
     });
@@ -224,6 +229,12 @@ export default function PageEditorPage() {
     if (target < 0 || target >= updated.length) return;
     [updated[index], updated[target]] = [updated[target], updated[index]];
     updated.forEach((b, i) => { b.order = i; });
+    setBlocks(updated);
+  }
+
+  function updateBlockContentFull(index, content) {
+    const updated = [...blocks];
+    updated[index] = { ...updated[index], content };
     setBlocks(updated);
   }
 
@@ -290,6 +301,16 @@ export default function PageEditorPage() {
           <label>Mots-clés (séparés par des virgules)</label>
           <input className="admin-input" value={page.keywords || ''} onChange={(e) => setPage({ ...page, keywords: e.target.value })} placeholder="ex: finance islamique, SCPI halal, gestion patrimoine Paris" />
         </div>
+        {page.slug?.startsWith('blog/') && (
+          <div className="admin-form-group">
+            <ImageUpload
+              label="Image de fond — liste du blog"
+              hint="1200 × 800 px — arrière-plan de la carte sur /blog"
+              value={page.coverImage || ''}
+              onChange={(url) => setPage({ ...page, coverImage: url })}
+            />
+          </div>
+        )}
         <div className="admin-checkbox-group">
           <input type="checkbox" checked={page.published} onChange={(e) => setPage({ ...page, published: e.target.checked })} id="published" />
           <label htmlFor="published" style={{ margin: 0 }}>Publié</label>
@@ -328,6 +349,18 @@ export default function PageEditorPage() {
               </div>
             </div>
 
+            {block.type === 'whitepapers' ? (
+              <WhitepapersEditor
+                content={block.content || {}}
+                onChange={(content) => updateBlockContentFull(index, content)}
+              />
+            ) : block.type === 'actualites' ? (
+              <ActualitesEditor
+                content={block.content || {}}
+                onChange={(content) => updateBlockContentFull(index, content)}
+              />
+            ) : (
+            <>
             {blockDef.fields.includes('badge') && (
               <div className="admin-form-group">
                 <label>Badge</label>
@@ -419,6 +452,8 @@ export default function PageEditorPage() {
                   onChange={(newItems) => updateBlockContent(index, itemsKey, newItems)}
                 />
               </div>
+            )}
+            </>
             )}
           </div>
         );

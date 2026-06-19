@@ -18,6 +18,9 @@ import ToolsEditor from '@/components/admin/blocks/ToolsEditor';
 import FoundersEditor from '@/components/admin/blocks/FoundersEditor';
 import IntroEditor from '@/components/admin/blocks/IntroEditor';
 import CaseStudyEditor from '@/components/admin/blocks/CaseStudyEditor';
+import WhitepapersEditor from '@/components/admin/blocks/WhitepapersEditor';
+import ActualitesEditor from '@/components/admin/blocks/ActualitesEditor';
+import ImageUpload from '@/components/admin/ImageUpload';
 
 const BLOCK_LABELS = {
   hero: 'Hero (bannière principale)',
@@ -38,6 +41,8 @@ const BLOCK_LABELS = {
   legal: 'Mentions légales',
   stats: 'Chiffres clés (KPI)',
   testimonials: 'Témoignages clients',
+  whitepapers: 'Livres blancs',
+  actualites: 'Nos actualités (vidéos YouTube)',
 };
 
 function getBlockEditor(type) {
@@ -77,6 +82,10 @@ function getBlockEditor(type) {
       return IntroEditor;
     case 'caseStudy':
       return CaseStudyEditor;
+    case 'whitepapers':
+      return WhitepapersEditor;
+    case 'actualites':
+      return ActualitesEditor;
     default:
       return null;
   }
@@ -137,8 +146,10 @@ function BlockItem({ block, index, total, onUpdate, onMove, onRemove }) {
 
 function PageEditor({ page, onClose, onSaved }) {
   const [blocks, setBlocks] = useState([]);
+  const [coverImage, setCoverImage] = useState(page.coverImage || '');
   const [saving, setSaving] = useState(false);
   const [message, setMessage] = useState('');
+  const isBlogArticle = page.slug?.startsWith('blog/');
 
   useEffect(() => {
     const parsed = (page.blocks || []).map((b) => ({
@@ -146,6 +157,7 @@ function PageEditor({ page, onClose, onSaved }) {
       content: typeof b.content === 'string' ? JSON.parse(b.content || '{}') : b.content,
     }));
     setBlocks(parsed);
+    setCoverImage(page.coverImage || '');
   }, [page]);
 
   const handleSave = async () => {
@@ -153,12 +165,22 @@ function PageEditor({ page, onClose, onSaved }) {
     setMessage('');
     try {
       const blocksData = blocks.map((b) => ({ type: b.type, content: b.content }));
-      const res = await fetch(`/api/admin/pages/${page.id}/blocks`, {
+      const blocksRes = await fetch(`/api/admin/pages/${page.id}/blocks`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ blocks: blocksData }),
       });
-      if (!res.ok) throw new Error('Erreur de sauvegarde');
+      if (!blocksRes.ok) throw new Error('Erreur de sauvegarde des blocs');
+
+      if (isBlogArticle) {
+        const metaRes = await fetch(`/api/admin/pages/${page.id}`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ coverImage }),
+        });
+        if (!metaRes.ok) throw new Error('Erreur de sauvegarde de l\'image');
+      }
+
       setMessage('Contenu sauvegardé avec succès !');
       onSaved();
       setTimeout(() => setMessage(''), 3000);
@@ -215,6 +237,21 @@ function PageEditor({ page, onClose, onSaved }) {
       </div>
 
       <div className="admin-editor-content">
+        {isBlogArticle && (
+          <div className="admin-card" style={{ marginBottom: '1.5rem' }}>
+            <h3 style={{ marginBottom: '0.75rem' }}>Image de fond — liste du blog</h3>
+            <p style={{ fontSize: '0.85rem', color: 'var(--admin-text-muted)', marginBottom: '1rem' }}>
+              Affichée en arrière-plan sur la carte de l&apos;article dans <a href="/blog" target="_blank" rel="noopener noreferrer">/blog</a>.
+              Si vide, l&apos;image du bloc Hero de page est utilisée.
+            </p>
+            <ImageUpload
+              label="Image de couverture"
+              hint="1200 × 800 px recommandé"
+              value={coverImage}
+              onChange={setCoverImage}
+            />
+          </div>
+        )}
         <div className="admin-blocks-list">
           {blocks.map((block, i) => (
             <BlockItem

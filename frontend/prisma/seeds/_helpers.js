@@ -1,8 +1,21 @@
 async function createPage(prisma, slug, meta, blocks) {
   const page = await prisma.page.upsert({
     where: { slug },
-    update: { title: meta.title, description: meta.description, keywords: meta.keywords || '', published: true },
-    create: { slug, title: meta.title, description: meta.description || '', keywords: meta.keywords || '', published: true },
+    update: {
+      title: meta.title,
+      description: meta.description,
+      keywords: meta.keywords || '',
+      coverImage: meta.coverImage || null,
+      published: true,
+    },
+    create: {
+      slug,
+      title: meta.title,
+      description: meta.description || '',
+      keywords: meta.keywords || '',
+      coverImage: meta.coverImage || null,
+      published: true,
+    },
   });
   await prisma.block.deleteMany({ where: { pageId: page.id } });
   for (let i = 0; i < blocks.length; i++) {

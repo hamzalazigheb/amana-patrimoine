@@ -34,6 +34,7 @@ const csp = {
     'data:',
     'blob:',
     'https://images.unsplash.com',
+    'https://i.ytimg.com',
     'https://amana-patrimoine.fr',
     siteUrl,
     chatbotApiUrl,
@@ -97,8 +98,8 @@ const securityHeaders = [
       "font-src 'self'",
       `img-src ${imgSrc}`,
       `connect-src ${connectSrc}`,
-      // No iframes except Calendly
-      "frame-src https://calendly.com",
+      // Calendly + YouTube embeds (nos-actualites)
+      "frame-src https://calendly.com https://www.youtube-nocookie.com https://www.youtube.com",
       "object-src 'none'",
       "base-uri 'self'",
       "form-action 'self'",
@@ -119,6 +120,7 @@ const nextConfig = {
   images: {
     remotePatterns: [
       { protocol: 'https', hostname: 'images.unsplash.com' },
+      { protocol: 'https', hostname: 'i.ytimg.com' },
       { protocol: 'https', hostname: 'amana-patrimoine.fr' },
       // Chatbot backend — preprod default, overridable via NEXT_PUBLIC_CHATBOT_API_URL
       ...(() => {

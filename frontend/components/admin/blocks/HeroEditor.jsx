@@ -62,9 +62,9 @@ export default function HeroEditor({ content, onChange }) {
 
       <ImageUpload
         label="Image de fond"
-        hint="1920 × 800 px"
-        value={content.backgroundImage || ''}
-        onChange={(url) => update('backgroundImage', url)}
+        hint="1920 × 800 px — affichée sur l'article et la liste du blog"
+        value={content.image || content.backgroundImage || ''}
+        onChange={(url) => onChange({ ...content, image: url, backgroundImage: url })}
       />
     </div>
   );

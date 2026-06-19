@@ -45,6 +45,8 @@ const DEFAULT_NAV_ITEMS = [
             { href: '/simulateurs', title: 'Simulateur Zakat', desc: 'Calculez en ligne', featureFlag: 'simulateurs_visible' },
             { href: '/lexique', title: 'Lexique', desc: 'Termes et définitions' },
             { href: '/blog', title: 'Blog', desc: 'Guides et analyses' },
+            { href: '/nos-actualites', title: 'Nos actualités', desc: 'Vidéos & conseils' },
+            { href: '/livres-blancs', title: 'Livres blancs', desc: 'Guides PDF gratuits' },
         ],
     },
     {

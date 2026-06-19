@@ -7,6 +7,8 @@ import StatsSection from './StatsSection';
 import Testimonials from './Testimonials';
 import CertBadges from './CertBadges';
 import ContactForm from './ContactForm';
+import { WhitepapersSection } from './WhitepapersSection';
+import ActualitesSection from './ActualitesSection';
 import { trackCalendlyClick } from '../lib/track';
 /**
  * Sanitize HTML from the database to prevent XSS.
@@ -452,8 +454,8 @@ function EducationBlock({ content }) {
                   <h3>{item.title}</h3>
                   {item.description && <p className="education-desc">{item.description}</p>}
                   {item.link && (
-                    <span style={{ display: 'inline-block', marginTop: '0.75rem', fontSize: 'var(--text-sm)', color: 'var(--color-brass-dark)', fontWeight: 500 }}>
-                      Lire l&apos;article →
+                    <span className="education-link">
+                      {item.linkLabel || 'Lire la suite'} →
                     </span>
                   )}
                 </div>
@@ -833,6 +835,8 @@ const BLOCK_MAP = {
   stats: StatsBlock,
   testimonials: TestimonialsBlock,
   contact: ContactFormBlock,
+  whitepapers: WhitepapersSection,
+  actualites: ActualitesSection,
 };
 
 export default function BlockRenderer({ blocks }) {

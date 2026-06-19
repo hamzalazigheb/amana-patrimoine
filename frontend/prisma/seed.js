@@ -64,6 +64,8 @@ async function main() {
     require('./seeds/zakat'),
     require('./seeds/lexique'),
     require('./seeds/bilan-patrimonial'),
+    require('./seeds/livres-blancs'),
+    require('./seeds/nos-actualites'),
     // Phase 4 — Blog
     require('./seeds/blog-guide-investissement-halal'),
     require('./seeds/blog-per-halal-retraite'),

@@ -14,7 +14,7 @@ export default function EducationEditor({ content, onChange }) {
   };
 
   const addItem = () => {
-    update('items', [...(content.items || []), { image: '', tag: '', title: '', description: '' }]);
+    update('items', [...(content.items || []), { image: '', tag: '', title: '', description: '', link: '', linkLabel: '' }]);
   };
 
   const removeItem = (index) => {
@@ -81,6 +81,26 @@ export default function EducationEditor({ content, onChange }) {
                 className="admin-field-textarea"
                 rows={2}
               />
+            </div>
+            <div className="admin-field-row">
+              <div className="admin-field">
+                <label className="admin-field-label-sm">Lien « Lire la suite »</label>
+                <input
+                  value={item.link || ''}
+                  onChange={(e) => updateItem(i, 'link', e.target.value)}
+                  className="admin-field-input"
+                  placeholder="/blog/mon-article ou https://..."
+                />
+              </div>
+              <div className="admin-field">
+                <label className="admin-field-label-sm">Texte du lien (optionnel)</label>
+                <input
+                  value={item.linkLabel || ''}
+                  onChange={(e) => updateItem(i, 'linkLabel', e.target.value)}
+                  className="admin-field-input"
+                  placeholder="Lire la suite"
+                />
+              </div>
             </div>
             <ImageUpload
               label="Image"

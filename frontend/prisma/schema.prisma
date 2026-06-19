@@ -23,6 +23,7 @@ model Page {
   title       String
   description String?
   keywords    String?
+  coverImage  String?  @map("cover_image")
   published   Boolean  @default(false)
   createdAt   DateTime @default(now()) @map("created_at")
   updatedAt   DateTime @updatedAt @map("updated_at")
@@ -73,4 +74,25 @@ model Contact {
 
   @@index([status])
   @@index([createdAt])
+}
+
+model WhitePaperDownload {
+  id            String   @id @default(cuid())
+  firstName     String   @map("first_name")
+  lastName      String   @map("last_name")
+  email         String
+  phone         String
+  project       String?
+  paperIds      String   @map("paper_ids")
+  newsletter    Boolean  @default(false)
+  downloadToken String   @unique @map("download_token") @default(cuid())
+  expiresAt     DateTime @map("expires_at")
+  ip            String?
+  status        String   @default("new")
+  createdAt     DateTime @default(now()) @map("created_at")
+
+  @@index([email])
+  @@index([status])
+  @@index([createdAt])
+  @@map("whitepaper_downloads")
 }

@@ -38,6 +38,7 @@ export async function PUT(request, { params }) {
     if (data.title !== undefined) updateData.title = String(data.title).trim();
     if (data.description !== undefined) updateData.description = String(data.description || '');
     if (data.keywords !== undefined) updateData.keywords = String(data.keywords || '');
+    if (data.coverImage !== undefined) updateData.coverImage = String(data.coverImage || '') || null;
     if (data.published !== undefined) updateData.published = Boolean(data.published);
 
     const page = await prisma.page.update({
@@ -49,6 +50,7 @@ export async function PUT(request, { params }) {
       if (page?.slug) {
         const path = page.slug === 'home' ? '/' : `/${page.slug}`;
         revalidatePath(path);
+        if (page.slug.startsWith('blog/')) revalidatePath('/blog');
         revalidatePath('/sitemap.xml');
       }
     } catch (err) {

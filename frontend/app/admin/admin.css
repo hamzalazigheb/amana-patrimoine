@@ -455,3 +455,436 @@
   .admin-sidebar { display: none; }
   .admin-main { margin-left: 0; padding: 16px; }
 }
+
+/* ============================================
+   LIVRES BLANCS — admin leads
+   ============================================ */
+.wp-admin {
+  max-width: 1200px;
+}
+
+.wp-admin-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.75rem;
+  flex-wrap: wrap;
+}
+
+.wp-admin-title {
+  font-family: Georgia, 'Playfair Display', serif;
+  font-size: 1.75rem;
+  font-weight: 600;
+  color: var(--admin-primary);
+  margin: 0 0 0.35rem;
+}
+
+.wp-admin-subtitle {
+  margin: 0;
+  font-size: 0.875rem;
+  color: var(--admin-text-muted);
+  line-height: 1.5;
+}
+
+.wp-admin-subtitle a {
+  color: var(--admin-primary);
+  font-weight: 500;
+}
+
+.wp-admin-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.wp-admin-stat {
+  background: var(--admin-white);
+  border: 1px solid var(--admin-border);
+  border-radius: var(--admin-radius);
+  padding: 1.25rem 1.5rem;
+  box-shadow: var(--admin-shadow);
+}
+
+.wp-admin-stat-value {
+  display: block;
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--admin-primary);
+  line-height: 1.1;
+}
+
+.wp-admin-stat-label {
+  display: block;
+  margin-top: 0.25rem;
+  font-size: 0.8rem;
+  color: var(--admin-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.wp-admin-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+}
+
+.wp-admin-search {
+  flex: 1;
+  max-width: 420px;
+  padding: 0.6rem 1rem;
+  border: 1px solid var(--admin-border);
+  border-radius: var(--admin-radius);
+  font-size: 0.875rem;
+  background: var(--admin-white);
+  color: var(--admin-text);
+}
+
+.wp-admin-search:focus {
+  outline: none;
+  border-color: var(--admin-primary);
+  box-shadow: 0 0 0 3px rgba(26, 60, 52, 0.1);
+}
+
+.wp-admin-count {
+  font-size: 0.8rem;
+  color: var(--admin-text-muted);
+  white-space: nowrap;
+}
+
+.wp-admin-loading,
+.wp-admin-empty {
+  text-align: center;
+  padding: 4rem 2rem;
+  background: var(--admin-white);
+  border: 1px solid var(--admin-border);
+  border-radius: var(--admin-radius);
+  color: var(--admin-text-muted);
+}
+
+.wp-admin-loading p,
+.wp-admin-empty p {
+  margin: 0.75rem 0 0;
+  font-size: 0.9rem;
+}
+
+.wp-admin-empty h2 {
+  margin: 1rem 0 0.35rem;
+  font-size: 1.1rem;
+  color: var(--admin-text);
+  font-weight: 600;
+}
+
+.wp-admin-empty-icon {
+  color: var(--admin-border);
+  display: flex;
+  justify-content: center;
+}
+
+.wp-admin-spinner {
+  width: 32px;
+  height: 32px;
+  margin: 0 auto;
+  border: 3px solid var(--admin-border);
+  border-top-color: var(--admin-primary);
+  border-radius: 50%;
+  animation: wp-admin-spin 0.7s linear infinite;
+}
+
+@keyframes wp-admin-spin {
+  to { transform: rotate(360deg); }
+}
+
+.wp-admin-layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.25rem;
+  align-items: start;
+}
+
+.wp-admin-layout--split {
+  grid-template-columns: minmax(0, 1fr) 380px;
+}
+
+.wp-admin-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.625rem;
+}
+
+.wp-admin-card {
+  width: 100%;
+  text-align: left;
+  background: var(--admin-white);
+  border: 1.5px solid var(--admin-border);
+  border-radius: var(--admin-radius);
+  padding: 1rem 1.15rem;
+  cursor: pointer;
+  transition: border-color 0.15s, box-shadow 0.15s;
+  font-family: inherit;
+}
+
+.wp-admin-card:hover {
+  border-color: #c5cfc9;
+  box-shadow: var(--admin-shadow);
+}
+
+.wp-admin-card--active {
+  border-color: var(--admin-primary);
+  box-shadow: 0 0 0 1px var(--admin-primary);
+  background: var(--admin-primary-light);
+}
+
+.wp-admin-card-top {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.85rem;
+}
+
+.wp-admin-avatar {
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--admin-primary);
+  color: #fff;
+  font-size: 0.75rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  letter-spacing: 0.02em;
+}
+
+.wp-admin-avatar--lg {
+  width: 48px;
+  height: 48px;
+  font-size: 0.85rem;
+}
+
+.wp-admin-card-main {
+  flex: 1;
+  min-width: 0;
+}
+
+.wp-admin-card-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-bottom: 0.15rem;
+}
+
+.wp-admin-card-name {
+  font-weight: 600;
+  font-size: 0.925rem;
+  color: var(--admin-text);
+}
+
+.wp-admin-card-date {
+  font-size: 0.72rem;
+  color: var(--admin-text-muted);
+  white-space: nowrap;
+}
+
+.wp-admin-card-email {
+  font-size: 0.8rem;
+  color: var(--admin-text-muted);
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.wp-admin-card-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin-top: 0.75rem;
+  padding-left: calc(40px + 0.85rem);
+}
+
+.wp-admin-tag {
+  display: inline-block;
+  padding: 0.2rem 0.55rem;
+  background: var(--admin-primary-light);
+  color: var(--admin-primary);
+  border-radius: 4px;
+  font-size: 0.68rem;
+  font-weight: 600;
+  line-height: 1.4;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.wp-admin-tag--muted {
+  background: #eee;
+  color: var(--admin-text-muted);
+}
+
+.wp-admin-tag--newsletter {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.wp-admin-detail {
+  background: var(--admin-white);
+  border: 1.5px solid var(--admin-border);
+  border-radius: var(--admin-radius);
+  padding: 1.35rem;
+  position: sticky;
+  top: 1rem;
+  box-shadow: var(--admin-shadow);
+}
+
+.wp-admin-detail-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-bottom: 1.35rem;
+  padding-bottom: 1.25rem;
+  border-bottom: 1px solid var(--admin-border);
+}
+
+.wp-admin-detail-identity {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+}
+
+.wp-admin-detail-identity h2 {
+  margin: 0 0 0.2rem;
+  font-family: Georgia, 'Playfair Display', serif;
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--admin-primary);
+}
+
+.wp-admin-detail-identity time {
+  font-size: 0.75rem;
+  color: var(--admin-text-muted);
+}
+
+.wp-admin-close {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--admin-text-muted);
+  font-size: 1.5rem;
+  line-height: 1;
+  padding: 0.15rem 0.35rem;
+  border-radius: 4px;
+  transition: background 0.15s;
+}
+
+.wp-admin-close:hover {
+  background: var(--admin-primary-light);
+  color: var(--admin-primary);
+}
+
+.wp-admin-detail-grid {
+  display: grid;
+  gap: 0.85rem;
+  margin-bottom: 1.25rem;
+}
+
+.wp-admin-field-label {
+  display: block;
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--admin-text-muted);
+  margin-bottom: 0.2rem;
+}
+
+.wp-admin-field-value {
+  font-size: 0.875rem;
+  color: var(--admin-text);
+}
+
+.wp-admin-link {
+  color: #2563eb;
+  text-decoration: none;
+  word-break: break-all;
+}
+
+.wp-admin-link:hover {
+  text-decoration: underline;
+}
+
+.wp-admin-badge-inline {
+  display: inline-block;
+  padding: 0.2rem 0.6rem;
+  border-radius: 4px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  background: #f3f4f6;
+  color: var(--admin-text-muted);
+}
+
+.wp-admin-badge-inline--yes {
+  background: #d1fae5;
+  color: #065f46;
+}
+
+.wp-admin-guides {
+  margin-bottom: 1.35rem;
+}
+
+.wp-admin-guides-list {
+  list-style: none;
+  padding: 0;
+  margin: 0.5rem 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.wp-admin-guide-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.55rem 0.75rem;
+  background: var(--admin-primary-light);
+  border-radius: 6px;
+  font-size: 0.82rem;
+  color: var(--admin-primary);
+  font-weight: 500;
+}
+
+.wp-admin-guide-item svg {
+  flex-shrink: 0;
+  opacity: 0.7;
+}
+
+.wp-admin-detail-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  padding-top: 1.15rem;
+  border-top: 1px solid var(--admin-border);
+}
+
+@media (max-width: 900px) {
+  .wp-admin-layout--split {
+    grid-template-columns: 1fr;
+  }
+
+  .wp-admin-detail {
+    position: static;
+  }
+
+  .wp-admin-stats {
+    grid-template-columns: 1fr;
+  }
+
+  .wp-admin-card-tags {
+    padding-left: 0;
+  }
+}
