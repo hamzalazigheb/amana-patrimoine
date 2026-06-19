@@ -35,6 +35,7 @@ const csp = {
     'blob:',
     'https://images.unsplash.com',
     'https://i.ytimg.com',
+    'https://img.youtube.com',
     'https://amana-patrimoine.fr',
     siteUrl,
     chatbotApiUrl,
@@ -115,12 +116,21 @@ const nextConfig = {
   output: 'standalone',
   // Browsers request /favicon.ico by default; we only ship public/favicon.svg
   async rewrites() {
-    return [{ source: '/favicon.ico', destination: '/favicon.svg' }];
+    return {
+      // Before public/ static check — runtime uploads live on a Docker volume, not in the build
+      beforeFiles: [
+        { source: '/uploads/:path*', destination: '/api/serve-upload/:path*' },
+      ],
+      afterFiles: [
+        { source: '/favicon.ico', destination: '/favicon.svg' },
+      ],
+    };
   },
   images: {
     remotePatterns: [
       { protocol: 'https', hostname: 'images.unsplash.com' },
       { protocol: 'https', hostname: 'i.ytimg.com' },
+      { protocol: 'https', hostname: 'img.youtube.com' },
       { protocol: 'https', hostname: 'amana-patrimoine.fr' },
       // Chatbot backend — preprod default, overridable via NEXT_PUBLIC_CHATBOT_API_URL
       ...(() => {
