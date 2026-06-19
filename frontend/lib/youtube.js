@@ -32,3 +32,25 @@ export function getYouTubeThumbnail(videoId) {
   if (!videoId) return null;
   return `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`;
 }
+
+/** Normalize img.youtube.com / maxresdefault URLs to the CSP-allowed i.ytimg.com CDN. */
+export function normalizeYouTubeThumbnail(url) {
+  if (!url || typeof url !== 'string') return url;
+
+  const trimmed = url.trim();
+  const fromUrl = getYouTubeVideoId(trimmed);
+  const fromPath = trimmed.match(/\/vi\/([a-zA-Z0-9_-]{11})(?:\/|$)/)?.[1];
+  const videoId = fromUrl || fromPath;
+
+  if (videoId) {
+    return getYouTubeThumbnail(videoId);
+  }
+
+  if (trimmed.includes('img.youtube.com')) {
+    return trimmed
+      .replace('img.youtube.com', 'i.ytimg.com')
+      .replace(/maxresdefault\.(jpg|webp)/, 'hqdefault.jpg');
+  }
+
+  return trimmed;
+}

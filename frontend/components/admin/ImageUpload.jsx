@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useRef } from 'react';
+import { normalizeYouTubeThumbnail } from '@/lib/youtube';
 
 export default function ImageUpload({ value, onChange, label, hint }) {
   const [uploading, setUploading] = useState(false);
@@ -52,7 +53,7 @@ export default function ImageUpload({ value, onChange, label, hint }) {
       <div className="admin-image-preview-area">
         {value ? (
           <div className="admin-image-preview">
-            <img src={value} alt="Aperçu" />
+            <img src={normalizeYouTubeThumbnail(value)} alt="Aperçu" />
             <div className="admin-image-overlay">
               <button type="button" onClick={() => fileRef.current?.click()} className="admin-image-change-btn">
                 {uploading ? 'Envoi...' : 'Changer'}

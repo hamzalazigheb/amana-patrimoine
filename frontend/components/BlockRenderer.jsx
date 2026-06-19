@@ -9,6 +9,7 @@ import CertBadges from './CertBadges';
 import ContactForm from './ContactForm';
 import { WhitepapersSection } from './WhitepapersSection';
 import ActualitesSection from './ActualitesSection';
+import { normalizeYouTubeThumbnail } from '@/lib/youtube';
 import { trackCalendlyClick } from '../lib/track';
 /**
  * Sanitize HTML from the database to prevent XSS.
@@ -444,7 +445,7 @@ function EducationBlock({ content }) {
               <>
                 {item.image && (
                   <div className="education-image">
-                    <Image src={item.image} alt={item.title || 'Article'} width={400} height={250} sizes="(max-width: 768px) 90vw, 33vw" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                    <Image src={normalizeYouTubeThumbnail(item.image)} alt={item.title || 'Article'} width={400} height={250} sizes="(max-width: 768px) 90vw, 33vw" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                   </div>
                 )}
                 <div className="education-content">
