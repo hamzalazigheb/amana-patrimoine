@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import AdminShell from '../AdminShell';
+import { DEFAULT_NAV_ITEMS } from '@/lib/nav-defaults';
 
 const GENERAL_FIELDS = [
   { key: 'site_name', label: 'Nom du site', type: 'text' },
@@ -33,41 +34,6 @@ const NAV_FIELDS = [
   { key: 'nav_phone_href', label: 'Lien téléphone (ex: tel:+33189700000)', type: 'text' },
   { key: 'nav_cta_text', label: 'Texte du bouton CTA (ex: Bilan Patrimonial)', type: 'text' },
   { key: 'nav_cta_link', label: 'Lien du bouton CTA (ex: /bilan-patrimonial)', type: 'text' },
-];
-
-const DEFAULT_NAV_ITEMS = [
-  {
-    label: 'Nos Solutions', type: 'mega',
-    columns: [
-      { title: 'Planification', items: [
-        { href: '/retraite', title: 'Préparer ma retraite', desc: 'Sécurisez votre avenir financier' },
-        { href: '/strategie', title: 'Stratégie patrimoniale', desc: 'Optimisez votre patrimoine' },
-        { href: '/succession', title: 'Préparer ma succession', desc: 'Transmettez en toute sérénité' },
-      ]},
-      { title: 'Investissement', items: [
-        { href: '/immobilier', title: "Investir dans l'immobilier", desc: 'Patrimoine immobilier durable' },
-        { href: '/investissement', title: 'Investir son argent', desc: 'Croissance et diversification' },
-        { href: '/enfants', title: 'Avenir des enfants', desc: 'Préparez leur avenir' },
-      ]},
-      { title: 'Optimisation', items: [
-        { href: '/reduire-impots', title: 'Optimiser ma fiscalité en tant que particulier', desc: 'Optimisation fiscale légale' },
-        { href: '/reduire-impots-entreprise', title: "Optimiser ma fiscalité d'entreprise", desc: 'Optimisation fiscale légale' },
-      ]},
-    ],
-  },
-  {
-    label: 'Ressources', type: 'dropdown',
-    items: [
-      { href: '/finance-islamique', title: 'Finance islamique', desc: 'Principes et solutions' },
-      { href: '/scpi-halal', title: 'SCPI Halal', desc: 'Immobilier sans riba' },
-      { href: '/assurance-vie-islamique', title: 'Assurance-vie islamique', desc: 'Épargner et transmettre' },
-      { href: '/zakat', title: 'Zakat', desc: 'Guide et calcul' },
-      { href: '/simulateurs', title: 'Simulateur Zakat', desc: 'Calculez en ligne', featureFlag: 'simulateurs_visible' },
-      { href: '/lexique', title: 'Lexique', desc: 'Termes et définitions' },
-      { href: '/blog', title: 'Blog', desc: 'Guides et analyses' },
-    ],
-  },
-  { label: 'Qui sommes-nous', type: 'link', href: '/qui-sommes-nous' },
 ];
 
 /* ── Nav sub-item row (href + title + desc) ── */

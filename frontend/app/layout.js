@@ -4,6 +4,7 @@ import Script from 'next/script';
 import ConsentManager from '../components/ConsentManager';
 import WhatsAppFab from '../components/WhatsAppFab';
 import prisma from '../lib/db';
+import { mergeNavItems } from '../lib/nav-defaults';
 
 const CHATBOT_WIDGET_ID =
     process.env.NEXT_PUBLIC_CHATBOT_ID || '69cefcc8cdd78aded2e4c7be';
@@ -249,6 +250,9 @@ async function getFeatureFlags() {
         const flags = { simulateurs_visible: true };
         for (const s of settings) {
             try { flags[s.key] = JSON.parse(s.value); } catch { flags[s.key] = s.value; }
+        }
+        if (Array.isArray(flags.nav_items) && flags.nav_items.length > 0) {
+            flags.nav_items = mergeNavItems(flags.nav_items);
         }
         return flags;
     } catch {

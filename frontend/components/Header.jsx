@@ -3,63 +3,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { trackCalendlyClick } from '../lib/track';
-
-const DEFAULT_NAV_ITEMS = [
-    {
-        label: 'Nos Solutions',
-        type: 'mega',
-        columns: [
-            {
-                title: 'Planification',
-                items: [
-                    { href: '/retraite', title: 'Préparer ma retraite', desc: 'Sécurisez votre avenir financier' },
-                    { href: '/strategie', title: 'Stratégie patrimoniale', desc: 'Optimisez votre patrimoine' },
-                    { href: '/succession', title: 'Préparer ma succession', desc: 'Transmettez en toute sérénité' },
-                ],
-            },
-            {
-                title: 'Investissement',
-                items: [
-                    { href: '/immobilier', title: "Investir dans l'immobilier", desc: 'Patrimoine immobilier durable' },
-                    { href: '/investissement', title: 'Investir son argent', desc: 'Croissance et diversification' },
-                    { href: '/enfants', title: 'Avenir des enfants', desc: 'Préparez leur avenir' },
-                ],
-            },
-            {
-                title: 'Optimisation',
-                items: [
-                    { href: '/reduire-impots', title: 'Optimiser ma fiscalité en tant que particulier', desc: 'Optimisation fiscale légale' },
-                    { href: '/reduire-impots-entreprise', title: "Optimiser ma fiscalité d'entreprise", desc: 'Optimisation fiscale légale' },
-                ],
-            },
-        ],
-    },
-    {
-        label: 'Ressources',
-        type: 'dropdown',
-        items: [
-            { href: '/finance-islamique', title: 'Finance islamique', desc: 'Principes et solutions' },
-            { href: '/scpi-halal', title: 'SCPI Halal', desc: 'Immobilier sans riba' },
-            { href: '/assurance-vie-islamique', title: 'Assurance-vie islamique', desc: 'Épargner et transmettre' },
-            { href: '/zakat', title: 'Zakat', desc: 'Guide et calcul' },
-            { href: '/simulateurs', title: 'Simulateur Zakat', desc: 'Calculez en ligne', featureFlag: 'simulateurs_visible' },
-            { href: '/lexique', title: 'Lexique', desc: 'Termes et définitions' },
-            { href: '/blog', title: 'Blog', desc: 'Guides et analyses' },
-            { href: '/nos-actualites', title: 'Nos actualités', desc: 'Vidéos & conseils' },
-            { href: '/livres-blancs', title: 'Livres blancs', desc: 'Guides PDF gratuits' },
-        ],
-    },
-    {
-        label: 'Qui sommes-nous',
-        type: 'link',
-        href: '/qui-sommes-nous',
-    },
-    {
-        label: 'Contact',
-        type: 'link',
-        href: '/contact',
-    },
-];
+import { DEFAULT_NAV_ITEMS, mergeNavItems } from '../lib/nav-defaults';
 
 export default function Header() {
     const [scrolled, setScrolled] = useState(false);
@@ -84,7 +28,7 @@ export default function Header() {
             if (f.nav_cta_text) setNavCtaText(f.nav_cta_text);
             if (f.nav_cta_link) setNavCtaLink(f.nav_cta_link);
             if (Array.isArray(f.nav_items) && f.nav_items.length > 0) {
-                setNavItems(f.nav_items);
+                setNavItems(mergeNavItems(f.nav_items));
             }
         }
     }, []);
