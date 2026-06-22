@@ -1,5 +1,12 @@
 /** Default main navigation — merged with DB nav_items so new pages appear without wiping custom menus. */
 
+/** Top-level nav links hidden from the menu (page stays accessible by direct URL). */
+const HIDDEN_NAV_HREFS = new Set(['/contact']);
+
+function isHiddenNavItem(item) {
+  return item?.type === 'link' && item.href && HIDDEN_NAV_HREFS.has(item.href);
+}
+
 export const DEFAULT_NAV_ITEMS = [
   {
     label: 'Nos Solutions',
@@ -50,11 +57,6 @@ export const DEFAULT_NAV_ITEMS = [
     type: 'link',
     href: '/qui-sommes-nous',
   },
-  {
-    label: 'Contact',
-    type: 'link',
-    href: '/contact',
-  },
 ];
 
 function mergeSubItems(dbItems, defaultItems) {
@@ -93,5 +95,6 @@ export function mergeNavItems(dbItems, defaults = DEFAULT_NAV_ITEMS) {
 
   const dbLabels = new Set(merged.map((item) => item.label));
   const missingTopLevel = defaults.filter((item) => !dbLabels.has(item.label));
-  return missingTopLevel.length > 0 ? [...merged, ...missingTopLevel] : merged;
+  const result = missingTopLevel.length > 0 ? [...merged, ...missingTopLevel] : merged;
+  return result.filter((item) => !isHiddenNavItem(item));
 }
